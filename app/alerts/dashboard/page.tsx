@@ -90,7 +90,7 @@ export default function AlertsDashboardPage() {
                       </Badge>
                     </div>
                     <p className="text-sm text-red-700 dark:text-red-300">
-                      预计未来6小时龙子湖中心区域将出现暴雨到大暴雨，累积降水量可达100-150毫米，请注意防范。
+                      预计未来6小时黄石坡区域将出现暴雨到大暴雨，累积降水量可达100-150毫米，请注意防范。
                     </p>
                     <div className="text-xs text-red-600 dark:text-red-400 mt-1">发布时间: 今天 08:30</div>
                   </div>
@@ -101,7 +101,7 @@ export default function AlertsDashboardPage() {
                       <span className="font-medium text-orange-800 dark:text-orange-400">内涝橙色预警</span>
                     </div>
                     <p className="text-sm text-orange-700 dark:text-orange-300">
-                      龙子湖中心区域多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
+                      柏杨中路多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
                     </p>
                     <div className="text-xs text-orange-600 dark:text-orange-400 mt-1">发布时间: 今天 09:00</div>
                   </div>
@@ -126,13 +126,13 @@ export default function AlertsDashboardPage() {
                       <CloudRain className="h-5 w-5 text-red-600 dark:text-red-400" />
                       <div>
                         <div className="font-medium text-red-800 dark:text-red-400">暴雨红色预警</div>
-                        <div className="text-xs text-muted-foreground">龙子湖区域</div>
+                        <div className="text-xs text-muted-foreground">黄石坡</div>
                       </div>
                     </div>
                     <Badge variant="destructive">红色预警</Badge>
                   </div>
                   <p className="text-sm text-red-700 dark:text-red-300 mb-2">
-                    预计未来6小时龙子湖中心区域将出现暴雨到大暴雨，累积降水量可达 100-150毫米，请注意防范。
+                    预计未来6小时黄石坡区域将出现暴雨到大暴雨，累积降水量可达 100-150毫米，请注意防范。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 08:30</div>
@@ -146,13 +146,13 @@ export default function AlertsDashboardPage() {
                       <Droplets className="h-5 w-5 text-red-600 dark:text-red-400" />
                       <div>
                         <div className="font-medium text-red-800 dark:text-red-400">洪水红色预警</div>
-                        <div className="text-xs text-muted-foreground">东风渠</div>
+                        <div className="text-xs text-muted-foreground">月弦坝</div>
                       </div>
                     </div>
                     <Badge variant="destructive">红色预警</Badge>
                   </div>
                   <p className="text-sm text-red-700 dark:text-red-300 mb-2">
-                    东风渠水位已超过警戒线，周边低洼地区可能发生洪水，请注意防范。
+                    月弦坝水位已超过警戒线，周边低洼地区可能发生洪水，请注意防范。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 09:15</div>
@@ -166,13 +166,13 @@ export default function AlertsDashboardPage() {
                       <Droplets className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                       <div>
                         <div className="font-medium text-orange-800 dark:text-orange-400">内涝橙色预警</div>
-                        <div className="text-xs text-muted-foreground">龙子湖中心区域</div>
+                        <div className="text-xs text-muted-foreground">柏杨中路</div>
                       </div>
                     </div>
                     <Badge variant="warning">橙色预警</Badge>
                   </div>
                   <p className="text-sm text-orange-700 dark:text-orange-300 mb-2">
-                    龙子湖中心区域多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
+                    柏杨中路多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 09:00</div>
@@ -186,7 +186,7 @@ export default function AlertsDashboardPage() {
                       <CloudRain className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                       <div>
                         <div className="font-medium text-yellow-800 dark:text-yellow-400">雷电黄色预警</div>
-                        <div className="text-xs text-muted-foreground">郑东新区</div>
+                        <div className="text-xs text-muted-foreground">市中区</div>
                       </div>
                     </div>
                     <Badge
@@ -197,7 +197,7 @@ export default function AlertsDashboardPage() {
                     </Badge>
                   </div>
                   <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-2">
-                    预计未来6小时郑州市将出现强雷电活动，局部地区可能伴有短时强降水和大风。
+                    预计未来6小时乐山市将出现强雷电活动，局部地区可能伴有短时强降水和大风。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 07:30</div>
@@ -211,7 +211,7 @@ export default function AlertsDashboardPage() {
                       <MapPin className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                       <div>
                         <div className="font-medium text-yellow-800 dark:text-yellow-400">道路积水黄色预警</div>
-                        <div className="text-xs text-muted-foreground">科学大道</div>
+                        <div className="text-xs text-muted-foreground">嘉州大道</div>
                       </div>
                     </div>
                     <Badge
@@ -222,7 +222,7 @@ export default function AlertsDashboardPage() {
                     </Badge>
                   </div>
                   <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-2">
-                    科学大道部分路段已出现积水，车辆通行受阻，请注意绕行。
+                    嘉州大道部分路段已出现积水，车辆通行受阻，请注意绕行。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 08:45</div>
@@ -240,13 +240,13 @@ export default function AlertsDashboardPage() {
                       <CloudRain className="h-5 w-5 text-red-600 dark:text-red-400" />
                       <div>
                         <div className="font-medium text-red-800 dark:text-red-400">暴雨红色预警</div>
-                        <div className="text-xs text-muted-foreground">龙子湖区域</div>
+                        <div className="text-xs text-muted-foreground">市中区</div>
                       </div>
                     </div>
                     <Badge variant="destructive">红色预警</Badge>
                   </div>
                   <p className="text-sm text-red-700 dark:text-red-300 mb-2">
-                    预计未来6小时龙子湖中心区域将出现暴雨到大暴雨，累积降水量可达 100-150毫米，请注意防范。
+                    预计未来6小时市中心区域将出现暴雨到大暴雨，累积降水量可达 100-150毫米，请注意防范。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 08:30</div>
@@ -260,7 +260,7 @@ export default function AlertsDashboardPage() {
                       <CloudRain className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                       <div>
                         <div className="font-medium text-yellow-800 dark:text-yellow-400">雷电黄色预警</div>
-                        <div className="text-xs text-muted-foreground">郑东新区</div>
+                        <div className="text-xs text-muted-foreground">乐山市</div>
                       </div>
                     </div>
                     <Badge
@@ -271,7 +271,7 @@ export default function AlertsDashboardPage() {
                     </Badge>
                   </div>
                   <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-2">
-                    预计未来6小时郑州市将出现强雷电活动，局部地区可能伴有短时强降水和大风。
+                    预计未来6小时乐山市将出现强雷电活动，局部地区可能伴有短时强降水和大风。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 07:30</div>
@@ -289,13 +289,13 @@ export default function AlertsDashboardPage() {
                       <Droplets className="h-5 w-5 text-red-600 dark:text-red-400" />
                       <div>
                         <div className="font-medium text-red-800 dark:text-red-400">洪水红色预警</div>
-                        <div className="text-xs text-muted-foreground">东风渠</div>
+                        <div className="text-xs text-muted-foreground">月弦坝</div>
                       </div>
                     </div>
                     <Badge variant="destructive">红色预警</Badge>
                   </div>
                   <p className="text-sm text-red-700 dark:text-red-300 mb-2">
-                    东风渠水位已超过警戒线，周边低洼地区可能发生洪水，请注意防范。
+                    月弦坝水位已超过警戒线，周边低洼地区可能发生洪水，请注意防范。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 09:15</div>
@@ -309,13 +309,13 @@ export default function AlertsDashboardPage() {
                       <Droplets className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                       <div>
                         <div className="font-medium text-orange-800 dark:text-orange-400">内涝橙色预警</div>
-                        <div className="text-xs text-muted-foreground">龙子湖中心区域</div>
+                        <div className="text-xs text-muted-foreground">黄石坡区域</div>
                       </div>
                     </div>
                     <Badge variant="warning">橙色预警</Badge>
                   </div>
                   <p className="text-sm text-orange-700 dark:text-orange-300 mb-2">
-                    龙子湖中心区域多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
+                    黄石坡区域多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 09:00</div>
@@ -333,7 +333,7 @@ export default function AlertsDashboardPage() {
                       <MapPin className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                       <div>
                         <div className="font-medium text-yellow-800 dark:text-yellow-400">道路积水黄色预警</div>
-                        <div className="text-xs text-muted-foreground">科学大道</div>
+                        <div className="text-xs text-muted-foreground">嘉州大道</div>
                       </div>
                     </div>
                     <Badge
@@ -344,7 +344,7 @@ export default function AlertsDashboardPage() {
                     </Badge>
                   </div>
                   <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-2">
-                    科学大道部分路段已出现积水，车辆通行受阻，请注意绕行。
+                    嘉州大道部分路段已出现积水，车辆通行受阻，请注意绕行。
                   </p>
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <div>发布时间: 今天 08:45</div>
@@ -359,3 +359,4 @@ export default function AlertsDashboardPage() {
     </div>
   )
 }
+

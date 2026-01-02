@@ -16,7 +16,7 @@ export default function DetectionPoints() {
   const detectionPoints = [
     {
       id: "DP001",
-      name: "龙子湖中心检测站",
+      name: "龙子湖中心监测站",
       status: "danger",
       waterLevel: "4.2m",
       rainfall: "45mm/h",
@@ -27,7 +27,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP002",
-      name: "东风渠检测站",
+      name: "东风渠监测站",
       status: "danger",
       waterLevel: "3.9m",
       rainfall: "42mm/h",
@@ -38,7 +38,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP003",
-      name: "龙子湖北岸检测站",
+      name: "龙子湖北岸监测站",
       status: "warning",
       waterLevel: "3.5m",
       rainfall: "38mm/h",
@@ -49,7 +49,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP004",
-      name: "科学大道检测站",
+      name: "科学大道监测站",
       status: "danger",
       waterLevel: "4.0m",
       rainfall: "48mm/h",
@@ -60,7 +60,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP005",
-      name: "龙翔街检测站",
+      name: "龙翔街监测站",
       status: "warning",
       waterLevel: "3.3m",
       rainfall: "35mm/h",
@@ -71,7 +71,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP006",
-      name: "瀚海路检测站",
+      name: "瀚海路监测站",
       status: "normal",
       waterLevel: "2.5m",
       rainfall: "25mm/h",
@@ -82,7 +82,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP007",
-      name: "如意湖检测站",
+      name: "如意湖监测站",
       status: "normal",
       waterLevel: "2.3m",
       rainfall: "22mm/h",
@@ -93,7 +93,7 @@ export default function DetectionPoints() {
     },
     {
       id: "DP008",
-      name: "龙湖大道检测站",
+      name: "龙湖大道监测站",
       status: "warning",
       waterLevel: "3.2m",
       rainfall: "32mm/h",
@@ -122,7 +122,7 @@ export default function DetectionPoints() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">龙子湖区域检测点网络</h3>
+        <h3 className="text-lg font-medium">乐山区监测点网络</h3>
         <div className="flex items-center gap-2">
           <Select value={filterStatus} onValueChange={setFilterStatus}>
             <SelectTrigger className="w-[120px]">
@@ -139,7 +139,7 @@ export default function DetectionPoints() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="搜索检测点..."
+              placeholder="搜索监测点..."
               className="pl-8 w-[200px]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -228,7 +228,7 @@ export default function DetectionPoints() {
                   <CardContent>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <div className="text-sm text-muted-foreground">检测站ID</div>
+                        <div className="text-sm text-muted-foreground">监测站ID</div>
                         <div>{selectedPointData.id}</div>
                       </div>
                       <div className="space-y-2">
@@ -336,7 +336,7 @@ export default function DetectionPoints() {
                     <div>
                       <h4 className="font-medium text-red-800">洪水预警</h4>
                       <p className="text-sm text-red-700 mt-1">
-                        该检测点水位已超过警戒线，请注意防范可能发生的内涝和洪水。建议避免前往低洼地区，并关注最新预警信息。
+                        该监测点水位已超过警戒线，请注意防范可能发生的内涝和洪水。建议避免前往低洼地区，并关注最新预警信息。
                       </p>
                     </div>
                   </div>
@@ -381,7 +381,7 @@ export default function DetectionPoints() {
                   <div className="absolute inset-0">
                     <img
                       src="/placeholder.svg?height=400&width=800"
-                      alt="检测点位置"
+                      alt="监测点位置"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -401,9 +401,9 @@ export default function DetectionPoints() {
             <div className="h-full flex items-center justify-center border rounded-md p-8">
               <div className="text-center">
                 <Info className="h-12 w-12 text-blue-200 mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">选择检测点</h3>
+                <h3 className="text-lg font-medium mb-2">选择监测点</h3>
                 <p className="text-muted-foreground max-w-md">
-                  从左侧列表中选择一个检测点以查看详细信息、历史数据和地图位置。
+                  从左侧列表中选择一个监测点以查看详细信息、历史数据和地图位置。
                 </p>
               </div>
             </div>
@@ -413,3 +413,4 @@ export default function DetectionPoints() {
     </div>
   )
 }
+

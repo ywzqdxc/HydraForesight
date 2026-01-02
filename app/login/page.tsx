@@ -348,7 +348,7 @@ export default function LoginPage() {
 
             <div className="mt-6 text-center">
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                © 2024 雨安盾监测系统 - 智能降水检测与预警平台
+                © 2025 雨安盾监测系统 - 智能降水检测与预警平台
               </p>
             </div>
           </CardContent>

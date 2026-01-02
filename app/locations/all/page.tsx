@@ -17,7 +17,7 @@ export default function AllLocationsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">监测区域</h1>
-              <p className="text-muted-foreground">龙子湖区域所有监测点位置和状态</p>
+              <p className="text-muted-foreground">乐山市所有监测点位置和状态</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="relative">
@@ -44,8 +44,8 @@ export default function AllLocationsPage() {
             <TabsContent value="all" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <LocationCard
-                  title="龙子湖中心"
-                  description="龙子湖中心区域的降水和积水情况监测"
+                  title="黄石坡"
+                  description="黄石坡区域的降水和积水情况监测"
                   status="danger"
                   icon={<CloudRain className="h-5 w-5" />}
                   alerts={[
@@ -58,8 +58,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="东风渠"
-                  description="东风渠水位监测和预警信息"
+                  title="月弦坝"
+                  description="月弦坝水位监测和预警信息"
                   status="danger"
                   icon={<CloudRain className="h-5 w-5" />}
                   alerts={[{ type: "洪水", severity: "红色预警" }]}
@@ -69,8 +69,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="科学大道"
-                  description="科学大道沿线的积水点和交通状况"
+                  title="嘉州大道"
+                  description="嘉州大道沿线的积水点和交通状况"
                   status="warning"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[{ type: "积水", severity: "黄色预警" }]}
@@ -80,8 +80,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="郑东新区"
-                  description="郑东新区整体降水和内涝监测"
+                  title="市中区"
+                  description="市中区整体降水和内涝监测"
                   status="normal"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[]}
@@ -91,8 +91,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="龙湖大道"
-                  description="龙湖大道交通和积水情况实时监测"
+                  title="柏杨中路"
+                  description="柏杨中路交通和积水情况实时监测"
                   status="warning"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[{ type: "积水", severity: "黄色预警" }]}
@@ -102,8 +102,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="如意湖"
-                  description="如意湖水位和周边区域降水监测"
+                  title="周河坎"
+                  description="周河坎水位和周边区域降水监测"
                   status="normal"
                   icon={<CloudRain className="h-5 w-5" />}
                   alerts={[]}
@@ -113,8 +113,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="龙翔街"
-                  description="龙翔街沿线积水和交通状况"
+                  title="王浩儿街"
+                  description="王浩儿街沿线积水和交通状况"
                   status="warning"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[{ type: "积水", severity: "黄色预警" }]}
@@ -124,14 +124,14 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="瀚海路"
-                  description="瀚海路交通和积水情况监测"
+                  title="碧山路"
+                  description="碧山路交通和积水情况监测"
                   status="normal"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[]}
                   rainfall="25mm/h"
                   waterLevel="N/A"
-                  href="/locations/hanhai-road"
+                  href="/locations/hanghai-road"
                 />
               </div>
             </TabsContent>
@@ -139,8 +139,8 @@ export default function AllLocationsPage() {
             <TabsContent value="warning" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <LocationCard
-                  title="龙子湖中心"
-                  description="龙子湖中心区域的降水和积水情况监测"
+                  title="黄石坡"
+                  description="黄石坡区域的降水和积水情况监测"
                   status="danger"
                   icon={<CloudRain className="h-5 w-5" />}
                   alerts={[
@@ -153,8 +153,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="东风渠"
-                  description="东风渠水位监测和预警信息"
+                  title="月弦坝"
+                  description="月弦坝水位监测和预警信息"
                   status="danger"
                   icon={<CloudRain className="h-5 w-5" />}
                   alerts={[{ type: "洪水", severity: "红色预警" }]}
@@ -164,8 +164,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="科学大道"
-                  description="科学大道沿线的积水点和交通状况"
+                  title="嘉州大道"
+                  description="嘉州大道沿线的积水点和交通状况"
                   status="warning"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[{ type: "积水", severity: "黄色预警" }]}
@@ -175,8 +175,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="龙湖大道"
-                  description="龙湖大道交通和积水情况实时监测"
+                  title="柏杨中路"
+                  description="柏杨中路交通和积水情况实时监测"
                   status="warning"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[{ type: "积水", severity: "黄色预警" }]}
@@ -186,8 +186,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="龙翔街"
-                  description="龙翔街沿线积水和交通状况"
+                  title="王浩儿街"
+                  description="王浩儿街沿线积水和交通状况"
                   status="warning"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[{ type: "积水", severity: "黄色预警" }]}
@@ -201,8 +201,8 @@ export default function AllLocationsPage() {
             <TabsContent value="normal" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <LocationCard
-                  title="郑东新区"
-                  description="郑东新区整体降水和内涝监测"
+                  title="市中区"
+                  description="市中区整体降水和内涝监测"
                   status="normal"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[]}
@@ -212,8 +212,8 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="如意湖"
-                  description="如意湖水位和周边区域降水监测"
+                  title="周河坎"
+                  description="周河坎水位和周边区域降水监测"
                   status="normal"
                   icon={<CloudRain className="h-5 w-5" />}
                   alerts={[]}
@@ -223,14 +223,14 @@ export default function AllLocationsPage() {
                 />
 
                 <LocationCard
-                  title="瀚海路"
-                  description="瀚海路交通和积水情况监测"
+                  title="碧山路"
+                  description="碧山路交通和积水情况监测"
                   status="normal"
                   icon={<MapIcon className="h-5 w-5" />}
                   alerts={[]}
                   rainfall="25mm/h"
                   waterLevel="N/A"
-                  href="/locations/hanhai-road"
+                  href="/locations/hanghai-road"
                 />
               </div>
             </TabsContent>
@@ -345,3 +345,4 @@ function LocationCard({ title, description, status, icon, alerts, rainfall, wate
     </Card>
   )
 }
+

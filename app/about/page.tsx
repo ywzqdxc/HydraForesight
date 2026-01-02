@@ -15,7 +15,7 @@ export default function AboutPage() {
               <Info className="h-8 w-8 text-blue-500" />
               关于系统
             </h1>
-            <p className="text-muted-foreground">了解龙子湖智能降水检测预警系统</p>
+            <p className="text-muted-foreground">了解雨安盾监测与预警系统</p>
           </div>
 
           <Tabs defaultValue="overview" className="w-full">
@@ -31,20 +31,20 @@ export default function AboutPage() {
                 <CardHeader>
                   <CardTitle className="text-xl flex items-center gap-2">
                     <CloudRain className="h-6 w-6 text-blue-500" />
-                    龙子湖智能降水检测预警系统
+                    雨安盾监测与预警系统
                   </CardTitle>
                   <CardDescription>智能化监测与预警平台，保障城市安全</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p>
-                    龙子湖智能降水检测预警系统是一套基于物联网、大数据和人工智能技术的综合性降水监测与预警平台。系统通过部署在龙子湖区域的多个检测点，实时采集降水量、水位、气象等数据，结合气象预报和历史数据分析，为城市防汛减灾提供科学决策支持。
+                  雨安盾监测与预警系统是一套基于物联网、大数据和人工智能技术的综合性监测与预警平台。系统通过部署的多个监测点，实时采集降水量、水位、气象等数据，结合气象预报和历史数据分析，为城市防汛减灾提供科学决策支持。
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div className="space-y-2">
                       <h3 className="text-lg font-medium">系统目标</h3>
                       <ul className="list-disc pl-5 space-y-1">
-                        <li>实时监测龙子湖区域降水情况和水位变化</li>
+                        <li>实时监测区域降水情况和水位变化</li>
                         <li>提供精准的降水预报和积水预警</li>
                         <li>辅助城市防汛减灾决策</li>
                         <li>提高公众防灾意识和自救能力</li>
@@ -64,7 +64,7 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <div className="relative w-full h-[300px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden mt-6">
+                  {/* <div className="relative w-full h-[300px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden mt-6">
                     <div className="absolute inset-0">
                       <img
                         src="/placeholder.svg?height=300&width=800"
@@ -72,7 +72,7 @@ export default function AboutPage() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="flex justify-center mt-4">
                     <Button>了解更多系统详情</Button>
@@ -92,7 +92,7 @@ export default function AboutPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      通过分布在龙子湖区域的多个检测点，实时采集降水量、水位、气象等数据，为预警分析提供基础数据支持。系统支持高频率数据采集，确保监测数据的实时性和准确性。
+                      通过区域的多个监测点，实时采集降水量、水位、气象等数据，为预警分析提供基础数据支持。系统支持高频率数据采集，确保监测数据的实时性和准确性。
                     </p>
                     <ul className="list-disc pl-5 mt-4 text-sm space-y-1">
                       <li>多点位监测，覆盖关键区域</li>
@@ -152,7 +152,7 @@ export default function AboutPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      提供全面的检测设备管理功能，包括设备状态监控、故障报警、维护管理等，确保监测网络的稳定运行和数据采集的连续性。
+                      提供全面的监测设备管理功能，包括设备状态监控、故障报警、维护管理等，确保监测网络的稳定运行和数据采集的连续性。
                     </p>
                     <ul className="list-disc pl-5 mt-4 text-sm space-y-1">
                       <li>状态监控，实时掌握设备情况</li>
@@ -212,7 +212,7 @@ export default function AboutPage() {
                   <CardDescription>基于云原生架构的智能监测预警平台</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="relative w-full h-[300px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
+                  {/* <div className="relative w-full h-[300px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                     <div className="absolute inset-0">
                       <img
                         src="/placeholder.svg?height=300&width=800"
@@ -220,7 +220,7 @@ export default function AboutPage() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2">
@@ -229,7 +229,7 @@ export default function AboutPage() {
                         <h3 className="text-lg font-medium">感知层</h3>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        由分布在龙子湖区域的各类传感器和监测设备组成，包括雨量计、水位计、气象站等，负责实时采集环境数据。
+                        由分区域的各类传感器和监测设备组成，包括雨量计、水位计、气象站等，负责实时采集环境数据。
                       </p>
                     </div>
 
@@ -307,29 +307,45 @@ export default function AboutPage() {
                 <CardContent>
                   <div className="space-y-6">
                     <p>
-                      龙子湖智能降水检测预警系统由一支跨学科的专业团队开发，团队成员来自水利工程、气象学、计算机科学、人工智能等多个领域，拥有丰富的理论知识和实践经验。
+                    雨安盾监测与预警系统由一支跨学科的专业团队开发，团队成员来自水利工程、软件工程等多个领域，拥有丰富的理论知识和实践经验。
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                       <div className="text-center">
-                        <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div>
-                        <h3 className="font-medium">张教授</h3>
+                        {/* <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div> */}
+                        <img src="team/cx.png" alt="崔鑫" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <h3 className="font-medium">崔鑫</h3>
                         <p className="text-sm text-muted-foreground">项目负责人</p>
-                        <p className="text-sm text-muted-foreground">水利工程专家</p>
+                        <p className="text-sm text-muted-foreground"></p>
                       </div>
 
                       <div className="text-center">
-                        <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div>
-                        <h3 className="font-medium">李博士</h3>
-                        <p className="text-sm text-muted-foreground">技术总监</p>
-                        <p className="text-sm text-muted-foreground">人工智能专家</p>
+                        {/* <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div> */}
+                        <img src="team/lyb.png" alt="路玉彬" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <h3 className="font-medium">路玉彬</h3>
+                        <p className="text-sm text-muted-foreground">软件工程师</p>
+                        <p className="text-sm text-muted-foreground"></p>
                       </div>
 
                       <div className="text-center">
-                        <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div>
-                        <h3 className="font-medium">王工程师</h3>
-                        <p className="text-sm text-muted-foreground">系统架构师</p>
-                        <p className="text-sm text-muted-foreground">云计算专家</p>
+                        {/* <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div> */}
+                        <img src="team/llg.png" alt="刘林国" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <h3 className="font-medium">刘林国</h3>
+                        <p className="text-sm text-muted-foreground">页面设计师</p>
+                        {/* <p className="text-sm text-muted-foreground">云计算专家</p> */}
+                      </div>
+
+                      <div className="text-center">
+                      <img src="team/lan.png" alt="李安宁" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <h3 className="font-medium">李安宁</h3>
+                        <p className="text-sm text-muted-foreground">算法设计师</p>
+                        {/* <p className="text-sm text-muted-foreground">专家</p> */}
+                      </div>
+                      <div className="text-center">
+                      <img src="team/zys.jpg" alt="张艳双" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <h3 className="font-medium">张艳双</h3>
+                        <p className="text-sm text-muted-foreground">水文学顾问</p>
+                        {/* <p className="text-sm text-muted-foreground">专家</p> */}
                       </div>
                     </div>
 
@@ -337,20 +353,24 @@ export default function AboutPage() {
                       <h3 className="text-lg font-medium">合作单位</h3>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="p-4 border rounded-md text-center">
-                          <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div>
-                          <p className="text-sm">郑州市气象局</p>
+                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                          <img src="cma_logo.png" alt="XX市气象局" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <p className="text-sm">XX市气象局</p>
                         </div>
                         <div className="p-4 border rounded-md text-center">
-                          <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div>
-                          <p className="text-sm">郑州市水利局</p>
+                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                          <img src="mwr_logo.png" alt="XX市水利局" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <p className="text-sm">XX市水利局</p>
                         </div>
                         <div className="p-4 border rounded-md text-center">
-                          <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div>
-                          <p className="text-sm">郑州市应急管理局</p>
+                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                          <img src="mem_logo.png" alt="XX市应急管理局" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <p className="text-sm">XX市应急管理局</p>
                         </div>
                         <div className="p-4 border rounded-md text-center">
-                          <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div>
-                          <p className="text-sm">郑州大学</p>
+                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                          <img src="ncwu_logo.png" alt="华北水利水电大学" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <p className="text-sm">华北水利水电大学</p>
                         </div>
                       </div>
                     </div>
@@ -361,7 +381,7 @@ export default function AboutPage() {
                       <ul className="list-disc pl-5 text-sm space-y-1">
                         <li>电子邮件：contact@longzihu-system.com</li>
                         <li>电话：0371-12345678</li>
-                        <li>地址：郑州市郑东新区龙子湖智慧城市研究中心</li>
+                        <li>地址：华北水利水电大学</li>
                       </ul>
                     </div>
                   </div>
@@ -374,3 +394,4 @@ export default function AboutPage() {
     </div>
   )
 }
+

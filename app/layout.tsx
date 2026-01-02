@@ -8,9 +8,9 @@ import { DarkModeFixes } from "@/components/dark-mode-fixes"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "龙子湖雨情预警系统",
-  description: "智能降雨监测与预警系统",
-    generator: 'v0.app'
+  title: "乐山市洪涝监测与预警系统",
+  description: "智能监测与预警系统",
+  generator: '崔Team'
 }
 
 export default function RootLayout({
@@ -29,3 +29,7 @@ export default function RootLayout({
     </html>
   )
 }
+
+
+
+import './globals.css'

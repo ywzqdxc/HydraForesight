@@ -88,12 +88,12 @@ export default function DeviceManagementPage() {
     // 保持原有的设备数据不变
     {
       id: "DEV001",
-      name: "龙子湖中心雨量站",
+      name: "黄石坡 雷达雨量计",
       type: "rainfall",
       area: "longzihu",
       status: "online",
-      location: "龙子湖中心公园北侧",
-      lastUpdate: "2025-04-02 10:15:23",
+      location: "绿心公园西侧",
+      lastUpdate: "2025-04-24 10:15:23",
       battery: 85,
       signal: 90,
       readings: {
@@ -104,12 +104,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV002",
-      name: "东风渠水位监测站",
+      name: "月弦坝 浮子式水位计",
       type: "water-level",
       area: "dongfengqu",
       status: "warning",
-      location: "东风渠与科学大道交叉口",
-      lastUpdate: "2025-04-02 10:12:45",
+      location: "大佛坝村大渡河南岸",
+      lastUpdate: "2025-04-24 10:12:45",
       battery: 62,
       signal: 75,
       readings: {
@@ -120,12 +120,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV003",
-      name: "科学大道流量站",
+      name: "嘉州大道 地埋式道路积水监测仪",
       type: "flow",
       area: "science-avenue",
       status: "online",
-      location: "科学大道排水管网监测点",
-      lastUpdate: "2025-04-02 10:10:12",
+      location: "嘉州大道排水管网监测点",
+      lastUpdate: "2025-04-24 10:10:12",
       battery: 90,
       signal: 85,
       readings: {
@@ -136,12 +136,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV004",
-      name: "龙湖大道气象站",
+      name: "柏杨中路 多普勒超声波在线监测设备",
       type: "weather",
       area: "longhu-avenue",
       status: "online",
-      location: "龙湖大道与瀚海路交叉口",
-      lastUpdate: "2025-04-02 10:14:56",
+      location: "柏杨中路与嘉州大道交叉口",
+      lastUpdate: "2025-04-24 10:14:56",
       battery: 78,
       signal: 92,
       readings: {
@@ -154,27 +154,27 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV005",
-      name: "如意湖监控摄像头",
+      name: "周河坎 监控摄像头",
       type: "camera",
       area: "ruyi-lake",
       status: "offline",
-      location: "如意湖南岸观景台",
-      lastUpdate: "2025-04-02 09:45:30",
+      location: "周河坎南岸观景台",
+      lastUpdate: "2025-04-24 09:45:30",
       battery: 0,
       signal: 0,
       maintenance: {
-        scheduled: "2025-04-03",
+        scheduled: "2025-04-24",
         lastMaintenance: "2025-03-15",
       },
     },
     {
       id: "DEV006",
-      name: "龙翔街雨量站",
+      name: "王浩儿街 压电式雨量计",
       type: "rainfall",
       area: "longxiang-street",
       status: "online",
-      location: "龙翔街与文苑路交叉口",
-      lastUpdate: "2025-04-02 10:13:42",
+      location: "王浩儿街与致江路交叉口",
+      lastUpdate: "2025-04-24 10:13:42",
       battery: 72,
       signal: 88,
       readings: {
@@ -185,12 +185,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV007",
-      name: "瀚海路水位站",
+      name: "碧山路 一体式雷达液位计",
       type: "water-level",
       area: "hanhai-road",
       status: "warning",
-      location: "瀚海路下穿隧道入口",
-      lastUpdate: "2025-04-02 10:11:18",
+      location: "碧山路下穿隧道入口",
+      lastUpdate: "2025-04-24 10:11:18",
       battery: 65,
       signal: 80,
       readings: {
@@ -201,12 +201,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV008",
-      name: "龙子湖北岸摄像头",
+      name: "黄石坡 东岸摄像头",
       type: "camera",
       area: "longzihu",
       status: "online",
-      location: "龙子湖北岸观景平台",
-      lastUpdate: "2025-04-02 10:16:05",
+      location: "黄石坡东岸观景平台",
+      lastUpdate: "2025-04-24 10:16:05",
       battery: 95,
       signal: 95,
       readings: {
@@ -217,12 +217,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV009",
-      name: "东风渠闸口流量计",
+      name: "月弦坝 闸口流量计",
       type: "flow",
       area: "dongfengqu",
       status: "maintenance",
-      location: "东风渠北段闸口",
-      lastUpdate: "2025-04-01 15:30:22",
+      location: "月弦坝北段闸口",
+      lastUpdate: "2025-04-24 15:30:22",
       maintenance: {
         scheduled: "2025-04-02",
         lastMaintenance: "2025-03-20",
@@ -230,12 +230,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV010",
-      name: "科学大道气象站",
+      name: "嘉州大道 OTT Pluvio²称重式雨量计",
       type: "weather",
       area: "science-avenue",
       status: "online",
-      location: "科学大道中段绿化带",
-      lastUpdate: "2025-04-02 10:14:30",
+      location: "嘉州大道中段绿化带",
+      lastUpdate: "2025-04-24 10:14:30",
       battery: 88,
       signal: 90,
       readings: {
@@ -248,12 +248,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV011",
-      name: "龙湖大道雨量站",
+      name: "柏杨中路 X波段雷达雨量监测系统",
       type: "rainfall",
       area: "longhu-avenue",
       status: "online",
-      location: "龙湖大道东段",
-      lastUpdate: "2025-04-02 10:15:10",
+      location: "柏杨中路东段",
+      lastUpdate: "2025-04-24 10:15:10",
       battery: 80,
       signal: 85,
       readings: {
@@ -264,12 +264,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV012",
-      name: "如意湖水位站",
+      name: "周河坎 U-son11标准型超声波液位计",
       type: "water-level",
       area: "ruyi-lake",
       status: "warning",
-      location: "如意湖溢洪道",
-      lastUpdate: "2025-04-02 10:12:35",
+      location: "周河坎溢洪道",
+      lastUpdate: "2025-04-24 10:12:35",
       battery: 70,
       signal: 82,
       readings: {
@@ -280,12 +280,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV013",
-      name: "龙翔街流量站",
+      name: "王浩儿街 声学多普勒流速仪(ADV)",
       type: "flow",
       area: "longxiang-street",
       status: "online",
-      location: "龙翔街排水管网监测点",
-      lastUpdate: "2025-04-02 10:11:45",
+      location: "王浩儿街排水管网监测点",
+      lastUpdate: "2025-04-24 10:11:45",
       battery: 75,
       signal: 88,
       readings: {
@@ -296,12 +296,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV014",
-      name: "瀚海路气象站",
+      name: "碧山路 立杆式积水监测仪",
       type: "weather",
       area: "hanhai-road",
       status: "online",
-      location: "瀚海路与龙翔街交叉口",
-      lastUpdate: "2025-04-02 10:13:50",
+      location: "碧山路与致江路大桥交叉口",
+      lastUpdate: "2025-04-24 10:13:50",
       battery: 82,
       signal: 87,
       readings: {
@@ -314,12 +314,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV015",
-      name: "龙子湖南岸摄像头",
+      name: "黄石坡 西岸摄像头",
       type: "camera",
       area: "longzihu",
       status: "offline",
-      location: "龙子湖南岸观景台",
-      lastUpdate: "2025-04-02 08:30:15",
+      location: "黄石坡西岸观景台",
+      lastUpdate: "2025-04-24 08:30:15",
       battery: 10,
       signal: 25,
       maintenance: {
@@ -329,12 +329,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV016",
-      name: "东风渠雨量站",
+      name: "月弦坝 摄像头",
       type: "rainfall",
       area: "dongfengqu",
       status: "online",
-      location: "东风渠管理站",
-      lastUpdate: "2025-04-02 10:14:22",
+      location: "大佛坝村北岸",
+      lastUpdate: "2025-04-24 10:14:22",
       battery: 78,
       signal: 83,
       readings: {
@@ -345,12 +345,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV017",
-      name: "科学大道桥下水位站",
+      name: "嘉州大道桥下水位站",
       type: "water-level",
       area: "science-avenue",
       status: "warning",
-      location: "科学大道跨河桥下",
-      lastUpdate: "2025-04-02 10:10:55",
+      location: "嘉州大道跨河桥下",
+      lastUpdate: "2025-04-24 10:10:55",
       battery: 68,
       signal: 78,
       readings: {
@@ -361,12 +361,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV018",
-      name: "龙湖大道流量站",
+      name: "柏杨中路 摄像头",
       type: "flow",
       area: "longhu-avenue",
       status: "online",
-      location: "龙湖大道排水管网监测点",
-      lastUpdate: "2025-04-02 10:12:18",
+      location: "柏杨中路与天星路交叉口",
+      lastUpdate: "2025-04-24 10:12:18",
       battery: 85,
       signal: 90,
       readings: {
@@ -377,12 +377,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV019",
-      name: "如意湖摄像头",
+      name: "周河坎 多普勒流量计（ADCP）",
       type: "camera",
       area: "ruyi-lake",
       status: "maintenance",
-      location: "如意湖东岸",
-      lastUpdate: "2025-04-01 16:45:30",
+      location: "周河坎东岸",
+      lastUpdate: "2025-04-24 16:45:30",
       maintenance: {
         scheduled: "2025-04-03",
         lastMaintenance: "2025-03-18",
@@ -390,12 +390,12 @@ export default function DeviceManagementPage() {
     },
     {
       id: "DEV020",
-      name: "龙翔街气象站",
+      name: "王浩儿街 摄像头",
       type: "weather",
       area: "longxiang-street",
       status: "online",
-      location: "龙翔街中段绿化带",
-      lastUpdate: "2025-04-02 10:15:40",
+      location: "王浩儿街中段绿化带",
+      lastUpdate: "2025-04-24 10:15:40",
       battery: 90,
       signal: 92,
       readings: {
@@ -511,25 +511,27 @@ export default function DeviceManagementPage() {
   const getAreaName = (area: Exclude<DeviceArea, "all">) => {
     switch (area) {
       case "longzihu":
-        return "龙子湖"
+        return "黄石坡"
       case "dongfengqu":
-        return "东风渠"
+        return "月弦坝"
       case "science-avenue":
-        return "科学大道"
+        return "嘉州大道"
       case "longhu-avenue":
-        return "龙湖大道"
+        return "柏杨中路"
       case "ruyi-lake":
-        return "如意湖"
+        return "周河坎"
       case "longxiang-street":
-        return "龙翔街"
+        return "王浩儿街"
       case "hanhai-road":
-        return "瀚海路"
+        return "碧山路"
     }
   }
 
   // 处理添加设备
   const handleAddDevice = () => {
-    if (!newDevice.name || !newDevice.location) {
+    // 这里实际应用中会发送请求到后端
+    // 模拟添加成功
+        if (!newDevice.name || !newDevice.location) {
       return // 简单验证
     }
 
@@ -578,7 +580,7 @@ export default function DeviceManagementPage() {
     })
   }
 
-  // 添加获取默认读数的辅助函数
+    // 添加获取默认读数的辅助函数
   const getDefaultReadings = (type: Exclude<DeviceType, "all">) => {
     switch (type) {
       case "rainfall":
@@ -629,13 +631,13 @@ export default function DeviceManagementPage() {
 
   // 计算区域设备统计
   const areaStats = [
-    { area: "longzihu", name: "龙子湖", count: allDevices.filter((d) => d.area === "longzihu").length },
-    { area: "dongfengqu", name: "东风渠", count: allDevices.filter((d) => d.area === "dongfengqu").length },
-    { area: "science-avenue", name: "科学大道", count: allDevices.filter((d) => d.area === "science-avenue").length },
-    { area: "longhu-avenue", name: "龙湖大道", count: allDevices.filter((d) => d.area === "longhu-avenue").length },
-    { area: "ruyi-lake", name: "如意湖", count: allDevices.filter((d) => d.area === "ruyi-lake").length },
-    { area: "longxiang-street", name: "龙翔街", count: allDevices.filter((d) => d.area === "longxiang-street").length },
-    { area: "hanhai-road", name: "瀚海路", count: allDevices.filter((d) => d.area === "hanhai-road").length },
+    { area: "longzihu", name: "黄石坡", count: allDevices.filter((d) => d.area === "longzihu").length },
+    { area: "dongfengqu", name: "月弦坝", count: allDevices.filter((d) => d.area === "dongfengqu").length },
+    { area: "science-avenue", name: "嘉州大道", count: allDevices.filter((d) => d.area === "science-avenue").length },
+    { area: "longhu-avenue", name: "柏杨中路", count: allDevices.filter((d) => d.area === "longhu-avenue").length },
+    { area: "ruyi-lake", name: "周河坎", count: allDevices.filter((d) => d.area === "ruyi-lake").length },
+    { area: "longxiang-street", name: "王浩儿街", count: allDevices.filter((d) => d.area === "longxiang-street").length },
+    { area: "hanhai-road", name: "碧山路", count: allDevices.filter((d) => d.area === "hanhai-road").length },
   ].sort((a, b) => b.count - a.count)
 
   return (
@@ -646,7 +648,7 @@ export default function DeviceManagementPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold tracking-tight">设备管理</h1>
-              <p className="text-sm text-muted-foreground">管理和监控所有降水检测设备</p>
+              <p className="text-sm text-muted-foreground">管理和监控所有降水监测设备</p>
             </div>
             <Dialog open={isAddDeviceOpen} onOpenChange={setIsAddDeviceOpen}>
               <DialogTrigger asChild>
@@ -685,10 +687,10 @@ export default function DeviceManagementPage() {
                         <SelectValue placeholder="选择设备类型" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="rainfall">雨量站</SelectItem>
-                        <SelectItem value="water-level">水位站</SelectItem>
-                        <SelectItem value="flow">流量站</SelectItem>
-                        <SelectItem value="weather">气象站</SelectItem>
+                        <SelectItem value="rainfall">雨量监测</SelectItem>
+                        <SelectItem value="water-level">水位监测</SelectItem>
+                        <SelectItem value="flow">流量监测</SelectItem>
+                        <SelectItem value="weather">积水监测</SelectItem>
                         <SelectItem value="camera">监控摄像头</SelectItem>
                       </SelectContent>
                     </Select>
@@ -707,13 +709,13 @@ export default function DeviceManagementPage() {
                         <SelectValue placeholder="选择所属区域" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="longzihu">龙子湖</SelectItem>
-                        <SelectItem value="dongfengqu">东风渠</SelectItem>
-                        <SelectItem value="science-avenue">科学大道</SelectItem>
-                        <SelectItem value="longhu-avenue">龙湖大道</SelectItem>
-                        <SelectItem value="ruyi-lake">如意湖</SelectItem>
-                        <SelectItem value="longxiang-street">龙翔街</SelectItem>
-                        <SelectItem value="hanhai-road">瀚海路</SelectItem>
+                        <SelectItem value="longzihu">黄石坡</SelectItem>
+                        <SelectItem value="dongfengqu">月弦坝</SelectItem>
+                        <SelectItem value="science-avenue">嘉州大道</SelectItem>
+                        <SelectItem value="longhu-avenue">柏杨中路</SelectItem>
+                        <SelectItem value="ruyi-lake">周河坎</SelectItem>
+                        <SelectItem value="longxiang-street">王浩儿街</SelectItem>
+                        <SelectItem value="hanhai-road">碧山路</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -888,7 +890,7 @@ export default function DeviceManagementPage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <Droplets className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm font-medium">雨量站</span>
+                      <span className="text-sm font-medium">雨量监测</span>
                       <span className="text-xs text-muted-foreground ml-auto">
                         {allDevices.filter((d) => d.type === "rainfall").length} 台设备
                       </span>
@@ -918,7 +920,7 @@ export default function DeviceManagementPage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <Thermometer className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm font-medium">水位站</span>
+                      <span className="text-sm font-medium">水位监测</span>
                       <span className="text-xs text-muted-foreground ml-auto">
                         {allDevices.filter((d) => d.type === "water-level").length} 台设备
                       </span>
@@ -948,7 +950,7 @@ export default function DeviceManagementPage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <BarChart3 className="h-4 w-4 text-green-500" />
-                      <span className="text-sm font-medium">流量站</span>
+                      <span className="text-sm font-medium">流量监测</span>
                       <span className="text-xs text-muted-foreground ml-auto">
                         {allDevices.filter((d) => d.type === "flow").length} 台设备
                       </span>
@@ -978,7 +980,7 @@ export default function DeviceManagementPage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CloudRain className="h-4 w-4 text-purple-500" />
-                      <span className="text-sm font-medium">气象站</span>
+                      <span className="text-sm font-medium">积水监测</span>
                       <span className="text-xs text-muted-foreground ml-auto">
                         {allDevices.filter((d) => d.type === "weather").length} 台设备
                       </span>
@@ -1042,7 +1044,7 @@ export default function DeviceManagementPage() {
           <Card>
             <CardHeader>
               <CardTitle>设备列表</CardTitle>
-              <CardDescription>管理和监控所有降水检测设备</CardDescription>
+              <CardDescription>管理和监控所有监测设备</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -1060,8 +1062,8 @@ export default function DeviceManagementPage() {
                   <div className="flex gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="w-[130px] bg-transparent">
-                          <Filter className="mr-2 h-4 w-4" />
+                        <Button variant="outline" className="w-[130px]">
+                          <Filter className="ml-2 h-4 w-4" />
                           {selectedType === "all"
                             ? "全部类型"
                             : selectedType === "rainfall"
@@ -1073,7 +1075,7 @@ export default function DeviceManagementPage() {
                                   : selectedType === "weather"
                                     ? "气象站"
                                     : "监控摄像头"}
-                          <ChevronDown className="ml-2 h-4 w-4" />
+                          <ChevronDown className="mr-2 h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -1103,29 +1105,30 @@ export default function DeviceManagementPage() {
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="w-[130px] bg-transparent">
-                          <MapPin className="mr-2 h-4 w-4" />
+                        <Button variant="outline" className="w-[130px]">
+                          <MapPin className="ml-2 h-4 w-4" />
                           {selectedArea === "all"
                             ? "全部区域"
                             : getAreaName(selectedArea as Exclude<DeviceArea, "all">)}
-                          <ChevronDown className="ml-2 h-4 w-4" />
+                          <ChevronDown className="mr-2 h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => setSelectedArea("all")}>全部区域</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("longzihu")}>龙子湖</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("dongfengqu")}>东风渠</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("science-avenue")}>科学大道</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("longhu-avenue")}>龙湖大道</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("ruyi-lake")}>如意湖</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("longxiang-street")}>龙翔街</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSelectedArea("hanhai-road")}>瀚海路</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("longzihu")}>黄石坡</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("dongfengqu")}>月弦坝</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("science-avenue")}>嘉州大道</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("longhu-avenue")}>柏杨中路</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("ruyi-lake")}>周河坎</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("longxiang-street")}>王浩儿街</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setSelectedArea("hanhai-road")}>碧山路</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
 
                     <Button
                       variant="outline"
                       size="icon"
+                      className="w-auto"
                       onClick={() =>
                         setSortBy(sortBy === "lastUpdate" ? "name" : sortBy === "name" ? "status" : "lastUpdate")
                       }
@@ -1133,7 +1136,10 @@ export default function DeviceManagementPage() {
                         sortBy === "lastUpdate" ? "按更新时间排序" : sortBy === "name" ? "按名称排序" : "按状态排序"
                       }
                     >
-                      <ArrowUpDown className="h-4 w-4" />
+                      <ArrowUpDown className="h-4 w-32 ml-2" />
+                      <div className="mr-2">
+                        {sortBy === "lastUpdate" ? "按更新时间排序" : sortBy === "name" ? "按名称排序" : "按状态排序"}
+                      </div>
                     </Button>
                   </div>
                 </div>
@@ -1225,7 +1231,7 @@ export default function DeviceManagementPage() {
                             </div>
 
                             <div className="flex gap-2 ml-auto">
-                              <Button variant="outline" size="sm" className="h-8 bg-transparent">
+                              <Button variant="outline" size="sm" className="h-8">
                                 <Settings className="h-3.5 w-3.5 mr-1" />
                                 配置
                               </Button>
@@ -1241,6 +1247,98 @@ export default function DeviceManagementPage() {
                       <div className="text-center py-8 text-muted-foreground">
                         <AlertCircle className="mx-auto h-8 w-8 mb-2 opacity-50" />
                         <p>没有找到匹配的设备</p>
+                      </div>
+                    )}
+                  </TabsContent>
+
+                  <TabsContent value="online" className="mt-4 space-y-4">
+                    {filteredDevices.filter((d) => d.status === "online").length > 0 ? (
+                      filteredDevices
+                        .filter((d) => d.status === "online")
+                        .map((device) => (
+                          <div key={device.id} className="border rounded-lg p-4 hover:bg-accent/50 transition-colors">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                              <div className="flex items-start gap-3">
+                                <div className="mt-0.5">{getTypeIcon(device.type)}</div>
+                                <div>
+                                  <div className="flex items-center flex-wrap gap-2">
+                                    <h3 className="font-medium">{device.name}</h3>
+                                    {getStatusBadge(device.status)}
+                                    <span className="text-xs text-muted-foreground">ID: {device.id}</span>
+                                  </div>
+                                  <div className="flex items-center text-xs text-muted-foreground mt-1">
+                                    <MapPin className="h-3 w-3 mr-1" />
+                                    {device.location} ({getAreaName(device.area as Exclude<DeviceArea, "all">)})
+                                  </div>
+
+                                  {device.readings && (
+                                    <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1">
+                                      {Object.entries(device.readings).map(([key, value]) => (
+                                        <div key={key} className="flex items-center text-xs">
+                                          <span className="text-muted-foreground mr-1">{key}:</span>
+                                          <span className="font-medium">{value}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+
+                                  <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                                    <span>最后更新: {device.lastUpdate}</span>
+
+                                    {device.battery !== undefined && (
+                                      <div className="flex items-center">
+                                        <Battery className="h-3 w-3 mr-1" />
+                                        <span
+                                          className={
+                                            device.battery < 20
+                                              ? "text-red-500"
+                                              : device.battery < 50
+                                                ? "text-yellow-500"
+                                                : "text-green-500"
+                                          }
+                                        >
+                                          {device.battery}%
+                                        </span>
+                                      </div>
+                                    )}
+
+                                    {device.signal !== undefined && (
+                                      <div className="flex items-center">
+                                        <Signal className="h-3 w-3 mr-1" />
+                                        <span
+                                          className={
+                                            device.signal < 30
+                                              ? "text-red-500"
+                                              : device.signal < 60
+                                                ? "text-yellow-500"
+                                                : "text-green-500"
+                                          }
+                                        >
+                                          {device.signal}%
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex gap-2 ml-auto">
+                                <Button variant="outline" size="sm" className="h-8">
+                                  <Settings className="h-3.5 w-3.5 mr-1" />
+                                  配置
+                                </Button>
+                                <Button size="sm" className="h-8">
+                                  <Wifi className="h-3.5 w-3.5 mr-1" />
+                                  查看数据
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                    ) : (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <AlertTriangle className="mx-auto h-8 w-8 mb-2 opacity-50" />
+                        <p>没有在线设备</p>
                       </div>
                     )}
                   </TabsContent>
@@ -1318,7 +1416,7 @@ export default function DeviceManagementPage() {
                               </div>
 
                               <div className="flex gap-2 ml-auto">
-                                <Button variant="outline" size="sm" className="h-8 bg-transparent">
+                                <Button variant="outline" size="sm" className="h-8">
                                   <Settings className="h-3.5 w-3.5 mr-1" />
                                   配置
                                 </Button>
@@ -1399,7 +1497,7 @@ export default function DeviceManagementPage() {
                               </div>
 
                               <div className="flex gap-2 ml-auto">
-                                <Button variant="outline" size="sm" className="h-8 bg-transparent">
+                                <Button variant="outline" size="sm" className="h-8">
                                   <Settings className="h-3.5 w-3.5 mr-1" />
                                   配置
                                 </Button>
@@ -1460,7 +1558,7 @@ export default function DeviceManagementPage() {
                               </div>
 
                               <div className="flex gap-2 ml-auto">
-                                <Button variant="outline" size="sm" className="h-8 bg-transparent">
+                                <Button variant="outline" size="sm" className="h-8">
                                   <Settings className="h-3.5 w-3.5 mr-1" />
                                   维护记录
                                 </Button>
@@ -1492,3 +1590,4 @@ export default function DeviceManagementPage() {
     </div>
   )
 }
+

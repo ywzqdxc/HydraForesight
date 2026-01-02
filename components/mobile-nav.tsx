@@ -24,7 +24,7 @@ export function MobileNav() {
           <span className="sr-only">打开菜单</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="pr-0">
+      <SheetContent side="left" className="pr-6">
         <SheetHeader className="border-b pb-4 mb-4">
           <SheetTitle className="flex items-center gap-2">
             <CloudRain className="h-5 w-5 text-blue-500" />
@@ -63,7 +63,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>郑东新区</span>
+                      <span>市中区</span>
                       <span className="w-2 h-2 rounded-full bg-green-500"></span>
                     </Link>
                     <Link
@@ -71,7 +71,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>龙子湖中心</span>
+                      <span>黄石坡</span>
                       <span className="w-2 h-2 rounded-full bg-red-500"></span>
                     </Link>
                     <Link
@@ -79,7 +79,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>东风渠</span>
+                      <span>月弦坝</span>
                       <span className="w-2 h-2 rounded-full bg-red-500"></span>
                     </Link>
                     <Link
@@ -87,7 +87,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>龙湖大道</span>
+                      <span>柏杨中路</span>
                       <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
                     </Link>
 
@@ -97,7 +97,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>如意湖</span>
+                      <span>周河坎</span>
                       <span className="w-2 h-2 rounded-full bg-green-500"></span>
                     </Link>
                     <Link
@@ -105,7 +105,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>科学大道</span>
+                      <span>嘉州大道</span>
                       <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
                     </Link>
                     <Link
@@ -113,7 +113,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>龙翔街</span>
+                      <span>王浩儿街</span>
                       <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
                     </Link>
                     <Link
@@ -121,7 +121,7 @@ export function MobileNav() {
                       onClick={() => setOpen(false)}
                       className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:text-foreground hover:bg-accent/50 flex justify-between items-center"
                     >
-                      <span>瀚海路</span>
+                      <span>碧山路</span>
                       <span className="w-2 h-2 rounded-full bg-green-500"></span>
                     </Link>
 
@@ -227,7 +227,7 @@ export function MobileNav() {
             <div className="px-3 py-2 mt-2 border-t">
               <div className="flex flex-col gap-2">
                 <h4 className="text-xs text-muted-foreground mb-1">主题设置</h4>
-                <div className="flex gap-2">
+                <div className="flex-row gap-2">
                   <Button
                     variant={theme === "light" ? "default" : "outline"}
                     size="sm"
@@ -255,3 +255,4 @@ export function MobileNav() {
     </Sheet>
   )
 }
+

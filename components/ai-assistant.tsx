@@ -18,7 +18,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "您好! 我是雨安盾智能助手，可以回答您关于降水、防洪、水资源等方面的问题。有什么可以帮助您的吗?",
+      content: "您好! 我是雨安盾智能助手，可以回答您关于降雨、防洪、水资源等方面的问题。有什么可以帮助您的吗?",
     },
   ])
   const [input, setInput] = useState("")
@@ -26,7 +26,7 @@ export default function AIAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   // 预设问题
-  const suggestedQuestions = ["如何应对暴雨天气?", "什么是城市内涝?", "龙子湖区域最近的降水情况", "如何保护水资源?"]
+  const suggestedQuestions = ["发生暴雨灾害时如何自救?", "城市洪涝问题的现状如何？", "如何提升水库的调蓄作用？", "人员调度如何进行？"]
 
   // 自动滚动到最新消息
   useEffect(() => {
@@ -44,7 +44,18 @@ export default function AIAssistant() {
     setInput("")
     setIsLoading(true)
 
+    // 添加助手回复
+    const aiMessage: Message = { role: "assistant", content }
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: "正在思考中...",
+      },
+    ])
     try {
+
+
       // 调用API
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -96,7 +107,7 @@ export default function AIAssistant() {
             AI 驱动
           </Badge>
         </div>
-        <CardDescription className="text-xs">可以回答您关于降水、防洪、水资源等方面的问题</CardDescription>
+        <CardDescription className="text-xs">可以回答您关于降雨、防洪、水资源等方面的问题</CardDescription>
       </CardHeader>
 
       <Tabs defaultValue="对话" className="w-full">
@@ -210,3 +221,4 @@ export default function AIAssistant() {
     </Card>
   )
 }
+

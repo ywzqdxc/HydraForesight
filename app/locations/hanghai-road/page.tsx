@@ -6,7 +6,7 @@ import { Header } from "@/components/header"
 import { CloudRain, Droplets, ArrowLeft, MapPin, Clock, Car } from "lucide-react"
 import Link from "next/link"
 
-export default function HanhaiRoadPage() {
+export default function HanghaiRoadPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -24,7 +24,7 @@ export default function HanhaiRoadPage() {
               <div className="p-1 bg-green-100 rounded-full text-green-600">
                 <MapPin className="h-5 w-5" />
               </div>
-              瀚海路
+              碧山路
               <Badge variant="outline" className="bg-green-100 text-green-800">正常</Badge>
             </h1>
           </div>
@@ -62,7 +62,7 @@ export default function HanhaiRoadPage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">位置:</span>
                     </div>
-                    <span className="text-sm">郑州市郑东新区瀚海路</span>
+                    <span className="text-sm">乐山市市中区碧山路</span>
                   </div>
                 </div>
               </CardContent>
@@ -75,12 +75,12 @@ export default function HanhaiRoadPage() {
               <CardContent>
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    瀚海路是郑东新区的主要道路之一，连接多个重要区域。目前区域内降水强度为小雨，路面排水良好，无明显积水，交通通行正常。
+                    碧山路是市中区的主要道路之一，连接多个重要区域。目前区域内降水强度为小雨，路面排水良好，无明显积水，交通通行正常。
                   </p>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
                     <div className="p-2 border rounded-md">
-                      <div className="text-xs text-muted-foreground">检测点数量</div>
+                      <div className="text-xs text-muted-foreground">监测点数量</div>
                       <div className="font-medium">2个</div>
                     </div>
                     <div className="p-2 border rounded-md">
@@ -113,21 +113,21 @@ export default function HanhaiRoadPage() {
               <div className="relative w-full h-[400px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="absolute inset-0">
                   <img
-                    src="/placeholder.svg?height=400&width=800"
-                    alt="瀚海路地图"
+                    src="/locations/bishan_road.png"
+                    alt="碧山路地图"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-1/4 right-1/3">
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">瀚海路检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">碧山路监测站</div>
                   </div>
                   <div className="absolute bottom-1/4 left-1/3">
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">瀚海路南段检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">碧山路南段监测站</div>
                   </div>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function HanhaiRoadPage() {
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">检测站</span>
+                  <span className="text-xs">监测站</span>
                 </div>
               </div>
             </TabsContent>
@@ -155,7 +155,7 @@ export default function HanhaiRoadPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">实时监测数据</CardTitle>
-                  <CardDescription>瀚海路检测站</CardDescription>
+                  <CardDescription>碧山路监测站</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -242,25 +242,25 @@ export default function HanhaiRoadPage() {
                         <h4 className="font-medium text-green-800">交通状况良好</h4>
                       </div>
                       <p className="text-sm text-green-700 mb-3">
-                        瀚海路全线交通状况良好，无明显积水和拥堵，车辆可以正常通行。
+                        碧山全线交通状况良好，无明显积水和拥堵，车辆可以正常通行。
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">瀚海路北段</div>
+                          <div className="text-sm font-medium mb-1">碧山路北段</div>
                           <div className="flex items-center gap-1 text-green-500">
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                             <span className="text-xs">通行正常</span>
                           </div>
                         </div>
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">瀚海路中段</div>
+                          <div className="text-sm font-medium mb-1">碧山路中段</div>
                           <div className="flex items-center gap-1 text-green-500">
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                             <span className="text-xs">通行正常</span>
                           </div>
                         </div>
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">瀚海路南段</div>
+                          <div className="text-sm font-medium mb-1">碧山路南段</div>
                           <div className="flex items-center gap-1 text-green-500">
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                             <span className="text-xs">通行正常</span>
@@ -298,7 +298,7 @@ export default function HanhaiRoadPage() {
                             1
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm">从龙子湖湖前往郑东新区，建议走瀚海路 → 如意湖路 → 郑东新区</p>
+                            {/* <p className="text-sm">从龙子湖湖前往郑东新区，建议走碧山路 → 如意湖路 → 郑东新区</p> */}
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
@@ -315,8 +315,91 @@ export default function HanhaiRoadPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="reports" className="mt-4">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">公众上报信息</CardTitle>
+                  <CardDescription>碧山路区域的公众上报</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="p-4 border rounded-md">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                          王
+                        </div>
+                        <div>
+                          <div className="font-medium">王先生</div>
+                          <div className="text-xs text-muted-foreground">20分钟前</div>
+                        </div>
+                        <Badge variant="outline" className="ml-auto">
+                          已核实
+                        </Badge>
+                      </div>
+                      <h4 className="font-medium mb-1">碧山路积水情况</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        山龙路与碧山路交叉口积水约20厘米，小车可以通行但需要减速，请注意安全。
+                      </p>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <MapPin className="h-3 w-3" />
+                        <span>四川市中区碧山路</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 border rounded-md">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                          李
+                        </div>
+                        <div>
+                          <div className="font-medium">李女士</div>
+                          <div className="text-xs text-muted-foreground">35分钟前</div>
+                        </div>
+                        <Badge variant="outline" className="ml-auto">
+                          已核实
+                        </Badge>
+                      </div>
+                      <h4 className="font-medium mb-1">碧山路交通缓行</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        碧山路中段交通缓行，车辆行驶速度较慢，建议有条件的车辆绕行。
+                      </p>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <MapPin className="h-3 w-3" />
+                        <span>四川市市中区碧山路中段</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 border rounded-md">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                          张
+                        </div>
+                        <div>
+                          <div className="font-medium">张先生</div>
+                          <div className="text-xs text-muted-foreground">50分钟前</div>
+                        </div>
+                        <Badge variant="outline" className="ml-auto">
+                          已核实
+                        </Badge>
+                      </div>
+                      <h4 className="font-medium mb-1">碧山路北段路况良好</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        碧山路北段目前路况良好，无明显积水，车辆可以正常通行。
+                      </p>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <MapPin className="h-3 w-3" />
+                        <span>乐山市市中区碧山路北段</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
           </Tabs> {/* 添加结束标记 */}
         </main>
       </div>
     )
 }
+

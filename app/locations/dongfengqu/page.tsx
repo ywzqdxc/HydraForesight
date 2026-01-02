@@ -24,7 +24,7 @@ export default function DongfengquPage() {
               <div className="p-1 bg-red-100 rounded-full text-red-600">
                 <CloudRain className="h-5 w-5" />
               </div>
-              东风渠
+              月弦坝
               <Badge variant="destructive">红色预警</Badge>
             </h1>
           </div>
@@ -62,7 +62,7 @@ export default function DongfengquPage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">位置:</span>
                     </div>
-                    <span className="text-sm">郑州市郑东新区东风渠附近</span>
+                    <span className="text-sm">乐山市市中区大佛坝村附近</span>
                   </div>
                 </div>
               </CardContent>
@@ -81,7 +81,7 @@ export default function DongfengquPage() {
                       <Badge variant="destructive">紧急</Badge>
                     </div>
                     <p className="text-sm text-red-700">
-                      东风渠水位已超过警戒线，周边低洼地区可能发生洪水，请注意防范。
+                      月弦坝水位已超过警戒线，周边低洼地区可能发生洪水，请注意防范。
                     </p>
                     <div className="text-xs text-red-600 mt-1">发布时间: 今天 09:15</div>
                   </div>
@@ -92,7 +92,7 @@ export default function DongfengquPage() {
                       <span className="font-medium text-orange-800">暴雨橙色预警</span>
                     </div>
                     <p className="text-sm text-orange-700">
-                      预计未来3小时东风渠区域将持续强降雨，累积降水量可达50-80毫米。
+                      预计未来3小时月弦坝区域将持续强降雨，累积降水量可达50-80毫米。
                     </p>
                     <div className="text-xs text-orange-600 mt-1">发布时间: 今天 08:45</div>
                   </div>
@@ -113,15 +113,15 @@ export default function DongfengquPage() {
               <div className="relative w-full h-[400px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="absolute inset-0">
                   <img
-                    src="/placeholder.svg?height=400&width=800"
-                    alt="东风渠地图"
+                    src="/locations/yuexianba.png"
+                    alt="月弦坝地图"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-1/3 left-1/2">
                     <div className="p-1 bg-red-500 rounded-full animate-pulse">
                       <Droplets className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">东风渠水位超警戒</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">月弦坝水位超警戒</div>
                   </div>
                   <div className="absolute top-1/2 left-1/4">
                     <div className="p-1 bg-red-500 rounded-full">
@@ -133,7 +133,7 @@ export default function DongfengquPage() {
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">东风渠检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">月弦坝监测站</div>
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function DongfengquPage() {
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">检测站</span>
+                  <span className="text-xs">监测站</span>
                 </div>
               </div>
             </TabsContent>
@@ -157,7 +157,7 @@ export default function DongfengquPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">实时监测数据</CardTitle>
-                  <CardDescription>东风渠检测站</CardDescription>
+                  <CardDescription>月弦坝监测站</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -250,7 +250,7 @@ export default function DongfengquPage() {
                       <h4 className="font-medium text-red-800">预警信息</h4>
                     </div>
                     <p className="text-sm text-red-700">
-                      根据最新气象预报，东风渠区域未来12小时内将持续有强降水，水位可能继续上涨。请密切关注预警信息，做好防范措施。建议周边居民暂时撤离至安全地区。
+                      根据最新气象预报，月弦坝区域未来12小时内将持续有强降水，水位可能继续上涨。请密切关注预警信息，做好防范措施。建议周边居民暂时撤离至安全地区。
                     </p>
                   </div>
                 </CardContent>
@@ -299,3 +299,4 @@ export default function DongfengquPage() {
     </div>
   )
 }
+

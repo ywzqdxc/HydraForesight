@@ -96,8 +96,8 @@ export default function WeatherForecast() {
           <Skeleton className="h-5 w-32" />
           <Skeleton className="h-7 w-[120px]" />
         </div>
-        <div className="grid grid-cols-7 gap-1">
-          {[...Array(7)].map((_, i) => (
+        <div className="grid grid-cols-5 gap-1">
+          {[...Array(5)].map((_, i) => (
             <Skeleton key={i} className="h-20 w-full" />
           ))}
         </div>
@@ -112,13 +112,13 @@ export default function WeatherForecast() {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <div className="text-xs text-muted-foreground">{weatherData?.city || "郑州市"}</div>
+        <div className="text-[20px] text-xs text-muted-foreground">{weatherData?.city || "乐山市"}</div>
         <Tabs value={forecastType} onValueChange={setForecastType} className="w-[120px]">
-          <TabsList className="grid w-full grid-cols-2 h-6">
-            <TabsTrigger value="daily" className="text-[10px] py-0.5">
+          <TabsList className="grid w-full grid-cols-2 h-10">
+            <TabsTrigger value="daily" className="text-[14px] py-1.5">
               每日
             </TabsTrigger>
-            <TabsTrigger value="hourly" className="text-[10px] py-0.5">
+            <TabsTrigger value="hourly" className="text-[14px] py-0.5">
               每小时
             </TabsTrigger>
           </TabsList>
@@ -126,14 +126,14 @@ export default function WeatherForecast() {
       </div>
 
       {forecastType === "daily" ? (
-        <div className="grid grid-cols-7 gap-1">
-          {dailyForecast.slice(0, 7).map((day, index) => (
+        <div className="grid grid-cols-5 gap-1">
+          {dailyForecast.slice(0, 5).map((day, index) => (
             <div key={index} className="flex flex-col items-center p-1 border rounded-md">
-              <div className="text-[10px] font-medium">{day.date.substring(5).replace("-", "/")}</div>
+              <div className="text-[14px] font-medium">{day.date.substring(5).replace("-", "/")}</div>
               {getWeatherIcon(day.weather)}
               <div className="text-xs font-bold mt-0.5">{day.temperature.split("/")[0]}</div>
-              <div className="text-[10px] text-muted-foreground">{day.temperature.split("/")[1]}</div>
-              <div className="text-[10px] mt-0.5">{day.weather}</div>
+              <div className="text-[14px] text-muted-foreground">{day.temperature.split("/")[1]}</div>
+              <div className="text-[14px] mt-0.5">{day.weather}</div>
             </div>
           ))}
         </div>
@@ -155,7 +155,7 @@ export default function WeatherForecast() {
         </div>
       )}
 
-      <div className="flex items-center justify-between text-[10px] text-muted-foreground pt-1 border-t">
+      <div className="flex items-center justify-between text-[13px] text-muted-foreground pt-1 border-t">
         <div className="flex items-center gap-1">
           <Wind className="h-3 w-3" />
           <span>{dailyForecast[0].direct}</span>
@@ -165,3 +165,4 @@ export default function WeatherForecast() {
     </div>
   )
 }
+

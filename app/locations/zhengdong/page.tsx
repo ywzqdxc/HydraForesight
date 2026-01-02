@@ -24,7 +24,7 @@ export default function ZhengdongPage() {
               <div className="p-1 bg-green-100 rounded-full text-green-600">
                 <CloudRain className="h-5 w-5" />
               </div>
-              郑东新区
+              市中区
               <Badge variant="outline">正常</Badge>
             </h1>
           </div>
@@ -62,7 +62,7 @@ export default function ZhengdongPage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">位置:</span>
                     </div>
-                    <span className="text-sm">郑州市郑东新区</span>
+                    <span className="text-sm">乐山市市中区</span>
                   </div>
                 </div>
               </CardContent>
@@ -75,12 +75,12 @@ export default function ZhengdongPage() {
               <CardContent>
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    郑东新区是郑州市的核心城区之一，包含龙子湖、如意湖等多个水域。目前区域内降水强度为中雨，各监测点水位正常，暂无积水和内涝风险。
+                  市中区是乐山市的核心城区之一，包含岷江、大渡河等多个水域。目前区域内降水强度为中雨，各监测点水位正常，暂无积水和内涝风险。
                   </p>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
                     <div className="p-2 border rounded-md">
-                      <div className="text-xs text-muted-foreground">检测点数量</div>
+                      <div className="text-xs text-muted-foreground">监测点数量</div>
                       <div className="font-medium">12个</div>
                     </div>
                     <div className="p-2 border rounded-md">
@@ -113,8 +113,8 @@ export default function ZhengdongPage() {
               <div className="relative w-full h-[400px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="absolute inset-0">
                   <img
-                    src="/placeholder.svg?height=400&width=800"
-                    alt="郑东新区地图"
+                    src="/locations/downtown.png"
+                    alt="市中区地图"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-1/3 left-1/2">
@@ -133,7 +133,7 @@ export default function ZhengdongPage() {
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">郑东新区检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">市中区监测站</div>
                   </div>
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function ZhengdongPage() {
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">检测站</span>
+                  <span className="text-xs">监测站</span>
                 </div>
               </div>
             </TabsContent>
@@ -161,7 +161,7 @@ export default function ZhengdongPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">实时监测数据</CardTitle>
-                  <CardDescription>郑东新区各监测点数据汇总</CardDescription>
+                  <CardDescription>市中区各监测点数据汇总</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -215,7 +215,7 @@ export default function ZhengdongPage() {
                         </thead>
                         <tbody>
                           <tr className="border-b">
-                            <td className="py-2">龙子湖中心</td>
+                            <td className="py-2">黄石坡</td>
                             <td className="py-2">4.2m</td>
                             <td className="py-2">45mm/h</td>
                             <td className="py-2">
@@ -224,7 +224,7 @@ export default function ZhengdongPage() {
                             <td className="py-2">5分钟前</td>
                           </tr>
                           <tr className="border-b">
-                            <td className="py-2">东风渠</td>
+                            <td className="py-2">月弦坝</td>
                             <td className="py-2">3.9m</td>
                             <td className="py-2">42mm/h</td>
                             <td className="py-2">
@@ -233,7 +233,7 @@ export default function ZhengdongPage() {
                             <td className="py-2">3分钟前</td>
                           </tr>
                           <tr className="border-b">
-                            <td className="py-2">如意湖</td>
+                            <td className="py-2">周河坎</td>
                             <td className="py-2">2.3m</td>
                             <td className="py-2">22mm/h</td>
                             <td className="py-2">
@@ -244,7 +244,7 @@ export default function ZhengdongPage() {
                             <td className="py-2">12分钟前</td>
                           </tr>
                           <tr className="border-b">
-                            <td className="py-2">郑东新区中心</td>
+                            <td className="py-2">市中区中心</td>
                             <td className="py-2">2.5m</td>
                             <td className="py-2">25mm/h</td>
                             <td className="py-2">
@@ -291,7 +291,7 @@ export default function ZhengdongPage() {
                       <h4 className="font-medium text-blue-800">预报信息</h4>
                     </div>
                     <p className="text-sm text-blue-700">
-                      根据最新气象预报，郑东新区未来24小时内将持续有中雨，局部地区可能出现短时强降水。目前各监测点水位正常，暂无内涝风险，但请注意关注实时预警信息。
+                      根据最新气象预报，市中区未来24小时内将持续有中雨，局部地区可能出现短时强降水。目前各监测点水位正常，暂无内涝风险，但请注意关注实时预警信息。
                     </p>
                   </div>
                 </CardContent>
@@ -340,3 +340,4 @@ export default function ZhengdongPage() {
     </div>
   )
 }
+

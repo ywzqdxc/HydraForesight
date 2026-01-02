@@ -9,37 +9,39 @@ import { cn } from "@/lib/utils"
 
 // 添加更多中国城市
 const locations = [
-  // 直辖市
-  { value: "beijing", label: "北京市" },
-  { value: "shanghai", label: "上海市" },
-  { value: "tianjin", label: "天津市" },
-  { value: "chongqing", label: "重庆市" },
+  // // 直辖市
+  // { value: "beijing", label: "北京市" },
+  // { value: "shanghai", label: "上海市" },
+  // { value: "tianjin", label: "天津市" },
+  // { value: "chongqing", label: "重庆市" },
 
-  // 河南省
-  { value: "zhengzhou", label: "郑州市" },
-  { value: "zhengdong", label: "郑东新区" },
-  { value: "erqi", label: "二七区" },
-  { value: "jinshui", label: "金水区" },
-  { value: "zhongyuan", label: "中原区" },
-  { value: "huiji", label: "惠济区" },
-  { value: "shangjie", label: "上街区" },
-  { value: "guancheng", label: "管城回族区" },
-  { value: "xinzheng", label: "新郑市" },
-  { value: "xinmi", label: "新密市" },
-  { value: "dengfeng", label: "登封市" },
-  { value: "gongyi", label: "巩义市" },
-  { value: "zhongmou", label: "中牟县" },
-  { value: "kaifeng", label: "开封市" },
-  { value: "luoyang", label: "洛阳市" },
-  { value: "anyang", label: "安阳市" },
+  // 四川省
+  { value: "chengdu", label: "成都市" },
+  { value: "zigong", label: "自贡市" },
+  { value: "luzhou", label: "泸州市" },
+  { value: "deyang", label: "德阳" },
+  { value: "mianyang", label: "绵阳" },
+  { value: "guangyuan", label: "广元市" },
+  { value: "suining", label: "遂宁市" },
+  { value: "neijiang", label: "内江" },
+  { value: "leshan", label: "乐山市" },
+  { value: "nanchong", label: "南充市" },
+  { value: "yibin", label: "宜宾市" },
+  { value: "guanggan", label: "广安市" },
+  { value: "dazhou", label: "达州市" },
+  { value: "bazhong", label: "巴中市" },
+  { value: "yaan", label: "雅安市" },
+  { value: "ziyang", label: "资阳市" },
+  { value: "aba", label: "阿坝市" },
+  { value: "ganzizhou", label: "甘孜州市" },
 
   // 其他省会城市
-  { value: "guangzhou", label: "广州市" },
   { value: "shenzhen", label: "深圳市" },
   { value: "nanjing", label: "南京市" },
   { value: "wuhan", label: "武汉市" },
   { value: "chengdu", label: "成都市" },
   { value: "xian", label: "西安市" },
+  { value: "guangzhou", label: "广州市" },
   { value: "hangzhou", label: "杭州市" },
   { value: "jinan", label: "济南市" },
   { value: "changsha", label: "长沙市" },
@@ -50,7 +52,7 @@ const locations = [
 export function CitySelector() {
   const [open, setOpen] = React.useState(false)
   const [selectedLocation, setSelectedLocation] = React.useState(
-    locations.find((loc) => loc.value === "zhengdong") || locations[0],
+    locations.find((loc) => loc.value === "leshan") || locations[0],
   )
 
   return (
@@ -67,7 +69,7 @@ export function CitySelector() {
           <CommandInput placeholder="搜索城市..." />
           <CommandEmpty>未找到城市</CommandEmpty>
           <CommandList>
-            <CommandGroup heading="直辖市">
+            {/* <CommandGroup heading="直辖市">
               {locations.slice(0, 4).map((location) => (
                 <CommandItem
                   key={location.value}
@@ -86,9 +88,9 @@ export function CitySelector() {
                   {location.label}
                 </CommandItem>
               ))}
-            </CommandGroup>
-            <CommandGroup heading="河南省">
-              {locations.slice(4, 21).map((location) => (
+            </CommandGroup> */}
+            <CommandGroup heading="四川省">
+              {locations.slice(0, 18).map((location) => (
                 <CommandItem
                   key={location.value}
                   value={location.value}
@@ -108,7 +110,7 @@ export function CitySelector() {
               ))}
             </CommandGroup>
             <CommandGroup heading="其他省会城市">
-              {locations.slice(21).map((location) => (
+              {locations.slice(22).map((location) => (
                 <CommandItem
                   key={location.value}
                   value={location.value}
@@ -133,3 +135,4 @@ export function CitySelector() {
     </Popover>
   )
 }
+

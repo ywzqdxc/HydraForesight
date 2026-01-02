@@ -24,7 +24,7 @@ export default function ScienceAvenuePage() {
               <div className="p-1 bg-yellow-100 rounded-full text-yellow-600">
                 <MapIcon className="h-5 w-5" />
               </div>
-              科学大道
+              嘉州大道
               <Badge variant="warning">黄色预警</Badge>
             </h1>
           </div>
@@ -62,7 +62,7 @@ export default function ScienceAvenuePage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">位置:</span>
                     </div>
-                    <span className="text-sm">郑州市郑东新区科学大道</span>
+                    <span className="text-sm">乐山市市中区嘉州大道</span>
                   </div>
                 </div>
               </CardContent>
@@ -79,7 +79,7 @@ export default function ScienceAvenuePage() {
                       <AlertTriangle className="h-5 w-5 text-yellow-600" />
                       <span className="font-medium text-yellow-800">道路积水黄色预警</span>
                     </div>
-                    <p className="text-sm text-yellow-700">科学大道部分路段已出现积水，车辆通行受阻，请注意绕行。</p>
+                    <p className="text-sm text-yellow-700">嘉州大道部分路段已出现积水，车辆通行受阻，请注意绕行。</p>
                     <div className="text-xs text-yellow-600 mt-1">发布时间: 今天 08:45</div>
                   </div>
 
@@ -89,7 +89,7 @@ export default function ScienceAvenuePage() {
                       <span className="font-medium text-yellow-800">交通拥堵黄色预警</span>
                     </div>
                     <p className="text-sm text-yellow-700">
-                      由于道路积水，科学大道与龙湖大道交叉口出现严重交通拥堵，请车辆绕行。
+                      由于道路积水，嘉州大道与嘉定北路交叉口出现严重交通拥堵，请车辆绕行。
                     </p>
                     <div className="text-xs text-yellow-600 mt-1">发布时间: 今天 09:10</div>
                   </div>
@@ -110,15 +110,15 @@ export default function ScienceAvenuePage() {
               <div className="relative w-full h-[400px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="absolute inset-0">
                   <img
-                    src="/placeholder.svg?height=400&width=800"
-                    alt="科学大道地图"
+                    src="/locations/jiazhou-ave.png"
+                    alt="嘉州大道地图"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-1/3 left-1/2">
                     <div className="p-1 bg-yellow-500 rounded-full animate-pulse">
                       <Droplets className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">科学大道积水点</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">嘉州大道积水点</div>
                   </div>
                   <div className="absolute top-1/2 left-1/4">
                     <div className="p-1 bg-yellow-500 rounded-full">
@@ -130,7 +130,7 @@ export default function ScienceAvenuePage() {
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">科学大道检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">嘉州大道监测站</div>
                   </div>
                 </div>
               </div>
@@ -149,7 +149,7 @@ export default function ScienceAvenuePage() {
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">检测站</span>
+                  <span className="text-xs">监测站</span>
                 </div>
               </div>
             </TabsContent>
@@ -158,7 +158,7 @@ export default function ScienceAvenuePage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">实时监测数据</CardTitle>
-                  <CardDescription>科学大道检测站</CardDescription>
+                  <CardDescription>嘉州大道监测站</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -245,25 +245,25 @@ export default function ScienceAvenuePage() {
                         <h4 className="font-medium text-yellow-800">交通拥堵情况</h4>
                       </div>
                       <p className="text-sm text-yellow-700 mb-3">
-                        由于道路积水，科学大道与龙湖大道交叉口出现严重交通拥堵，车辆通行缓慢。建议车辆绕行龙翔街或瀚海路。
+                        由于道路积水，嘉州大道与嘉定北路交叉口出现严重交通拥堵，车辆通行缓慢。建议车辆绕行柏杨东路或春华路。
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">科学大道与龙湖大道交叉口</div>
+                          <div className="text-sm font-medium mb-1">嘉州大道与嘉定北路交叉口</div>
                           <div className="flex items-center gap-1 text-red-500">
                             <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                             <span className="text-xs">严重拥堵</span>
                           </div>
                         </div>
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">科学大道中段</div>
+                          <div className="text-sm font-medium mb-1">嘉州大道中段</div>
                           <div className="flex items-center gap-1 text-yellow-500">
                             <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                             <span className="text-xs">中度拥堵</span>
                           </div>
                         </div>
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">科学大道北段</div>
+                          <div className="text-sm font-medium mb-1">嘉州大道北段</div>
                           <div className="flex items-center gap-1 text-green-500">
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                             <span className="text-xs">通行正常</span>
@@ -301,7 +301,7 @@ export default function ScienceAvenuePage() {
                             1
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm">从龙子湖中心前往郑东新区，建议走龙翔街 → 如意湖路 → 郑东新区</p>
+                            <p className="text-sm">从东坡公园前往沟儿口村，建议走嘉定北路 → 致江路大桥路 → 碧山路</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
@@ -310,7 +310,7 @@ export default function ScienceAvenuePage() {
                           </div>
                           <div className="flex-1">
                             <p className="text-sm">
-                              从郑东新区前往龙子湖中心，建议走瀚海路 → 龙湖大道北段 → 龙子湖中心
+                              从东坡公园前往市汽车站，建议走东坡路 → 嘉祥路 → 天星路
                             </p>
                           </div>
                         </div>
@@ -325,7 +325,7 @@ export default function ScienceAvenuePage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">公众上报信息</CardTitle>
-                  <CardDescription>科学大道区域的公众上报</CardDescription>
+                  <CardDescription>嘉州大道区域的公众上报</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -342,13 +342,13 @@ export default function ScienceAvenuePage() {
                           已核实
                         </Badge>
                       </div>
-                      <h4 className="font-medium mb-1">科学大道积水严重</h4>
+                      <h4 className="font-medium mb-1">嘉州大道积水严重</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        科学大道与龙湖大道交叉口积水严重，水深约50厘米，小车无法通行，请绕行。
+                      嘉州大道与嘉定北路交叉口积水严重，水深约50厘米，小车无法通行，请绕行。
                       </p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <MapPin className="h-3 w-3" />
-                        <span>郑州市郑东新区科学大道</span>
+                        <span>乐山市市中区嘉州大道</span>
                       </div>
                     </div>
 
@@ -365,13 +365,13 @@ export default function ScienceAvenuePage() {
                           已核实
                         </Badge>
                       </div>
-                      <h4 className="font-medium mb-1">科学大道交通拥堵</h4>
+                      <h4 className="font-medium mb-1">嘉州大道交通拥堵</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        科学大道中段交通拥堵严重，车辆几乎无法移动，建议绕行其他道路。
+                      嘉州大道中段交通拥堵严重，车辆几乎无法移动，建议绕行其他道路。
                       </p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <MapPin className="h-3 w-3" />
-                        <span>郑州市郑东新区科学大道中段</span>
+                        <span>乐山市市中区嘉州大道中段</span>
                       </div>
                     </div>
 
@@ -388,13 +388,13 @@ export default function ScienceAvenuePage() {
                           已核实
                         </Badge>
                       </div>
-                      <h4 className="font-medium mb-1">科学大道北段路况良好</h4>
+                      <h4 className="font-medium mb-1">嘉州大道北段路况良好</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        科学大道北段目前路况良好，积水已经排除，车辆可以正常通行。
+                      嘉州大道北段目前路况良好，积水已经排除，车辆可以正常通行。
                       </p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <MapPin className="h-3 w-3" />
-                        <span>郑州市郑东新区科学大道北段</span>
+                        <span>乐山市市中区嘉州大道北段</span>
                       </div>
                     </div>
                   </div>
@@ -407,3 +407,4 @@ export default function ScienceAvenuePage() {
     </div>
   )
 }
+

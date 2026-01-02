@@ -8,7 +8,7 @@ export default function AlertsPanel() {
       type: "暴雨",
       severity: "红色预警",
       time: "今天, 上午8:30",
-      description: "预计未来6小时郑州市龙子湖区将出现暴雨到大暴雨，累积降水量可达100-150毫米，请注意防范。",
+      description: "预计未来6小时市中区将出现暴雨到大暴雨，累积降水量可达100-150毫米，请注意防范。",
       icon: <CloudRain className="h-4 w-4" />,
       color: "red",
     },
@@ -17,7 +17,7 @@ export default function AlertsPanel() {
       type: "城市内涝",
       severity: "黄色预警",
       time: "今天, 上午9:00",
-      description: "龙子湖区多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。",
+      description: "黄石坡多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。",
       icon: <Droplets className="h-4 w-4" />,
       color: "yellow",
     },
@@ -26,7 +26,7 @@ export default function AlertsPanel() {
       type: "雷电",
       severity: "橙色预警",
       time: "今天, 上午7:30",
-      description: "预计未来6小时郑州市将出现强雷电活动，局部地区可能伴有短时强降水和大风。",
+      description: "预计未来6小时乐山市将出现雷电市将出现强雷电活动，局部地区可能伴有短时强降水和大风。",
       icon: <AlertTriangle className="h-4 w-4" />,
       color: "orange",
     },
@@ -84,3 +84,4 @@ export default function AlertsPanel() {
     </div>
   )
 }
+

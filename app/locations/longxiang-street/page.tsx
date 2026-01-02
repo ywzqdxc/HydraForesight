@@ -24,7 +24,7 @@ export default function LongxiangStreetPage() {
               <div className="p-1 bg-yellow-100 rounded-full text-yellow-600">
                 <MapPin className="h-5 w-5" />
               </div>
-              龙翔街
+              王浩儿街
               <Badge variant="warning">黄色预警</Badge>
             </h1>
           </div>
@@ -62,7 +62,7 @@ export default function LongxiangStreetPage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">位置:</span>
                     </div>
-                    <span className="text-sm">郑州市郑东新区龙翔街</span>
+                    <span className="text-sm">乐山市市中区王浩儿街</span>
                   </div>
                 </div>
               </CardContent>
@@ -79,7 +79,7 @@ export default function LongxiangStreetPage() {
                       <AlertTriangle className="h-5 w-5 text-yellow-600" />
                       <span className="font-medium text-yellow-800">道路积水黄色预警</span>
                     </div>
-                    <p className="text-sm text-yellow-700">龙翔街部分路段已出现积水，深度约20厘米，请注意安全驾驶。</p>
+                    <p className="text-sm text-yellow-700">王浩儿街部分路段已出现积水，深度约20厘米，请注意安全驾驶。</p>
                     <div className="text-xs text-yellow-600 mt-1">发布时间: 今天 08:30</div>
                   </div>
 
@@ -88,7 +88,7 @@ export default function LongxiangStreetPage() {
                       <AlertTriangle className="h-5 w-5 text-yellow-600" />
                       <span className="font-medium text-yellow-800">交通缓行黄色预警</span>
                     </div>
-                    <p className="text-sm text-yellow-700">由于道路积水，龙翔街与瀚海路交叉口交通缓行，请耐心驾驶。</p>
+                    <p className="text-sm text-yellow-700">由于道路积水，王浩儿街与致江路交叉口交通缓行，请耐心驾驶。</p>
                     <div className="text-xs text-yellow-600 mt-1">发布时间: 今天 08:45</div>
                   </div>
                 </div>
@@ -108,15 +108,15 @@ export default function LongxiangStreetPage() {
               <div className="relative w-full h-[400px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="absolute inset-0">
                   <img
-                    src="/placeholder.svg?height=400&width=800"
-                    alt="龙翔街地图"
+                    src="/locations/wanghaoer_street.png"
+                    alt="王浩儿街地图"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-1/3 left-1/2">
                     <div className="p-1 bg-yellow-500 rounded-full animate-pulse">
                       <Droplets className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">龙翔街积水点</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">王浩儿街积水点</div>
                   </div>
                   <div className="absolute top-1/2 left-1/4">
                     <div className="p-1 bg-yellow-500 rounded-full">
@@ -128,7 +128,7 @@ export default function LongxiangStreetPage() {
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">龙翔街检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">王浩儿街监测站</div>
                   </div>
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function LongxiangStreetPage() {
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">检测站</span>
+                  <span className="text-xs">监测站</span>
                 </div>
               </div>
             </TabsContent>
@@ -156,7 +156,7 @@ export default function LongxiangStreetPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">实时监测数据</CardTitle>
-                  <CardDescription>龙翔街检测站</CardDescription>
+                  <CardDescription>王浩儿街监测站</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -243,25 +243,25 @@ export default function LongxiangStreetPage() {
                         <h4 className="font-medium text-yellow-800">交通缓行情况</h4>
                       </div>
                       <p className="text-sm text-yellow-700 mb-3">
-                        由于道路积水，龙翔街与瀚海路交叉口交通缓行，车辆通行速度降低。建议车辆减速慢行，注意安全。
+                        由于道路积水，王浩儿街与致江路交叉口交通缓行，车辆通行速度降低。建议车辆减速慢行，注意安全。
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">龙翔街与瀚海路交叉口</div>
+                          <div className="text-sm font-medium mb-1">王浩儿街与致江路交叉口</div>
                           <div className="flex items-center gap-1 text-yellow-500">
                             <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                             <span className="text-xs">交通缓行</span>
                           </div>
                         </div>
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">龙翔街中段</div>
+                          <div className="text-sm font-medium mb-1">王浩儿街中段</div>
                           <div className="flex items-center gap-1 text-yellow-500">
                             <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                             <span className="text-xs">轻微拥堵</span>
                           </div>
                         </div>
                         <div className="p-3 bg-white rounded-md border">
-                          <div className="text-sm font-medium mb-1">龙翔街北段</div>
+                          <div className="text-sm font-medium mb-1">王浩儿街北段</div>
                           <div className="flex items-center gap-1 text-green-500">
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                             <span className="text-xs">通行正常</span>
@@ -299,7 +299,7 @@ export default function LongxiangStreetPage() {
                             1
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm">从龙子湖中心前往郑东新区，建议走龙湖大道 → 如意湖路 → 郑东新区</p>
+                            <p className="text-sm">从王浩儿街前往嘉州花城，建议走百禄路 → 嘉定北路 → 嘉定中路 → 里仁街</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
@@ -307,7 +307,7 @@ export default function LongxiangStreetPage() {
                             2
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm">从郑东新区前往龙子湖中心，建议走瀚海路 → 龙湖大道 → 龙子湖中心</p>
+                            <p className="text-sm">从劼人街前往王浩儿街，建议走滨江路中段 → 百禄路</p>
                           </div>
                         </div>
                       </div>
@@ -321,7 +321,7 @@ export default function LongxiangStreetPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">公众上报信息</CardTitle>
-                  <CardDescription>龙翔街区域的公众上报</CardDescription>
+                  <CardDescription>王浩儿街区域的公众上报</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -338,13 +338,13 @@ export default function LongxiangStreetPage() {
                           已核实
                         </Badge>
                       </div>
-                      <h4 className="font-medium mb-1">龙翔街积水情况</h4>
+                      <h4 className="font-medium mb-1">王浩儿街积水情况</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        龙翔街与瀚海路交叉口积水约20厘米，小车可以通行但需要减速，请注意安全。
+                      王浩儿街与致江路交叉口积水约20厘米，小车可以通行但需要减速，请注意安全。
                       </p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <MapPin className="h-3 w-3" />
-                        <span>郑州市郑东新区龙翔街</span>
+                        <span>乐山市市中区区王浩儿街</span>
                       </div>
                     </div>
 
@@ -361,13 +361,13 @@ export default function LongxiangStreetPage() {
                           已核实
                         </Badge>
                       </div>
-                      <h4 className="font-medium mb-1">龙翔街交通缓行</h4>
+                      <h4 className="font-medium mb-1">王浩儿街交通缓行</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        龙翔街中段交通缓行，车辆行驶速度较慢，建议有条件的车辆绕行。
+                      王浩儿街中段交通缓行，车辆行驶速度较慢，建议有条件的车辆绕行。
                       </p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <MapPin className="h-3 w-3" />
-                        <span>郑州市郑东新区龙翔街中段</span>
+                        <span>乐山市市中区王浩儿街中段</span>
                       </div>
                     </div>
 
@@ -384,13 +384,13 @@ export default function LongxiangStreetPage() {
                           已核实
                         </Badge>
                       </div>
-                      <h4 className="font-medium mb-1">龙翔街北段路况良好</h4>
+                      <h4 className="font-medium mb-1">王浩儿街北段路况良好</h4>
                       <p className="text-sm text-muted-foreground mb-2">
-                        龙翔街北段目前路况良好，无明显积水，车辆可以正常通行。
+                      王浩儿街北段目前路况良好，无明显积水，车辆可以正常通行。
                       </p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <MapPin className="h-3 w-3" />
-                        <span>郑州市郑东新区龙翔街北段</span>
+                        <span>乐山市市中区王浩儿街北段</span>
                       </div>
                     </div>
                   </div>
@@ -403,3 +403,4 @@ export default function LongxiangStreetPage() {
     </div>
   )
 }
+

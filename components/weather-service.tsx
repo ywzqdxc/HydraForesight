@@ -47,7 +47,7 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentCity, setCurrentCity] = useState("郑州")
+  const [currentCity, setCurrentCity] = useState("乐山")
 
   const fetchWeatherData = async (city: string) => {
     setLoading(true)
@@ -97,3 +97,4 @@ export function useWeather() {
   }
   return context
 }
+

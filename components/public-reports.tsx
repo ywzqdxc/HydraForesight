@@ -57,7 +57,7 @@ interface Report {
 }
 
 export default function PublicReports() {
-  // 状态管理
+    // 状态管理
   const [activeTab, setActiveTab] = useState<string>("all")
   const [selectedType, setSelectedType] = useState<ReportType>("all")
   const [searchQuery, setSearchQuery] = useState("")
@@ -75,14 +75,15 @@ export default function PublicReports() {
   const [showSubmitSuccess, setShowSubmitSuccess] = useState(false)
 
   // 模拟上报数据
+  // const allReports: Report[] = [
   const [allReports, setAllReports] = useState<Report[]>([
     {
       id: "1",
       type: "flooding",
-      title: "科学大道严重积水",
-      location: "龙子湖区科学大道与瀚海路交叉口",
+      title: "嘉州大道严重积水",
+      location: "市中区嘉州大道与天星路交叉口",
       description: "道路积水严重，水深约30厘米，小型车辆难以通行，建议绕行。",
-      time: "2025-04-02 10:15",
+      time: "2025-04-24 10:15",
       status: "verified",
       severity: "high",
       upvotes: 15,
@@ -91,9 +92,9 @@ export default function PublicReports() {
       id: "2",
       type: "rainfall",
       title: "持续强降雨",
-      location: "龙子湖区东风渠附近",
+      location: "市中区月弦坝附近",
       description: "持续强降雨已超过2小时，雨势不减，周边低洼地带开始出现积水。",
-      time: "2025-04-02 09:30",
+      time: "2025-04-16 09:30",
       status: "verified",
       severity: "medium",
       upvotes: 8,
@@ -102,9 +103,9 @@ export default function PublicReports() {
       id: "3",
       type: "traffic",
       title: "道路交通拥堵",
-      location: "龙子湖北路与文苑西路交叉口",
+      location: "嘉定北路与柏杨东路交叉口",
       description: "因积水导致交通拥堵，车辆行驶缓慢，预计需等待30分钟以上。",
-      time: "2025-04-02 09:45",
+      time: "2025-04-20 09:45",
       status: "verified",
       severity: "medium",
       upvotes: 12,
@@ -113,9 +114,9 @@ export default function PublicReports() {
       id: "4",
       type: "disaster",
       title: "小区地下车库进水",
-      location: "龙子湖区瀚海北路龙湖小区",
+      location: "市中区徐家街徐家小区",
       description: "小区地下车库进水严重，水位约20厘米，正在组织车辆撤离。",
-      time: "2025-04-02 10:05",
+      time: "2025-04-24 10:05",
       status: "verified",
       severity: "high",
       upvotes: 18,
@@ -123,8 +124,8 @@ export default function PublicReports() {
     {
       id: "5",
       type: "flooding",
-      title: "文苑路积水",
-      location: "龙子湖区文苑路中段",
+      title: "嘉定北路积水",
+      location: "市中区嘉定北路与百福路交叉口",
       description: "道路出现积水，深度约15厘米，车辆可缓慢通行。",
       time: "2025-04-02 09:20",
       status: "verified",
@@ -135,7 +136,7 @@ export default function PublicReports() {
       id: "6",
       type: "rainfall",
       title: "雨势增强",
-      location: "龙子湖区全域",
+      location: "沙湾区全域",
       description: "降雨强度明显增加，预计未来1小时雨量将达到30mm以上。",
       time: "2025-04-02 08:50",
       status: "unverified",
@@ -145,9 +146,9 @@ export default function PublicReports() {
       id: "7",
       type: "traffic",
       title: "信号灯故障",
-      location: "龙子湖区科学大道与龙翔三路交叉口",
+      location: "市中区龙游路与天星路交叉口",
       description: "交通信号灯因雨水影响出现故障，交警正在现场指挥交通。",
-      time: "2025-04-02 09:10",
+      time: "2025-04-18 09:10",
       status: "unverified",
       upvotes: 7,
     },
@@ -155,9 +156,9 @@ export default function PublicReports() {
       id: "8",
       type: "disaster",
       title: "树木倒伏",
-      location: "龙子湖区龙子湖公园北门",
+      location: "市中区春华公园北门",
       description: "一棵大树因强风暴雨倒伏，压坏两辆停放的车辆，无人员伤亡。",
-      time: "2025-04-02 10:20",
+      time: "2025-04-21 10:20",
       status: "unverified",
       severity: "medium",
       upvotes: 9,
@@ -166,9 +167,9 @@ export default function PublicReports() {
       id: "9",
       type: "other",
       title: "排水管道堵塞",
-      location: "龙子湖区瀚海路与文苑路交叉口",
+      location: "市中区柏杨东路与天星路交叉口",
       description: "排水管道疑似堵塞，路面积水无法及时排出，建议相关部门处理。",
-      time: "2025-04-02 09:35",
+      time: "2025-04-09 09:35",
       status: "unverified",
       upvotes: 6,
     },
@@ -176,7 +177,7 @@ export default function PublicReports() {
       id: "10",
       type: "flooding",
       title: "地下通道积水",
-      location: "龙子湖区科学大道地下通道",
+      location: "市中区碧山路地下通道",
       description: "地下通道积水严重，已无法通行，请绕行其他道路。",
       time: "2025-04-02 10:30",
       status: "verified",
@@ -186,9 +187,9 @@ export default function PublicReports() {
     {
       id: "11",
       type: "other",
-      title: "电力设施受损",
-      location: "龙子湖区文苑西路龙湖花园小区",
-      description: "小区配电箱疑似进水，部分楼栋已停电，物业正在处理。",
+      title: "雨水口堵塞",
+      location: "市中区朝霞路新纪元小区",
+      description: "小区北门雨水口堵塞，路面大量积水，影响出行。",
       time: "2025-04-02 10:40",
       status: "unverified",
       upvotes: 11,
@@ -197,14 +198,22 @@ export default function PublicReports() {
       id: "12",
       type: "disaster",
       title: "围墙倒塌",
-      location: "龙子湖区龙子湖北路建设工地",
+      location: "市中区竹公溪路建设工地",
       description: "工地临时围墙因强风暴雨部分倒塌，无人员伤亡，已封锁现场。",
-      time: "2025-04-02 09:55",
+      time: "2025-04-17 09:55",
       status: "verified",
       severity: "medium",
       upvotes: 8,
     },
   ])
+
+  // 状态管理
+  // const [activeTab, setActiveTab] = useState<string>("all")
+  // const [selectedType, setSelectedType] = useState<ReportType>("all")
+  // const [searchQuery, setSearchQuery] = useState("")
+  // const [showVerified, setShowVerified] = useState(true)
+  // const [showUnverified, setShowUnverified] = useState(true)
+  // const [sortBy, setSortBy] = useState<"time" | "upvotes">("time")
 
   // 处理提交上报
   const handleSubmitReport = () => {
@@ -702,3 +711,4 @@ export default function PublicReports() {
     </Card>
   )
 }
+

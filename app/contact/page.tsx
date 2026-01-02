@@ -46,9 +46,9 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent className="space-y-2">
                 <p className="text-sm text-muted-foreground">一般咨询</p>
-                <p className="font-medium">info@longzihu-system.com</p>
+                <p className="font-medium">info@XXXXXXXX.com</p>
                 <p className="text-sm text-muted-foreground">技术支持</p>
-                <p className="font-medium">support@longzihu-system.com</p>
+                <p className="font-medium">support@XXXXXXXX.com</p>
               </CardContent>
             </Card>
 
@@ -61,9 +61,9 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent className="space-y-2">
                 <p className="text-sm text-muted-foreground">总部地址</p>
-                <p className="font-medium">郑州市郑东新区龙子湖智慧城市研究中心</p>
+                <p className="font-medium">XXXXXXXX</p>
                 <p className="text-sm text-muted-foreground">监测中心</p>
-                <p className="font-medium">郑州市郑东新区龙子湖北岸监测站</p>
+                <p className="font-medium">XXXXXXXX</p>
               </CardContent>
             </Card>
           </div>
@@ -161,20 +161,24 @@ export default function ContactPage() {
                     </p>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="p-4 border rounded-md text-center">
-                        <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div>
-                        <p className="text-sm">郑州市气象局</p>
+                        {/* <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                        <img src="cma_logo.png" alt="XX市气象局" className="w-12 h-12 mx-auto mb-2 rounded"/>
+                        <p className="text-sm">XX市气象局</p>
                       </div>
                       <div className="p-4 border rounded-md text-center">
-                        <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div>
-                        <p className="text-sm">郑州市水利局</p>
+                        {/* <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                        <img src="mwr_logo.png" alt="XX市水利局" className="w-12 h-12 mx-auto mb-2 rounded"/>
+                        <p className="text-sm">XX市水利局</p>
                       </div>
                       <div className="p-4 border rounded-md text-center">
-                        <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div>
-                        <p className="text-sm">郑州市应急管理局</p>
+                        {/* <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                        <img src="mem_logo.png" alt="XX市应急管理局" className="w-12 h-12 mx-auto mb-2 rounded"/>
+                        <p className="text-sm">XX市应急管理局</p>
                       </div>
                       <div className="p-4 border rounded-md text-center">
-                        <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div>
-                        <p className="text-sm">郑州大学</p>
+                        {/* <div className="w-12 h-12 bg-slate-200 mx-auto mb-2 rounded"></div> */}
+                        <img src="ncwu_logo.png" alt="华北水利水电大学" className="w-12 h-12 mx-auto mb-2 rounded"/>
+                        <p className="text-sm">华北水利水电大学</p>
                       </div>
                     </div>
                   </div>
@@ -183,21 +187,23 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <Card>
+          {/* <Card>
             <CardHeader>
               <CardTitle>位置地图</CardTitle>
-              <CardDescription>我们的办公地址位于郑州市郑东新区龙子湖智慧城市研究中心</CardDescription>
+              <CardDescription>我们的办公地址位于XXXXXXXX</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-[400px] w-full bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="flex items-center justify-center h-full">
                   <p className="text-muted-foreground">地图加载中...</p>
+                  <p className="text-muted-foreground">这里是地图</p>
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </main>
     </div>
   )
 }
+

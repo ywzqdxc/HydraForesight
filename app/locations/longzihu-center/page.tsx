@@ -24,7 +24,7 @@ export default function LongzihuCenterPage() {
               <div className="p-1 bg-red-100 rounded-full text-red-600">
                 <CloudRain className="h-5 w-5" />
               </div>
-              龙子湖中心
+              黄石坡
               <Badge variant="destructive">红色预警</Badge>
             </h1>
           </div>
@@ -62,7 +62,7 @@ export default function LongzihuCenterPage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">位置:</span>
                     </div>
-                    <span className="text-sm">郑州市郑东新区龙子湖中心区域</span>
+                    <span className="text-sm">乐山市市中区黄石坡区域</span>
                   </div>
                 </div>
               </CardContent>
@@ -81,7 +81,7 @@ export default function LongzihuCenterPage() {
                       <Badge variant="destructive">紧急</Badge>
                     </div>
                     <p className="text-sm text-red-700">
-                      预计未来6小时龙子湖中心区域将出现暴雨到大暴雨，累积降水量可达100-150毫米，请注意防范。
+                      预计未来6小时黄石坡区域将出现暴雨到大暴雨，累积降水量可达100-150毫米，请注意防范。
                     </p>
                     <div className="text-xs text-red-600 mt-1">发布时间: 今天 08:30</div>
                   </div>
@@ -92,7 +92,7 @@ export default function LongzihuCenterPage() {
                       <span className="font-medium text-orange-800">内涝橙色预警</span>
                     </div>
                     <p className="text-sm text-orange-700">
-                      龙子湖中心区域多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
+                    黄石坡区域多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。
                     </p>
                     <div className="text-xs text-orange-600 mt-1">发布时间: 今天 09:00</div>
                   </div>
@@ -113,27 +113,27 @@ export default function LongzihuCenterPage() {
               <div className="relative w-full h-[400px] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                 <div className="absolute inset-0">
                   <img
-                    src="/placeholder.svg?height=400&width=800"
-                    alt="龙子湖中心地图"
+                    src="/locations/huangshipo.png"
+                    alt="黄石坡地图"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-1/3 left-1/2">
                     <div className="p-1 bg-red-500 rounded-full animate-pulse">
                       <Droplets className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">科学大道严重积水</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">青衣路严重积水</div>
                   </div>
                   <div className="absolute top-1/2 left-1/4">
                     <div className="p-1 bg-orange-500 rounded-full">
                       <Droplets className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">龙子湖北路中度积水</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">黄石坡东段中度积水</div>
                   </div>
                   <div className="absolute top-1/4 right-1/3">
                     <div className="p-1 bg-blue-500 rounded-full">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
-                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">龙子湖检测站</div>
+                    <div className="mt-1 px-2 py-1 bg-white rounded text-xs">黄石坡监测站</div>
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function LongzihuCenterPage() {
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs">检测站</span>
+                  <span className="text-xs">监测站</span>
                 </div>
               </div>
             </TabsContent>
@@ -157,7 +157,7 @@ export default function LongzihuCenterPage() {
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">实时监测数据</CardTitle>
-                  <CardDescription>龙子湖中心检测站</CardDescription>
+                  <CardDescription>黄石坡监测站</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -250,7 +250,7 @@ export default function LongzihuCenterPage() {
                       <h4 className="font-medium text-red-800">预警信息</h4>
                     </div>
                     <p className="text-sm text-red-700">
-                      根据最新气象预报，龙子湖中心区域未来24小时内将持续有强降水，请密切关注预警信息，做好防范措施。建议非必要不外出，远离低洼地区和河道。
+                      根据最新气象预报，黄石坡区域未来24小时内将持续有强降水，请密切关注预警信息，做好防范措施。建议非必要不外出，远离低洼地区和河道。
                     </p>
                   </div>
                 </CardContent>
@@ -299,3 +299,4 @@ export default function LongzihuCenterPage() {
     </div>
   )
 }
+
