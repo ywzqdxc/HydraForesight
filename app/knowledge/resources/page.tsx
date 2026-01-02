@@ -481,5 +481,3 @@ function ResourceCard({ title, description, type, size, downloads, date }: Resou
     </Card>
   )
 }
-
-

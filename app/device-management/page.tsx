@@ -1590,4 +1590,3 @@ export default function DeviceManagementPage() {
     </div>
   )
 }
-

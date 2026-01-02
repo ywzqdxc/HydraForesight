@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hydravision.mapper.device.DeviceMapper">
+
+    <!-- 分页查询设备列表 -->
+    <select id="selectDevicePage" resultType="com.hydravision.entity.device.Device">
+        SELECT d.*, ma.area_name
+        FROM hf_device d
+        LEFT JOIN hf_monitor_area ma ON d.area_id = ma.id
+        WHERE d.is_deleted = 0
+        <if test="query.deviceId != null and query.deviceId != ''">
+            AND d.device_id LIKE CONCAT('%', #{query.deviceId}, '%')
+        </if>
+        <if test="query.deviceName != null and query.deviceName != ''">
+            AND d.device_name LIKE CONCAT('%', #{query.deviceName}, '%')
+        </if>
+        <if test="query.deviceType != null">
+            AND d.device_type = #{query.deviceType}
+        </if>
+        <if test="query.areaId != null">
+            AND d.area_id = #{query.areaId}
+        </if>
+        <if test="query.status != null">
+            AND d.status = #{query.status}
+        </if>
+        ORDER BY d.create_time DESC
+    </select>
+
+</mapper>

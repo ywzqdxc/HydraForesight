@@ -711,4 +711,3 @@ export default function PublicReports() {
     </Card>
   )
 }
-

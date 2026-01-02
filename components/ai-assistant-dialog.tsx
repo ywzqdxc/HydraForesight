@@ -237,4 +237,3 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
     </div>
   )
 }
-

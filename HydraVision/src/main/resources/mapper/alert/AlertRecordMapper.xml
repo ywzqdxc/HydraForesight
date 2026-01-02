@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hydravision.mapper.alert.AlertRecordMapper">
+
+    <!-- 分页查询预警记录 -->
+    <select id="selectAlertPage" resultType="com.hydravision.entity.alert.AlertRecord">
+        SELECT *
+        FROM hf_alert_record
+        WHERE is_deleted = 0
+        <if test="query.alertType != null">
+            AND alert_type = #{query.alertType}
+        </if>
+        <if test="query.alertLevel != null">
+            AND alert_level = #{query.alertLevel}
+        </if>
+        <if test="query.areaId != null">
+            AND area_id = #{query.areaId}
+        </if>
+        <if test="query.status != null">
+            AND status = #{query.status}
+        </if>
+        <if test="query.startTime != null">
+            AND trigger_time >= #{query.startTime}
+        </if>
+        <if test="query.endTime != null">
+            AND trigger_time &lt;= #{query.endTime}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

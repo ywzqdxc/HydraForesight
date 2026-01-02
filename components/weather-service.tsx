@@ -97,4 +97,3 @@ export function useWeather() {
   }
   return context
 }
-

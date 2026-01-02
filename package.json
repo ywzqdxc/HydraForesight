@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 9001",
     "build": "next build && rm -rf .next/cache",
-    "start": "next start -p 9001",
-    "lint": "next lint"
+    "dev": "next dev -p 9001",
+    "lint": "next lint",
+    "start": "next start -p 9001"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -40,6 +40,7 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "autoprefixer": "^10.4.20",
     "axios": "latest",
+    "bufferutil": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
@@ -64,6 +65,7 @@
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "utf-8-validate": "latest",
     "vaul": "^0.9.6",
     "ws": "latest",
     "zod": "^3.24.1"

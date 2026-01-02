@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hydravision.mapper.monitor.RainfallDataMapper">
+
+    <!-- 查询时间范围内的降水数据 -->
+    <select id="selectByTimeRange" resultType="com.hydravision.entity.monitor.RainfallData">
+        SELECT *
+        FROM hf_rainfall_data
+        WHERE area_id = #{areaId}
+          AND record_time BETWEEN #{startTime} AND #{endTime}
+        ORDER BY record_time ASC
+    </select>
+
+    <!-- 获取各区域降水统计 -->
+    <select id="selectRainfallStatsByArea" resultType="java.util.Map">
+        SELECT 
+            area_id as areaId,
+            SUM(rainfall_value) as totalRainfall,
+            MAX(rainfall_intensity) as maxIntensity,
+            AVG(rainfall_value) as avgRainfall,
+            COUNT(*) as dataCount
+        FROM hf_rainfall_data
+        WHERE record_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY area_id
+    </select>
+
+</mapper>

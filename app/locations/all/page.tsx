@@ -345,4 +345,3 @@ function LocationCard({ title, description, status, icon, alerts, rainfall, wate
     </Card>
   )
 }
-
