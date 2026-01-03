@@ -1,7 +1,8 @@
 package com.hydravision.config;
 
 import com.hydravision.security.JwtAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
+import com.hydravision.security.JwtTokenProvider;
+import com.hydravision.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,11 +29,9 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
+    
     /**
      * 密码加密器
      */
@@ -50,10 +49,22 @@ public class SecurityConfig {
     }
 
     /**
+     * JWT认证过滤器
+     */
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(
+            JwtTokenProvider jwtTokenProvider,
+            UserDetailsServiceImpl userDetailsService) {
+        return new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService);
+    }
+
+    /**
      * 安全过滤链配置
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
                 // 禁用CSRF
                 .csrf(AbstractHttpConfigurer::disable)
