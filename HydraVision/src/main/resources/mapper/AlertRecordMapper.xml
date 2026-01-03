@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hydravision.mapper.alert.AlertRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.hydravision.entity.alert.AlertRecord">
+        <id column="id" property="id"/>
+        <result column="alert_id" property="alertId"/>
+        <result column="alert_type" property="alertType"/>
+        <result column="alert_level" property="alertLevel"/>
+        <result column="area_id" property="areaId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="trigger_value" property="triggerValue"/>
+        <result column="trigger_time" property="triggerTime"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="expected_end_time" property="expectedEndTime"/>
+        <result column="actual_end_time" property="actualEndTime"/>
+        <result column="status" property="status"/>
+        <result column="publisher_name" property="publisherName"/>
+        <result column="release_reason" property="releaseReason"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!-- 获取预警统计 -->
+    <select id="getStatistics" resultType="com.hydravision.vo.alert.AlertStatisticsVO">
+        SELECT
+            COUNT(*) as totalCount,
+            SUM(CASE WHEN alert_level = 1 THEN 1 ELSE 0 END) as blueCount,
+            SUM(CASE WHEN alert_level = 2 THEN 1 ELSE 0 END) as yellowCount,
+            SUM(CASE WHEN alert_level = 3 THEN 1 ELSE 0 END) as orangeCount,
+            SUM(CASE WHEN alert_level = 4 THEN 1 ELSE 0 END) as redCount,
+            SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) as pendingCount,
+            SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as publishedCount,
+            SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) as releasedCount
+        FROM hf_alert_record
+        WHERE is_deleted = 0
+    </select>
+
+    <!-- 获取活跃预警 -->
+    <select id="getActiveAlerts" resultMap="BaseResultMap">
+        SELECT *
+        FROM hf_alert_record
+        WHERE status = 1 AND is_deleted = 0
+        ORDER BY alert_level DESC, trigger_time DESC
+    </select>
+
+    <!-- 获取最新预警 -->
+    <select id="getLatestAlerts" resultMap="BaseResultMap">
+        SELECT *
+        FROM hf_alert_record
+        WHERE is_deleted = 0
+        ORDER BY trigger_time DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>

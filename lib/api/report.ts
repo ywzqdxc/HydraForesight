@@ -95,3 +95,10 @@ export async function getReportDetail(id: number): Promise<ApiResponse<PublicRep
 export async function createReport(data: CreateReportRequest): Promise<ApiResponse<number>> {
   return apiClient.post<number>("/report", data)
 }
+
+/**
+ * 点赞上报
+ */
+export async function upvoteReport(id: number): Promise<ApiResponse<void>> {
+  return apiClient.post<void>(`/report/${id}/upvote`)
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hydravision.mapper.report.PublicReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.hydravision.entity.report.PublicReport">
+        <id column="id" property="id"/>
+        <result column="report_id" property="reportId"/>
+        <result column="report_type" property="reportType"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="location_name" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="area_id" property="areaId"/>
+        <result column="severity" property="severity"/>
+        <result column="image_urls" property="imageUrls"/>
+        <result column="video_url" property="videoUrl"/>
+        <result column="reporter_name" property="reporterName"/>
+        <result column="reporter_phone" property="reporterPhone"/>
+        <result column="report_time" property="reportTime"/>
+        <result column="verify_status" property="verifyStatus"/>
+        <result column="verify_time" property="verifyTime"/>
+        <result column="verifier_name" property="verifierName"/>
+        <result column="verify_remark" property="verifyRemark"/>
+        <result column="process_status" property="processStatus"/>
+        <result column="process_result" property="processResult"/>
+        <result column="upvote_count" property="upvoteCount"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!-- 获取上报统计 -->
+    <select id="getStatistics" resultType="com.hydravision.vo.report.ReportStatisticsVO">
+        SELECT
+            COUNT(*) as totalCount,
+            SUM(CASE WHEN process_status = 0 THEN 1 ELSE 0 END) as pendingCount,
+            SUM(CASE WHEN process_status = 1 THEN 1 ELSE 0 END) as processingCount,
+            SUM(CASE WHEN process_status = 2 THEN 1 ELSE 0 END) as processedCount
+        FROM hf_public_report
+        WHERE is_deleted = 0
+    </select>
+
+    <!-- 按类型统计 -->
+    <select id="getTypeStatistics" resultType="map">
+        SELECT
+            report_type as reportType,
+            COUNT(*) as count
+        FROM hf_public_report
+        WHERE is_deleted = 0
+        GROUP BY report_type
+    </select>
+
+    <!-- 获取最新上报 -->
+    <select id="getLatestReports" resultMap="BaseResultMap">
+        SELECT *
+        FROM hf_public_report
+        WHERE is_deleted = 0
+        ORDER BY report_time DESC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 点赞上报 -->
+    <update id="upvoteReport">
+        UPDATE hf_public_report
+        SET upvote_count = upvote_count + 1
+        WHERE id = #{id} AND is_deleted = 0
+    </update>
+
+</mapper>

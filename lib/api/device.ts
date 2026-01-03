@@ -45,6 +45,39 @@ export interface DeviceQueryParams {
   size?: number
 }
 
+export interface CreateDeviceRequest {
+  deviceName: string
+  deviceType: number
+  deviceModel?: string
+  manufacturer?: string
+  areaId: number
+  locationName: string
+  longitude?: number
+  latitude?: number
+  altitude?: number
+  installDate?: string
+  dataInterval?: number
+  communicationType?: number
+  powerType?: number
+  remark?: string
+}
+
+export interface UpdateDeviceRequest {
+  id: number
+  deviceName?: string
+  deviceType?: number
+  deviceModel?: string
+  manufacturer?: string
+  areaId?: number
+  locationName?: string
+  longitude?: number
+  latitude?: number
+  altitude?: number
+  dataInterval?: number
+  status?: number
+  remark?: string
+}
+
 /**
  * 获取设备统计数据
  */
@@ -71,4 +104,32 @@ export async function pageDevices(params: DeviceQueryParams): Promise<ApiRespons
  */
 export async function getDeviceDetail(id: number): Promise<ApiResponse<Device>> {
   return apiClient.get<Device>(`/device/${id}`)
+}
+
+/**
+ * 创建设备
+ */
+export async function createDevice(data: CreateDeviceRequest): Promise<ApiResponse<number>> {
+  return apiClient.post<number>("/device", data)
+}
+
+/**
+ * 更新设备
+ */
+export async function updateDevice(data: UpdateDeviceRequest): Promise<ApiResponse<void>> {
+  return apiClient.put<void>("/device", data)
+}
+
+/**
+ * 删除设备
+ */
+export async function deleteDevice(id: number): Promise<ApiResponse<void>> {
+  return apiClient.delete<void>(`/device/${id}`)
+}
+
+/**
+ * 更新设备状态
+ */
+export async function updateDeviceStatus(id: number, status: number): Promise<ApiResponse<void>> {
+  return apiClient.put<void>(`/device/${id}/status/${status}`)
 }
