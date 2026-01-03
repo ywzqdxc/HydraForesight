@@ -37,7 +37,7 @@ export function UserNav({ onLogout }: UserNavProps) {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{username}</p>
-            <p className="text-xs leading-none text-muted-foreground">雨安盾系统用户</p>
+            <p className="text-xs leading-none text-muted-foreground">智水先知系统用户</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

@@ -14,7 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { CloudRain, MapIcon, BarChart, Info, Phone, HelpCircle } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 // 修改 components 数组，按照区域大小从大到小排序
 const components: { title: string; href: string; description: string; icon: React.ReactNode; status?: string }[] = [
@@ -83,7 +83,7 @@ export function MainNav({ className }: React.HTMLAttributes<HTMLElement>) {
     <div className="mr-4 flex">
       <Link href="/" className="mr-6 flex items-center space-x-2">
         <CloudRain className="h-6 w-6 text-blue-500" />
-        <span className="hidden font-bold sm:inline-block min-w-[55px]">雨安盾</span>
+        <span className="hidden font-bold sm:inline-block min-w-[55px]">智水先知</span>
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
@@ -252,35 +252,42 @@ export function MainNav({ className }: React.HTMLAttributes<HTMLElement>) {
 
       <DropdownMenu>
         {/* <DropdownMenuTrigger asChild> */}
-          <DropdownMenuTrigger> <div className={cn(
-                "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
-                className
-              )}>更多</div> </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <ul className="grid w-[200px] gap-3 p-4">
-                <li>
-                  <ListItemForDrop title="数据分析" href="/analytics" icon={<BarChart className="h-4 w-4" />}>
-                    降水数据统计与分析
-                  </ListItemForDrop>
-                </li>
-                <li>
-                  <ListItemForDrop title="关于系统" href="/about" icon={<Info className="h-4 w-4" />}>
-                    系统介绍与使用说明
-                  </ListItemForDrop>
-                </li>
-                <li>
-                  <ListItemForDrop title="联系我们" href="/contact" icon={<Phone className="h-4 w-4" />}>
-                    联系方式与反馈渠道
-                  </ListItemForDrop>
-                </li>
-                <li>
-                  <ListItemForDrop title="帮助中心" href="/help" icon={<HelpCircle className="h-4 w-4" />}>
-                    常见问题与使用帮助
-                  </ListItemForDrop>
-                </li>
-              </ul>
-          </DropdownMenuContent>
-    </DropdownMenu>
+        <DropdownMenuTrigger>
+          {" "}
+          <div
+            className={cn(
+              "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
+              className,
+            )}
+          >
+            更多
+          </div>{" "}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <ul className="grid w-[200px] gap-3 p-4">
+            <li>
+              <ListItemForDrop title="数据分析" href="/analytics" icon={<BarChart className="h-4 w-4" />}>
+                降水数据统计与分析
+              </ListItemForDrop>
+            </li>
+            <li>
+              <ListItemForDrop title="关于系统" href="/about" icon={<Info className="h-4 w-4" />}>
+                系统介绍与使用说明
+              </ListItemForDrop>
+            </li>
+            <li>
+              <ListItemForDrop title="联系我们" href="/contact" icon={<Phone className="h-4 w-4" />}>
+                联系方式与反馈渠道
+              </ListItemForDrop>
+            </li>
+            <li>
+              <ListItemForDrop title="帮助中心" href="/help" icon={<HelpCircle className="h-4 w-4" />}>
+                常见问题与使用帮助
+              </ListItemForDrop>
+            </li>
+          </ul>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   )
 }
@@ -331,27 +338,27 @@ const ListItemForDrop = React.forwardRef<
   }
 >(({ className, title, children, icon, status, ...props }, ref) => {
   return (
-      <a
-        ref={ref}
-        className={cn(
-          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-          className,
+    <a
+      ref={ref}
+      className={cn(
+        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex items-center gap-2 text-sm font-medium leading-none">
+        {icon}
+        <span>{title}</span>
+        {status && (
+          <div
+            className={cn(
+              "ml-auto w-2 h-2 rounded-full",
+              status === "danger" ? "bg-red-500" : status === "warning" ? "bg-yellow-500" : "bg-green-500",
+            )}
+          />
         )}
-        {...props}
-      >
-        <div className="flex items-center gap-2 text-sm font-medium leading-none">
-          {icon}
-          <span>{title}</span>
-          {status && (
-            <div
-              className={cn(
-                "ml-auto w-2 h-2 rounded-full",
-                status === "danger" ? "bg-red-500" : status === "warning" ? "bg-yellow-500" : "bg-green-500",
-              )}
-            />
-          )}
-        </div>
-        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-      </a>
+      </div>
+      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
+    </a>
   )
 })

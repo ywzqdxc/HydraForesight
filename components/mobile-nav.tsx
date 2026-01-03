@@ -28,7 +28,7 @@ export function MobileNav() {
         <SheetHeader className="border-b pb-4 mb-4">
           <SheetTitle className="flex items-center gap-2">
             <CloudRain className="h-5 w-5 text-blue-500" />
-            雨安盾
+            智水先知
           </SheetTitle>
         </SheetHeader>
         <ScrollArea className="h-[calc(100vh-8rem)] pb-10">
