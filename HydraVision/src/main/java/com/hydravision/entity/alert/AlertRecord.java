@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hydravision.common.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,8 +12,6 @@ import java.time.LocalDateTime;
 /**
  * 预警记录实体类
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("hf_alert_record")
 @Schema(description = "预警记录")
 public class AlertRecord extends BaseEntity {
@@ -96,4 +92,156 @@ public class AlertRecord extends BaseEntity {
     @Schema(description = "查看次数")
     @TableField("view_count")
     private Integer viewCount;
+
+    public String getAlertId() {
+        return alertId;
+    }
+
+    public void setAlertId(String alertId) {
+        this.alertId = alertId;
+    }
+
+    public Long getRuleId() {
+        return ruleId;
+    }
+
+    public void setRuleId(Long ruleId) {
+        this.ruleId = ruleId;
+    }
+
+    public Integer getAlertType() {
+        return alertType;
+    }
+
+    public void setAlertType(Integer alertType) {
+        this.alertType = alertType;
+    }
+
+    public Integer getAlertLevel() {
+        return alertLevel;
+    }
+
+    public void setAlertLevel(Integer alertLevel) {
+        this.alertLevel = alertLevel;
+    }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public BigDecimal getTriggerValue() {
+        return triggerValue;
+    }
+
+    public void setTriggerValue(BigDecimal triggerValue) {
+        this.triggerValue = triggerValue;
+    }
+
+    public LocalDateTime getTriggerTime() {
+        return triggerTime;
+    }
+
+    public void setTriggerTime(LocalDateTime triggerTime) {
+        this.triggerTime = triggerTime;
+    }
+
+    public LocalDateTime getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(LocalDateTime publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public LocalDateTime getExpectedEndTime() {
+        return expectedEndTime;
+    }
+
+    public void setExpectedEndTime(LocalDateTime expectedEndTime) {
+        this.expectedEndTime = expectedEndTime;
+    }
+
+    public LocalDateTime getActualEndTime() {
+        return actualEndTime;
+    }
+
+    public void setActualEndTime(LocalDateTime actualEndTime) {
+        this.actualEndTime = actualEndTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Long getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(Long publisherId) {
+        this.publisherId = publisherId;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
+    }
+
+    public String getReleaseReason() {
+        return releaseReason;
+    }
+
+    public void setReleaseReason(String releaseReason) {
+        this.releaseReason = releaseReason;
+    }
+
+    public Integer getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Integer isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
 }
