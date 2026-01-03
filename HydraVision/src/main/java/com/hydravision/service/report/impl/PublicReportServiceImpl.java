@@ -3,6 +3,7 @@ package com.hydravision.service.report.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,7 +18,6 @@ import com.hydravision.mapper.report.PublicReportMapper;
 import com.hydravision.service.report.PublicReportService;
 import com.hydravision.vo.report.PublicReportVO;
 import com.hydravision.vo.report.ReportStatisticsVO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
  * 公众上报服务实现类
  */
 @Service
-@RequiredArgsConstructor
 public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, PublicReport> implements PublicReportService {
 
     @Override
@@ -90,9 +89,10 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
         }
 
         // 增加浏览次数
-        baseMapper.update(null, new LambdaQueryWrapper<PublicReport>()
-                .eq(PublicReport::getId, id)
-                .setSql("view_count = view_count + 1"));
+        LambdaUpdateWrapper<PublicReport> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(PublicReport::getId, id)
+                .setSql("view_count = view_count + 1");
+        baseMapper.update(null, updateWrapper);
 
         return convertToVO(report);
     }
@@ -157,9 +157,10 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void upvoteReport(Long id) {
-        baseMapper.update(null, new LambdaQueryWrapper<PublicReport>()
-                .eq(PublicReport::getId, id)
-                .setSql("upvote_count = upvote_count + 1"));
+        LambdaUpdateWrapper<PublicReport> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(PublicReport::getId, id)
+                .setSql("upvote_count = upvote_count + 1");
+        baseMapper.update(null, updateWrapper);
     }
 
     private PublicReportVO convertToVO(PublicReport report) {

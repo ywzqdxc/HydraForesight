@@ -3,6 +3,7 @@ package com.hydravision.service.alert.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,7 +17,6 @@ import com.hydravision.mapper.alert.AlertRecordMapper;
 import com.hydravision.service.alert.AlertService;
 import com.hydravision.vo.alert.AlertRecordVO;
 import com.hydravision.vo.alert.AlertStatisticsVO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
  * 预警服务实现类
  */
 @Service
-@RequiredArgsConstructor
 public class AlertServiceImpl extends ServiceImpl<AlertRecordMapper, AlertRecord> implements AlertService {
 
     @Override
@@ -88,9 +87,10 @@ public class AlertServiceImpl extends ServiceImpl<AlertRecordMapper, AlertRecord
         }
 
         // 增加查看次数
-        baseMapper.update(null, new LambdaQueryWrapper<AlertRecord>()
-                .eq(AlertRecord::getId, id)
-                .setSql("view_count = view_count + 1"));
+        LambdaUpdateWrapper<AlertRecord> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(AlertRecord::getId, id)
+                .setSql("view_count = view_count + 1");
+        baseMapper.update(null, updateWrapper);
 
         return convertToVO(alert);
     }

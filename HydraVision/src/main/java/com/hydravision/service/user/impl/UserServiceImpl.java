@@ -3,6 +3,7 @@ package com.hydravision.service.user.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,7 +17,7 @@ import com.hydravision.entity.user.User;
 import com.hydravision.mapper.user.UserMapper;
 import com.hydravision.service.user.UserService;
 import com.hydravision.vo.user.UserVO;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +31,10 @@ import java.util.stream.Collectors;
  * 用户服务实现类
  */
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User getByUsername(String username) {
@@ -133,9 +134,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         baseMapper.updateById(user);
 
         // 更新登录次数
-        baseMapper.update(null, new LambdaQueryWrapper<User>()
-                .eq(User::getId, userId)
-                .setSql("login_count = login_count + 1"));
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId, userId)
+                .setSql("login_count = login_count + 1");
+        baseMapper.update(null, updateWrapper);
     }
 
     private UserVO convertToVO(User user) {
