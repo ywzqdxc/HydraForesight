@@ -22,7 +22,7 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "您好! 我是雨安盾智能助手，可以回答您关于降雨、防洪、水资源等方面的问题。有什么可以帮助您的吗?",
+      content: "您好! 我是智水先知智能助手，可以回答您关于降雨、防洪、水资源等方面的问题。有什么可以帮助您的吗?",
     },
   ])
   const [input, setInput] = useState("")
@@ -30,7 +30,12 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   // 预设问题
-  const suggestedQuestions = ["发生暴雨灾害时如何自救?", "城市洪涝问题的现状如何？", "如何提升水库的调蓄作用？", "人员调度如何进行？"]
+  const suggestedQuestions = [
+    "发生暴雨灾害时如何自救?",
+    "城市洪涝问题的现状如何？",
+    "如何提升水库的调蓄作用？",
+    "人员调度如何进行？",
+  ]
 
   // 自动滚动到最新消息
   useEffect(() => {
@@ -108,7 +113,7 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Bot className="h-5 w-5 text-blue-500" />
-                <CardTitle className="text-lg">雨安盾智能助手</CardTitle>
+                <CardTitle className="text-lg">智水先知智能助手</CardTitle>
               </div>
               <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8">
                 <X className="h-4 w-4" />
@@ -143,7 +148,7 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
                           <div className="flex items-center gap-2 mb-1">
                             {message.role === "assistant" ? <Bot className="h-4 w-4" /> : <User className="h-4 w-4" />}
                             <span className="text-xs font-medium">
-                              {message.role === "assistant" ? "雨安盾助手" : "您"}
+                              {message.role === "assistant" ? "智水先知助手" : "您"}
                             </span>
                           </div>
                           {/* <p className="text-sm whitespace-pre-wrap">{message.reasoning}</p> */}
@@ -164,7 +169,7 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
                         key={index}
                         variant="outline"
                         size="sm"
-                        className="text-xs h-7"
+                        className="text-xs h-7 bg-transparent"
                         onClick={() => handleSendMessage(question)}
                         disabled={isLoading}
                       >
@@ -225,7 +230,7 @@ export default function AIAssistantDialog({ isOpen, onClose }: AIAssistantDialog
                   <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-md border border-blue-100 dark:border-blue-800">
                     <div className="flex items-center gap-2 text-blue-800 dark:text-blue-300 text-sm font-medium">
                       <Bot className="h-4 w-4" />
-                      <span>雨安盾智能助手由百炼AI提供技术支持</span>
+                      <span>智水先知智能助手由百炼AI提供技术支持</span>
                     </div>
                   </div>
                 </div>

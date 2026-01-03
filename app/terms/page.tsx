@@ -18,19 +18,19 @@ export default function TermsPage() {
               </div>
             </div>
             <CardTitle className="text-2xl font-bold">用户协议</CardTitle>
-            <p className="text-sm text-muted-foreground">雨安盾智能降水检测预警系统</p>
+            <p className="text-sm text-muted-foreground">智水先知智能降水检测预警系统</p>
           </CardHeader>
 
           <CardContent className="space-y-6">
             <div className="prose dark:prose-invert max-w-none">
               <h3 className="text-lg font-semibold">1. 服务条款</h3>
               <p className="text-sm text-muted-foreground">
-                欢迎使用雨安盾智能降水检测预警系统。通过访问和使用本系统，您同意遵守以下条款和条件。
+                欢迎使用智水先知智能降水检测预警系统。通过访问和使用本系统，您同意遵守以下条款和条件。
               </p>
 
               <h3 className="text-lg font-semibold">2. 服务描述</h3>
               <p className="text-sm text-muted-foreground">
-                雨安盾系统提供实时降水监测、预警信息发布、数据分析等服务，旨在帮助用户及时了解降水情况并做好防范措施。
+                智水先知系统提供实时降水监测、预警信息发布、数据分析等服务，旨在帮助用户及时了解降水情况并做好防范措施。
               </p>
 
               <h3 className="text-lg font-semibold">3. 用户责任</h3>
@@ -64,7 +64,7 @@ export default function TermsPage() {
                   返回登录
                 </Button>
               </Link>
-              <p className="text-xs text-muted-foreground">最后更新：2024年1月1日</p>
+              <p className="text-xs text-muted-foreground">最后更新：2026年1月1日</p>
             </div>
           </CardContent>
         </Card>

@@ -13,7 +13,6 @@ import {
   Info,
   Zap,
   AreaChart,
-  Layers,
 } from "lucide-react"
 import RainfallMap from "@/components/rainfall-map"
 import WeatherForecast from "@/components/weather-forecast"
@@ -25,78 +24,75 @@ import { WeatherProvider } from "@/components/weather-service"
 import { CitySelector } from "@/components/city-selector"
 import { CurrentWeather } from "@/components/current-weather"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import AIAssistantButton from "@/components/ai-assistant-button"
-import Chart from "@/components/Chart";
+import Chart from "@/components/Chart"
+import { isAuthenticated } from "@/lib/api/auth"
+
 const options = {
   title: {
-    text: '日降水量 (mm)'
+    text: "日降水量 (mm)",
   },
   tooltip: {
-    trigger: 'axis'
+    trigger: "axis",
   },
   legend: {
     // orient: 'vertical',
     right: 10,
-    top: 'bottom',
-    data: ['日降水量']
+    top: "bottom",
+    data: ["日降水量"],
   },
   grid: {
-    left: '3%',
-    right: '3%',
-    bottom: '13%',
-    top: '18%',
-    containLabel: true
+    left: "3%",
+    right: "3%",
+    bottom: "13%",
+    top: "18%",
+    containLabel: true,
   },
   toolbox: {
     feature: {
-      saveAsImage: {}
-    }
+      saveAsImage: {},
+    },
   },
   xAxis: {
-    type: 'category',
-    data: ['7/21', '7/22', '7/23', '7/24', '7/25', '7/26', '7/27']
+    type: "category",
+    data: ["7/21", "7/22", "7/23", "7/24", "7/25", "7/26", "7/27"],
   },
   yAxis: {
-    type: 'value'
+    type: "value",
   },
   series: [
     {
-      name: '日降水量',
+      name: "日降水量",
       data: [20, 0, 0, 10, 20, 35, 55],
-      type: 'bar'
-    }
-  ]
-};
+      type: "bar",
+    },
+  ],
+}
 
 export default function HomePage() {
-    const router = useRouter()
-  
-    useEffect(() => {
-      // 检查用户是否已登录
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"
-  
-      if (!isLoggedIn) {
-        router.push("/login")
-        return
-      }
-    }, [router])
-  
-    // 如果未登录，显示加载状态
-    const isLoggedIn = typeof window !== "undefined" ? localStorage.getItem("isLoggedIn") === "true" : false
-  
-    if (!isLoggedIn) {
-      return (
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-muted-foreground">正在验证登录状态...</p>
-          </div>
-        </div>
-      )
+  const router = useRouter()
+
+  useEffect(() => {
+    // 检查用户是否已登录
+    if (!isAuthenticated()) {
+      router.push("/login")
+      return
     }
-  
+  }, [router])
+
+  // 如果未登录，显示加载状态
+  if (typeof window !== "undefined" && !isAuthenticated()) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">正在验证登录状态...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -104,11 +100,16 @@ export default function HomePage() {
         <main className="flex-1 container py-4">
           <div className="flex flex-col gap-4">
             {/* 页面标题和城市选择器 */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold tracking-tight">雨安盾监测与预警系统</h1>
-                {/* <p className="text-sm text-muted-foreground">监测四川省乐山市降水情况与预警信息</p> */}
+            <div className="mb-6 flex items-center gap-3">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <Droplets className="h-8 w-8 text-blue-500" />
               </div>
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent">
+                智水先知
+              </h1>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>{/* <p className="text-sm text-muted-foreground">监测四川省乐山市降水情况与预警信息</p> */}</div>
               <div className="flex items-center gap-2">
                 <CitySelector />
               </div>
@@ -124,32 +125,32 @@ export default function HomePage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="ml-auto text-xs h-7 border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/40"
+                  className="ml-auto text-xs h-7 border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/40 bg-transparent"
                 >
                   查看详情
                 </Button>
               </div>
             </div> */}
 
-              {/* 顶部：实时降水地图 */}
-              <div className="md:col-span-2 lg:col-span-2">
-                {/* <Card className="h-full"> */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-sm font-medium flex items-center gap-1.5">
-                        <MapPin className="h-4 w-4 text-blue-500" />
-                        实时监测地图
-                      </CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="relative">
-                      <RainfallMap />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+            {/* 顶部：实时降水地图 */}
+            <div className="md:col-span-2 lg:col-span-2">
+              {/* <Card className="h-full"> */}
+              <Card>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-sm font-medium flex items-center gap-1.5">
+                      <MapPin className="h-4 w-4 text-blue-500" />
+                      实时监测地图
+                    </CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="relative">
+                    <RainfallMap />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* 主要内容区域 - 上半部分 */}
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -198,8 +199,6 @@ export default function HomePage() {
                   </Card>
                 </div>
               </div>
-
-
 
               {/* 右侧：监测点状态和降水概率 */}
               <div className="md:col-span-3 lg:col-span-1">
@@ -276,7 +275,7 @@ export default function HomePage() {
                       </div>
                     </CardContent>
                     <CardFooter className="pt-0">
-                      <Button variant="outline" size="sm" className="w-full text-xs h-7" asChild>
+                      <Button variant="outline" size="sm" className="w-full text-xs h-7 bg-transparent" asChild>
                         <a href="/device-management">查看所有设备</a>
                       </Button>
                     </CardFooter>
@@ -344,7 +343,7 @@ export default function HomePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <div className="h-[200px] w-full bg-slate-100 dark:bg-slate-800 rounded-md relative overflow-hidden">
-                    <Chart options={options} height={200} />
+                      <Chart options={options} height={200} />
                       {/* <div className="absolute top-2 left-2 text-xs font-medium">日降水量 (mm)</div>
                       <div className="absolute top-2 right-2 text-xs font-medium text-red-500">今日: 95mm</div> */}
                     </div>

@@ -18,7 +18,7 @@ export default function PrivacyPage() {
               </div>
             </div>
             <CardTitle className="text-2xl font-bold">隐私政策</CardTitle>
-            <p className="text-sm text-muted-foreground">雨安盾智能降水检测预警系统</p>
+            <p className="text-sm text-muted-foreground">智水先知智能降水检测预警系统</p>
           </CardHeader>
 
           <CardContent className="space-y-6">

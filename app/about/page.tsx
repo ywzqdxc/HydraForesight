@@ -15,7 +15,7 @@ export default function AboutPage() {
               <Info className="h-8 w-8 text-blue-500" />
               关于系统
             </h1>
-            <p className="text-muted-foreground">了解雨安盾监测与预警系统</p>
+            <p className="text-muted-foreground">了解智水先知监测与预警系统</p>
           </div>
 
           <Tabs defaultValue="overview" className="w-full">
@@ -31,13 +31,13 @@ export default function AboutPage() {
                 <CardHeader>
                   <CardTitle className="text-xl flex items-center gap-2">
                     <CloudRain className="h-6 w-6 text-blue-500" />
-                    雨安盾监测与预警系统
+                    智水先知监测与预警系统
                   </CardTitle>
                   <CardDescription>智能化监测与预警平台，保障城市安全</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p>
-                  雨安盾监测与预警系统是一套基于物联网、大数据和人工智能技术的综合性监测与预警平台。系统通过部署的多个监测点，实时采集降水量、水位、气象等数据，结合气象预报和历史数据分析，为城市防汛减灾提供科学决策支持。
+                    智水先知监测与预警系统是一套基于物联网、大数据和人工智能技术的综合性监测与预警平台。系统通过部署的多个监测点，实时采集降水量、水位、气象等数据，结合气象预报和历史数据分析，为城市防汛减灾提供科学决策支持。
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -307,45 +307,59 @@ export default function AboutPage() {
                 <CardContent>
                   <div className="space-y-6">
                     <p>
-                    雨安盾监测与预警系统由一支跨学科的专业团队开发，团队成员来自水利工程、软件工程等多个领域，拥有丰富的理论知识和实践经验。
+                      智水先知监测与预警系统由一支跨学科的专业团队开发，团队成员来自水利工程、软件工程等多个领域，拥有丰富的理论知识和实践经验。
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                       <div className="text-center">
-                        {/* <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div> */}
-                        <img src="team/cx.png" alt="崔鑫" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <img
+                          src="team/cx.png"
+                          alt="崔鑫"
+                          className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"
+                        />
                         <h3 className="font-medium">崔鑫</h3>
                         <p className="text-sm text-muted-foreground">项目负责人</p>
                         <p className="text-sm text-muted-foreground"></p>
                       </div>
 
                       <div className="text-center">
-                        {/* <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div> */}
-                        <img src="team/lyb.png" alt="路玉彬" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <img
+                          src="team/lyb.png"
+                          alt="路玉彬"
+                          className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"
+                        />
                         <h3 className="font-medium">路玉彬</h3>
                         <p className="text-sm text-muted-foreground">软件工程师</p>
                         <p className="text-sm text-muted-foreground"></p>
                       </div>
 
                       <div className="text-center">
-                        {/* <div className="w-24 h-24 rounded-full bg-slate-200 mx-auto mb-4"></div> */}
-                        <img src="team/llg.png" alt="刘林国" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <img
+                          src="team/llg.png"
+                          alt="刘林国"
+                          className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"
+                        />
                         <h3 className="font-medium">刘林国</h3>
                         <p className="text-sm text-muted-foreground">页面设计师</p>
-                        {/* <p className="text-sm text-muted-foreground">云计算专家</p> */}
                       </div>
 
                       <div className="text-center">
-                      <img src="team/lan.png" alt="李安宁" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <img
+                          src="team/lan.png"
+                          alt="李安宁"
+                          className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"
+                        />
                         <h3 className="font-medium">李安宁</h3>
                         <p className="text-sm text-muted-foreground">算法设计师</p>
-                        {/* <p className="text-sm text-muted-foreground">专家</p> */}
                       </div>
                       <div className="text-center">
-                      <img src="team/zys.jpg" alt="张艳双" className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"/>
+                        <img
+                          src="team/zys.jpg"
+                          alt="张艳双"
+                          className="w-18 h-24 rounded-full bg-slate-200 mx-auto mb-4"
+                        />
                         <h3 className="font-medium">张艳双</h3>
                         <p className="text-sm text-muted-foreground">水文学顾问</p>
-                        {/* <p className="text-sm text-muted-foreground">专家</p> */}
                       </div>
                     </div>
 
@@ -353,23 +367,19 @@ export default function AboutPage() {
                       <h3 className="text-lg font-medium">合作单位</h3>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="p-4 border rounded-md text-center">
-                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
-                          <img src="cma_logo.png" alt="XX市气象局" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <img src="cma_logo.png" alt="XX市气象局" className="w-16 h-16 mx-auto mb-2 rounded" />
                           <p className="text-sm">XX市气象局</p>
                         </div>
                         <div className="p-4 border rounded-md text-center">
-                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
-                          <img src="mwr_logo.png" alt="XX市水利局" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <img src="mwr_logo.png" alt="XX市水利局" className="w-16 h-16 mx-auto mb-2 rounded" />
                           <p className="text-sm">XX市水利局</p>
                         </div>
                         <div className="p-4 border rounded-md text-center">
-                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
-                          <img src="mem_logo.png" alt="XX市应急管理局" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <img src="mem_logo.png" alt="XX市应急管理局" className="w-16 h-16 mx-auto mb-2 rounded" />
                           <p className="text-sm">XX市应急管理局</p>
                         </div>
                         <div className="p-4 border rounded-md text-center">
-                          {/* <div className="w-16 h-16 bg-slate-200 mx-auto mb-2 rounded"></div> */}
-                          <img src="ncwu_logo.png" alt="华北水利水电大学" className="w-16 h-16 mx-auto mb-2 rounded"/>
+                          <img src="ncwu_logo.png" alt="华北水利水电大学" className="w-16 h-16 mx-auto mb-2 rounded" />
                           <p className="text-sm">华北水利水电大学</p>
                         </div>
                       </div>

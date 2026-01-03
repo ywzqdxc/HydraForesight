@@ -7,14 +7,17 @@ import { Eye, EyeOff, CloudRain, Droplets, Shield, Mail, Lock, User, Phone } fro
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { login, register, isAuthenticated } from "@/lib/api/auth"
+import { useToast } from "@/hooks/use-toast"
 
 export default function LoginPage() {
   const router = useRouter()
+  const { toast } = useToast()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -34,8 +37,7 @@ export default function LoginPage() {
 
   // 检查是否已经登录，如果已登录则跳转到主页
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"
-    if (isLoggedIn) {
+    if (isAuthenticated()) {
       router.push("/")
     }
   }, [router])
@@ -44,40 +46,95 @@ export default function LoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    // 模拟登录请求
-    setTimeout(() => {
+    try {
+      const response = await login({
+        username: loginForm.username,
+        password: loginForm.password,
+        rememberMe: loginForm.rememberMe,
+      })
+
+      if (response.code === 200) {
+        toast({
+          title: "登录成功",
+          description: `欢迎回来，${response.data.user.username}！`,
+        })
+        router.push("/")
+      } else {
+        toast({
+          title: "登录失败",
+          description: response.message || "用户名或密码错误",
+          variant: "destructive",
+        })
+      }
+    } catch (error: any) {
+      toast({
+        title: "登录失败",
+        description: error.message || "网络错误，请稍后重试",
+        variant: "destructive",
+      })
+    } finally {
       setIsLoading(false)
-      // 设置登录状态
-      localStorage.setItem("isLoggedIn", "true")
-      localStorage.setItem("username", loginForm.username)
-      // 登录成功后跳转到主页
-      router.push("/")
-    }, 1500)
+    }
   }
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     if (registerForm.password !== registerForm.confirmPassword) {
-      alert("密码不一致")
+      toast({
+        title: "注册失败",
+        description: "两次输入的密码不一致",
+        variant: "destructive",
+      })
       return
     }
     if (!registerForm.agreeTerms) {
-      alert("请同意用户协议和隐私政策")
+      toast({
+        title: "注册失败",
+        description: "请同意用户协议和隐私政策",
+        variant: "destructive",
+      })
       return
     }
 
     setIsLoading(true)
 
-    // 模拟注册请求
-    setTimeout(() => {
+    try {
+      const response = await register({
+        username: registerForm.username,
+        password: registerForm.password,
+        email: registerForm.email || undefined,
+        phone: registerForm.phone || undefined,
+      })
+
+      if (response.code === 200) {
+        toast({
+          title: "注册成功",
+          description: "请使用新账号登录",
+        })
+        // 注册成功后自动登录
+        const loginResponse = await login({
+          username: registerForm.username,
+          password: registerForm.password,
+        })
+        if (loginResponse.code === 200) {
+          router.push("/")
+        }
+      } else {
+        toast({
+          title: "注册失败",
+          description: response.message || "注册失败，请稍后重试",
+          variant: "destructive",
+        })
+      }
+    } catch (error: any) {
+      toast({
+        title: "注册失败",
+        description: error.message || "网络错误，请稍后重试",
+        variant: "destructive",
+      })
+    } finally {
       setIsLoading(false)
-      // 设置登录状态
-      localStorage.setItem("isLoggedIn", "true")
-      localStorage.setItem("username", registerForm.username)
-      alert("注册成功！")
-      // 注册成功后跳转到主页
-      router.push("/")
-    }, 1500)
+    }
   }
 
   return (
@@ -116,10 +173,18 @@ export default function LoginPage() {
                 <Droplets className="h-6 w-6 text-cyan-500 absolute -top-1 -right-1" />
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              雨安盾监测系统
-            </CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-400">智能降水检测与预警平台</CardDescription>
+            <div className="flex flex-col items-center justify-center mb-8">
+              <div className="relative group">
+                <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-blue-500/20 rounded-full blur-lg group-hover:blur-xl transition-all duration-300" />
+                <div className="relative bg-white dark:bg-slate-800 rounded-full p-4 shadow-lg">
+                  <CloudRain className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+                </div>
+              </div>
+              <h1 className="mt-6 text-3xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                智水先知
+              </h1>
+              <p className="mt-2 text-sm text-muted-foreground">城市洪涝监测与预警系统</p>
+            </div>
           </CardHeader>
 
           <CardContent>
@@ -241,7 +306,6 @@ export default function LoginPage() {
                         className="pl-10"
                         value={registerForm.email}
                         onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-                        required
                       />
                     </div>
                   </div>
@@ -257,7 +321,6 @@ export default function LoginPage() {
                         className="pl-10"
                         value={registerForm.phone}
                         onChange={(e) => setRegisterForm({ ...registerForm, phone: e.target.value })}
-                        required
                       />
                     </div>
                   </div>
@@ -348,7 +411,7 @@ export default function LoginPage() {
 
             <div className="mt-6 text-center">
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                © 2025 雨安盾监测系统 - 智能降水检测与预警平台
+                © 2025 智水先知监测系统 - 智能降水检测与预警平台
               </p>
             </div>
           </CardContent>

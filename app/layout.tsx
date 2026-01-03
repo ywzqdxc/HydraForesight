@@ -8,8 +8,8 @@ import { DarkModeFixes } from "@/components/dark-mode-fixes"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "乐山市洪涝监测与预警系统",
-  description: "智能监测与预警系统",
+  title: "智水先知 - 城市洪涝监测与预警系统",
+  description: "智水先知是一套基于物联网、大数据和人工智能技术的综合性降水监测与预警平台",
   generator: "崔Team",
 }
 
