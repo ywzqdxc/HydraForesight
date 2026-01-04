@@ -95,10 +95,15 @@ export default function DeviceManagementPage() {
   const [isAddDeviceOpen, setIsAddDeviceOpen] = useState(false)
 
   const [newDevice, setNewDevice] = useState({
+    deviceId: "",
     deviceName: "",
     deviceType: 1 as number,
     areaId: 1 as number,
     locationName: "",
+    latitude: 29.5629 as number,
+    longitude: 104.0657 as number,
+    deviceModel: "",
+    manufacturer: "",
   })
   const [showAddSuccess, setShowAddSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -280,8 +285,13 @@ export default function DeviceManagementPage() {
     })
 
   const handleAddDevice = async () => {
-    if (!newDevice.deviceName || !newDevice.locationName) {
-      setError("请填写设备名称和位置")
+    if (!newDevice.deviceId || !newDevice.deviceName || !newDevice.locationName) {
+      setError("请填写设备ID、设备名称和位置")
+      return
+    }
+
+    if (newDevice.latitude === null || newDevice.longitude === null) {
+      setError("请填写设备坐标信息")
       return
     }
 
@@ -290,10 +300,15 @@ export default function DeviceManagementPage() {
       setError(null)
 
       const response = await createDevice({
+        deviceId: newDevice.deviceId,
         deviceName: newDevice.deviceName,
         deviceType: newDevice.deviceType,
         areaId: newDevice.areaId,
         locationName: newDevice.locationName,
+        latitude: Number.parseFloat(newDevice.latitude.toString()),
+        longitude: Number.parseFloat(newDevice.longitude.toString()),
+        deviceModel: newDevice.deviceModel || undefined,
+        manufacturer: newDevice.manufacturer || undefined,
       })
 
       if (response.data) {
@@ -303,10 +318,15 @@ export default function DeviceManagementPage() {
 
         // 重置表单
         setNewDevice({
+          deviceId: "",
           deviceName: "",
           deviceType: 1,
           areaId: 1,
           locationName: "",
+          latitude: 29.5629,
+          longitude: 104.0657,
+          deviceModel: "",
+          manufacturer: "",
         })
 
         // 3秒后隐藏成功提示，并重新获取设备列表
@@ -428,18 +448,31 @@ export default function DeviceManagementPage() {
                 <Plus className="mr-2 h-4 w-4" /> 添加设备
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>添加新设备</DialogTitle>
                 <DialogDescription>填写以下信息添加新的监测设备到系统中</DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="deviceId" className="text-right">
+                    设备ID <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="deviceId"
+                    placeholder="例如：RAIN-001"
+                    value={newDevice.deviceId}
+                    onChange={(e) => setNewDevice({ ...newDevice, deviceId: e.target.value })}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
-                    设备名称
+                    设备名称 <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="name"
+                    placeholder="例如：黄石坡监测点"
                     value={newDevice.deviceName}
                     onChange={(e) => setNewDevice({ ...newDevice, deviceName: e.target.value })}
                     className="col-span-3"
@@ -447,7 +480,7 @@ export default function DeviceManagementPage() {
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="type" className="text-right">
-                    设备类型
+                    设备类型 <span className="text-red-500">*</span>
                   </Label>
                   <Select
                     value={newDevice.deviceType.toString()}
@@ -467,7 +500,7 @@ export default function DeviceManagementPage() {
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="area" className="text-right">
-                    所属区域
+                    所属区域 <span className="text-red-500">*</span>
                   </Label>
                   <Select
                     value={newDevice.areaId.toString()}
@@ -489,16 +522,70 @@ export default function DeviceManagementPage() {
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="location" className="text-right">
-                    具体位置
+                    具体位置 <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="location"
+                    placeholder="例如：河道左岸"
                     value={newDevice.locationName}
                     onChange={(e) => setNewDevice({ ...newDevice, locationName: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="longitude" className="text-right">
+                    经度 <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="longitude"
+                    type="number"
+                    step="0.0001"
+                    placeholder="例如：104.0657"
+                    value={newDevice.longitude}
+                    onChange={(e) => setNewDevice({ ...newDevice, longitude: Number.parseFloat(e.target.value) || 0 })}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="latitude" className="text-right">
+                    纬度 <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="latitude"
+                    type="number"
+                    step="0.0001"
+                    placeholder="例如：29.5629"
+                    value={newDevice.latitude}
+                    onChange={(e) => setNewDevice({ ...newDevice, latitude: Number.parseFloat(e.target.value) || 0 })}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="model" className="text-right">
+                    设备型号
+                  </Label>
+                  <Input
+                    id="model"
+                    placeholder="可选"
+                    value={newDevice.deviceModel}
+                    onChange={(e) => setNewDevice({ ...newDevice, deviceModel: e.target.value })}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="manufacturer" className="text-right">
+                    生产厂家
+                  </Label>
+                  <Input
+                    id="manufacturer"
+                    placeholder="可选"
+                    value={newDevice.manufacturer}
+                    onChange={(e) => setNewDevice({ ...newDevice, manufacturer: e.target.value })}
+                    className="col-span-3"
+                  />
+                </div>
               </div>
+              {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
               <DialogFooter>
                 <DialogClose asChild>
                   <Button variant="outline">取消</Button>
