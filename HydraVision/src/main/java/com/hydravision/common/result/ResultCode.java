@@ -11,6 +11,7 @@ public enum ResultCode {
     // 客户端错误 4xx
     FAIL(400, "操作失败"),
     PARAM_ERROR(400, "参数错误"),
+    PARAMS_ERROR(400, "参数错误"), // 添加 PARAMS_ERROR 作为别名
     PARAM_VALID_ERROR(400, "参数校验失败"),
     NOT_FOUND(404, "资源不存在"),
     METHOD_NOT_ALLOWED(405, "请求方法不允许"),
