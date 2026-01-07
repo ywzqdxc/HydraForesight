@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { User, Mail, Phone, Key, Save, Loader2 } from "lucide-react"
+import { User, Mail, Phone, Key, Save, Loader2, Settings, Shield } from "lucide-react"
+import Link from "next/link"
 import {
   getCurrentUser,
   updateProfile,
@@ -19,6 +20,8 @@ import {
   type UpdatePasswordRequest,
 } from "@/lib/api/user"
 import { useToast } from "@/hooks/use-toast"
+import { getDepartment } from "@/lib/api/department"
+import { getRolesByUserId } from "@/lib/api/role"
 
 export default function ProfilePage() {
   const { toast } = useToast()
@@ -26,6 +29,8 @@ export default function ProfilePage() {
   const [profileLoading, setProfileLoading] = useState(true)
   const [passwordLoading, setPasswordLoading] = useState(false)
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
+  const [department, setDepartment] = useState<string>("")
+  const [roles, setRoles] = useState<string[]>([])
 
   // 表单状态
   const [formData, setFormData] = useState({
@@ -59,6 +64,24 @@ export default function ProfilePage() {
         phone: data.phone || "",
         gender: data.gender || 0,
       })
+
+      if (data.deptId) {
+        try {
+          const deptData = await getDepartment(data.deptId)
+          setDepartment(deptData.deptName)
+        } catch (error) {
+          console.error("Failed to load department:", error)
+        }
+      }
+
+      if (data.id) {
+        try {
+          const rolesData = await getRolesByUserId(data.id)
+          setRoles(rolesData.map((r) => r.roleName))
+        } catch (error) {
+          console.error("Failed to load roles:", error)
+        }
+      }
     } catch (error) {
       toast({
         title: "加载失败",
@@ -275,6 +298,30 @@ export default function ProfilePage() {
                               />
                             </div>
                           </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="department">所属部门</Label>
+                            <Input id="department" value={department || "暂无部门"} disabled />
+                            <p className="text-xs text-muted-foreground">部门不可修改</p>
+                          </div>
+                          <div className="space-y-2 md:col-span-2">
+                            <Label htmlFor="roles">角色</Label>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <Shield className="h-4 w-4 text-muted-foreground" />
+                              {roles.length > 0 ? (
+                                roles.map((role, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm"
+                                  >
+                                    {role}
+                                  </span>
+                                ))
+                              ) : (
+                                <span className="text-muted-foreground text-sm">暂无角色</span>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground">角色不可修改，请联系管理员</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -372,6 +419,14 @@ export default function ProfilePage() {
               </TabsContent>
             </Tabs>
           )}
+          <div className="flex justify-end mt-4">
+            <Link href="/settings">
+              <Button variant="outline">
+                <Settings className="mr-2 h-4 w-4" />
+                系统设置
+              </Button>
+            </Link>
+          </div>
         </div>
       </main>
     </div>

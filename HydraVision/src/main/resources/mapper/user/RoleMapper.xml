@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hydravision.mapper.user.RoleMapper">
+
+    <!-- 根据用户ID查询角色列表 -->
+    <select id="selectByUserId" resultType="com.hydravision.entity.user.Role">
+        SELECT r.*
+        FROM hf_role r
+        INNER JOIN hf_user_role ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId}
+          AND r.is_deleted = 0
+          AND r.status = 1
+    </select>
+
+</mapper>
