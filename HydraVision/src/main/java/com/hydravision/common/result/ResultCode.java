@@ -35,6 +35,7 @@ public enum ResultCode {
     OLD_PASSWORD_ERROR(1004, "原密码错误"),
     USERNAME_OR_PASSWORD_ERROR(1005, "用户名或密码错误"),
     PASSWORD_NOT_MATCH(1006, "两次输入的密码不一致"), // 添加密码不匹配错误码
+    ROLE_NOT_FOUND(1007, "角色不存在"),
 
     DEVICE_NOT_FOUND(2001, "设备不存在"),
     DEVICE_OFFLINE(2002, "设备离线"),

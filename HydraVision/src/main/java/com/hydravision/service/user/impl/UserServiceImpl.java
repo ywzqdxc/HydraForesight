@@ -14,6 +14,7 @@ import com.hydravision.dto.user.PasswordUpdateDTO;
 import com.hydravision.dto.user.UserCreateDTO;
 import com.hydravision.dto.user.UserQueryDTO;
 import com.hydravision.dto.user.UserUpdateDTO;
+import com.hydravision.entity.user.Role;
 import com.hydravision.entity.user.User;
 import com.hydravision.entity.user.UserRole;
 import com.hydravision.mapper.user.RoleMapper;
