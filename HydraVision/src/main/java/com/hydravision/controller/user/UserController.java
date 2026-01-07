@@ -2,9 +2,13 @@ package com.hydravision.controller.user;
 
 import com.hydravision.common.result.PageResult;
 import com.hydravision.common.result.Result;
+import com.hydravision.dto.user.PasswordUpdateDTO;
 import com.hydravision.dto.user.UserCreateDTO;
 import com.hydravision.dto.user.UserQueryDTO;
 import com.hydravision.dto.user.UserUpdateDTO;
+import com.hydravision.entity.user.User;
+import com.hydravision.exception.BusinessException;
+import com.hydravision.exception.ResultCode;
 import com.hydravision.service.user.UserService;
 import com.hydravision.vo.user.UserVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +16,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -55,5 +61,26 @@ public class UserController {
     @GetMapping("/page")
     public Result<PageResult<UserVO>> pageUsers(UserQueryDTO query) {
         return Result.success(userService.pageUsers(query));
+    }
+
+    @Operation(summary = "获取当前用户信息")
+    @GetMapping("/current")
+    public Result<UserVO> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.getByUsername(username);
+        if (user == null) {
+            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+        }
+        return Result.success(userService.getUserDetail(user.getId()));
+    }
+
+    @Operation(summary = "修改密码")
+    @PutMapping("/password")
+    public Result<Void> updatePassword(@Valid @RequestBody PasswordUpdateDTO dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        userService.updatePassword(username, dto);
+        return Result.success();
     }
 }

@@ -7,6 +7,7 @@ import com.hydravision.dto.user.UserQueryDTO;
 import com.hydravision.dto.user.UserUpdateDTO;
 import com.hydravision.entity.user.User;
 import com.hydravision.vo.user.UserVO;
+import com.hydravision.dto.user.PasswordUpdateDTO; // Import PasswordUpdateDTO
 
 import java.util.List;
 
@@ -59,4 +60,9 @@ public interface UserService extends IService<User> {
      * 更新用户登录信息
      */
     void updateLoginInfo(Long userId, String ip);
+
+    /**
+     * 修改用户密码
+     */
+    void updatePassword(String username, PasswordUpdateDTO dto); // Added method
 }

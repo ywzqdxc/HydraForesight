@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hydravision.common.exception.BusinessException;
 import com.hydravision.common.result.PageResult;
 import com.hydravision.common.result.ResultCode;
+import com.hydravision.dto.user.PasswordUpdateDTO;
 import com.hydravision.dto.user.UserCreateDTO;
 import com.hydravision.dto.user.UserQueryDTO;
 import com.hydravision.dto.user.UserUpdateDTO;
@@ -142,6 +143,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         updateWrapper.eq(User::getId, userId)
                 .setSql("login_count = login_count + 1");
         baseMapper.update(null, updateWrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePassword(String username, PasswordUpdateDTO dto) {
+        // 验证新密码和确认密码是否一致
+        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+            throw new BusinessException(ResultCode.PASSWORD_NOT_MATCH);
+        }
+
+        // 查询用户
+        User user = baseMapper.selectByUsername(username);
+        if (user == null) {
+            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+        }
+
+        // 验证当前密码是否正确
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPasswordHash())) {
+            throw new BusinessException(ResultCode.PASSWORD_ERROR);
+        }
+
+        // 更新密码
+        user.setPasswordHash(passwordEncoder.encode(dto.getNewPassword()));
+        user.setSalt(IdUtil.fastSimpleUUID().substring(0, 8));
+        baseMapper.updateById(user);
     }
 
     private UserVO convertToVO(User user) {

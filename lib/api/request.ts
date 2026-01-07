@@ -109,3 +109,39 @@ class RequestClient {
 }
 
 export const apiClient = new RequestClient(API_BASE_URL)
+
+export async function request<T = any>(
+  url: string,
+  options?: {
+    method?: "GET" | "POST" | "PUT" | "DELETE"
+    body?: string
+    params?: Record<string, any>
+  },
+): Promise<T> {
+  const method = options?.method || "GET"
+
+  let response: ApiResponse<T>
+
+  switch (method) {
+    case "GET":
+      response = await apiClient.get<T>(url, options?.params)
+      break
+    case "POST":
+      response = await apiClient.post<T>(url, options?.body ? JSON.parse(options.body) : undefined)
+      break
+    case "PUT":
+      response = await apiClient.put<T>(url, options?.body ? JSON.parse(options.body) : undefined)
+      break
+    case "DELETE":
+      response = await apiClient.delete<T>(url)
+      break
+    default:
+      throw new Error(`Unsupported method: ${method}`)
+  }
+
+  if (response.code !== 200) {
+    throw new Error(response.message || "请求失败")
+  }
+
+  return response.data
+}
