@@ -15,7 +15,10 @@ import com.hydravision.dto.user.UserCreateDTO;
 import com.hydravision.dto.user.UserQueryDTO;
 import com.hydravision.dto.user.UserUpdateDTO;
 import com.hydravision.entity.user.User;
+import com.hydravision.entity.user.UserRole;
+import com.hydravision.mapper.user.RoleMapper;
 import com.hydravision.mapper.user.UserMapper;
+import com.hydravision.mapper.user.UserRoleMapper;
 import com.hydravision.service.user.UserService;
 import com.hydravision.vo.user.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -168,6 +177,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPasswordHash(passwordEncoder.encode(dto.getNewPassword()));
         user.setSalt(IdUtil.fastSimpleUUID().substring(0, 8));
         baseMapper.updateById(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void setUserRole(Long userId, Long roleId) {
+        User user = baseMapper.selectById(userId);
+        if (user == null) {
+            throw new BusinessException(ResultCode.USER_NOT_FOUND);
+        }
+
+        Role role = roleMapper.selectById(roleId);
+        if (role == null) {
+            throw new BusinessException(ResultCode.ROLE_NOT_FOUND);
+        }
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        userRole.setRoleId(roleId);
+        userRoleMapper.insert(userRole);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void removeUserRole(Long userId, Long roleId) {
+        LambdaUpdateWrapper<UserRole> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(UserRole::getUserId, userId)
+               .eq(UserRole::getRoleId, roleId);
+        userRoleMapper.delete(wrapper);
+    }
+
+    @Override
+    public List<String> getUserRoles(Long userId) {
+        return baseMapper.selectRoleCodesByUserId(userId);
     }
 
     private UserVO convertToVO(User user) {
