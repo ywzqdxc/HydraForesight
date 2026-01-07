@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import {
@@ -30,7 +32,7 @@ import {
   deleteUser,
 } from "@/lib/api/user"
 import { pageDepartments } from "@/lib/api/department"
-import { Loader2, Pencil, Trash2, UserPlus } from "lucide-react"
+import { Loader2, Pencil, Trash2, UserPlus, Settings } from "lucide-react"
 import type { User, Role } from "@/lib/api/user"
 import type { Department } from "@/lib/api/department"
 
@@ -147,7 +149,6 @@ export default function SettingsPage() {
           deptId: userForm.deptId ? Number.parseInt(userForm.deptId) : undefined,
         })
 
-        // 更新用户角色
         const currentRoleIds = selectedUser.roles?.map((r) => r.id) || []
         const toAdd = userForm.selectedRoleIds.filter((id) => !currentRoleIds.includes(id))
         const toRemove = currentRoleIds.filter((id) => !userForm.selectedRoleIds.includes(id))
@@ -170,7 +171,6 @@ export default function SettingsPage() {
           deptId: userForm.deptId ? Number.parseInt(userForm.deptId) : undefined,
         })
 
-        // 设置用户角色
         for (const roleId of userForm.selectedRoleIds) {
           await setUserRole(userId, roleId)
         }
@@ -225,7 +225,9 @@ export default function SettingsPage() {
       }
 
       await loadData()
-      const updatedUser = users.find((u) => u.id === selectedUser.id)
+      // 更新 selectedUser 以保持对话框内的数据同步
+      const updatedUsers = await pageUsers({ current: 1, size: 100 })
+      const updatedUser = updatedUsers.records.find((u) => u.id === selectedUser.id)
       if (updatedUser) setSelectedUser(updatedUser)
     } catch (error) {
       toast({
@@ -267,43 +269,82 @@ export default function SettingsPage() {
               </Button>
             </div>
 
-            <div className="grid gap-4">
-              {users.map((user) => (
-                <Card key={user.id} className="p-4">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="font-semibold">{user.realName || user.username}</h3>
-                      <p className="text-sm text-muted-foreground">用户名: {user.username}</p>
-                      <p className="text-sm text-muted-foreground">邮箱: {user.email || "未设置"}</p>
-                      <p className="text-sm text-muted-foreground">手机: {user.phone || "未设置"}</p>
-                      <p className="text-sm text-muted-foreground">部门: {user.deptName || "未分配"}</p>
-                      <div className="flex gap-2 mt-2">
-                        {user.roles && user.roles.length > 0 ? (
-                          user.roles.map((role) => (
-                            <span key={role.id} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded">
-                              {role.roleName}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-sm text-muted-foreground">未分配角色</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline" onClick={() => handleConfigureRoles(user)}>
-                        配置角色
-                      </Button>
-                      <Button size="sm" variant="outline" onClick={() => handleEditUser(user)}>
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="destructive" onClick={() => handleDeleteUser(user.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+            <Card>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>用户名</TableHead>
+                    <TableHead>真实姓名</TableHead>
+                    <TableHead>邮箱</TableHead>
+                    <TableHead>手机号</TableHead>
+                    <TableHead>部门</TableHead>
+                    <TableHead>角色</TableHead>
+                    <TableHead>状态</TableHead>
+                    <TableHead className="text-right">操作</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={8} className="text-center text-muted-foreground py-8">
+                        暂无用户数据
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    users.map((user) => (
+                      <TableRow key={user.id}>
+                        <TableCell className="font-medium">{user.username}</TableCell>
+                        <TableCell>{user.realName || "-"}</TableCell>
+                        <TableCell>{user.email || "-"}</TableCell>
+                        <TableCell>{user.phone || "-"}</TableCell>
+                        <TableCell>{user.deptName || "-"}</TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1">
+                            {user.roles && user.roles.length > 0 ? (
+                              user.roles.map((role) => (
+                                <Badge key={role.id} variant="secondary" className="text-xs">
+                                  {role.roleName}
+                                </Badge>
+                              ))
+                            ) : (
+                              <span className="text-muted-foreground text-sm">未分配</span>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={user.status === 1 ? "default" : "destructive"}>
+                            {user.status === 1 ? "正常" : "禁用"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleConfigureRoles(user)}
+                              title="配置角色"
+                            >
+                              <Settings className="h-4 w-4" />
+                            </Button>
+                            <Button size="sm" variant="outline" onClick={() => handleEditUser(user)} title="编辑用户">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDeleteUser(user.id)}
+                              title="删除用户"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </Card>
           </TabsContent>
 
           <TabsContent value="roles" className="space-y-4">
@@ -349,7 +390,7 @@ export default function SettingsPage() {
             <DialogDescription>{isEditMode ? "修改用户信息和角色" : "创建新用户并分配角色"}</DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4">
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto">
             <div>
               <Label>用户名 {!isEditMode && <span className="text-red-500">*</span>}</Label>
               <Input
@@ -419,32 +460,37 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <Label>角色</Label>
-              <div className="space-y-2 mt-2">
-                {roles.map((role) => (
-                  <div key={role.id} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`role-${role.id}`}
-                      checked={userForm.selectedRoleIds.includes(role.id)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setUserForm({
-                            ...userForm,
-                            selectedRoleIds: [...userForm.selectedRoleIds, role.id],
-                          })
-                        } else {
-                          setUserForm({
-                            ...userForm,
-                            selectedRoleIds: userForm.selectedRoleIds.filter((id) => id !== role.id),
-                          })
-                        }
-                      }}
-                    />
-                    <Label htmlFor={`role-${role.id}`} className="cursor-pointer">
-                      {role.roleName}
-                    </Label>
-                  </div>
-                ))}
+              <Label>分配角色</Label>
+              <div className="space-y-2 mt-2 border rounded-md p-3">
+                {roles.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">暂无可分配的角色</p>
+                ) : (
+                  roles.map((role) => (
+                    <div key={role.id} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`role-${role.id}`}
+                        checked={userForm.selectedRoleIds.includes(role.id)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setUserForm({
+                              ...userForm,
+                              selectedRoleIds: [...userForm.selectedRoleIds, role.id],
+                            })
+                          } else {
+                            setUserForm({
+                              ...userForm,
+                              selectedRoleIds: userForm.selectedRoleIds.filter((id) => id !== role.id),
+                            })
+                          }
+                        }}
+                      />
+                      <Label htmlFor={`role-${role.id}`} className="cursor-pointer flex-1">
+                        <span>{role.roleName}</span>
+                        {role.roleDesc && <span className="text-xs text-muted-foreground ml-2">({role.roleDesc})</span>}
+                      </Label>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
