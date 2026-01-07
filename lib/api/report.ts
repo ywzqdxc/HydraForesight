@@ -61,6 +61,24 @@ export interface CreateReportRequest {
   reporterPhone?: string
 }
 
+export interface ReportProcess {
+  id: number
+  reportId: number
+  processType: number
+  processTypeName: string
+  processContent: string
+  processorName: string
+  processorDept: string
+  processTime: string
+}
+
+export interface ProcessReportRequest {
+  reportId: number
+  processType: number
+  processContent: string
+  processStatus?: number
+}
+
 /**
  * 获取上报统计数据
  */
@@ -101,4 +119,18 @@ export async function createReport(data: CreateReportRequest): Promise<ApiRespon
  */
 export async function upvoteReport(id: number): Promise<ApiResponse<void>> {
   return apiClient.post<void>(`/report/${id}/upvote`)
+}
+
+/**
+ * 处理上报(含处理记录)
+ */
+export async function processReportWithRecord(data: ProcessReportRequest): Promise<ApiResponse<void>> {
+  return apiClient.post<void>("/report/process", data)
+}
+
+/**
+ * 获取处理记录
+ */
+export async function getProcessRecords(reportId: number): Promise<ApiResponse<ReportProcess[]>> {
+  return apiClient.get<ReportProcess[]>(`/report/${reportId}/process`)
 }

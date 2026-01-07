@@ -11,13 +11,21 @@ import com.hydravision.common.exception.BusinessException;
 import com.hydravision.common.result.PageResult;
 import com.hydravision.common.result.ResultCode;
 import com.hydravision.dto.report.ReportCreateDTO;
+import com.hydravision.dto.report.ReportProcessDTO;
 import com.hydravision.dto.report.ReportQueryDTO;
 import com.hydravision.dto.report.ReportVerifyDTO;
 import com.hydravision.entity.report.PublicReport;
+import com.hydravision.entity.report.ReportProcess;
+import com.hydravision.entity.user.User;
 import com.hydravision.mapper.report.PublicReportMapper;
+import com.hydravision.mapper.report.ReportProcessMapper;
+import com.hydravision.mapper.user.UserMapper;
+import com.hydravision.security.SecurityUtils;
 import com.hydravision.service.report.PublicReportService;
 import com.hydravision.vo.report.PublicReportVO;
+import com.hydravision.vo.report.ReportProcessVO;
 import com.hydravision.vo.report.ReportStatisticsVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -33,6 +41,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, PublicReport> implements PublicReportService {
+
+    @Autowired
+    private ReportProcessMapper processMapper;
+    
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -79,6 +93,43 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
         report.setProcessStatus(2); // 已处理
         report.setProcessResult(result);
         baseMapper.updateById(report);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void processReportWithRecord(ReportProcessDTO dto) {
+        PublicReport report = baseMapper.selectById(dto.getReportId());
+        if (report == null) {
+            throw new BusinessException(ResultCode.REPORT_NOT_FOUND);
+        }
+
+        // 获取当前用户信息
+        Long userId = SecurityUtils.getCurrentUserId();
+        User user = userMapper.selectById(userId);
+        
+        // 更新上报状态
+        if (dto.getProcessStatus() != null) {
+            report.setProcessStatus(dto.getProcessStatus());
+            // 如果完成处理，自动核实
+            if (dto.getProcessStatus() == 2) {
+                report.setVerifyStatus(1);
+                report.setVerifyTime(LocalDateTime.now());
+                report.setVerifierId(userId);
+                report.setVerifierName(user != null ? user.getRealName() : "");
+            }
+        }
+        baseMapper.updateById(report);
+
+        // 创建处理记录
+        ReportProcess process = new ReportProcess();
+        process.setReportId(dto.getReportId());
+        process.setProcessType(dto.getProcessType());
+        process.setProcessContent(dto.getProcessContent());
+        process.setProcessorId(userId);
+        process.setProcessorName(user != null ? user.getRealName() : "");
+        process.setProcessorDept(user != null && user.getDepartmentName() != null ? user.getDepartmentName() : "");
+        process.setProcessTime(LocalDateTime.now());
+        processMapper.insert(process);
     }
 
     @Override
@@ -163,9 +214,40 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
         baseMapper.update(null, updateWrapper);
     }
 
+    @Override
+    public List<ReportProcessVO> getProcessRecords(Long reportId) {
+        List<ReportProcess> processes = processMapper.selectByReportId(reportId);
+        return processes.stream().map(this::convertProcessToVO).collect(Collectors.toList());
+    }
+
     private PublicReportVO convertToVO(PublicReport report) {
         PublicReportVO vo = new PublicReportVO();
         BeanUtil.copyProperties(report, vo);
         return vo;
+    }
+
+    private ReportProcessVO convertProcessToVO(ReportProcess process) {
+        ReportProcessVO vo = new ReportProcessVO();
+        vo.setId(process.getId());
+        vo.setReportId(process.getReportId());
+        vo.setProcessType(process.getProcessType());
+        vo.setProcessTypeName(getProcessTypeName(process.getProcessType()));
+        vo.setProcessContent(process.getProcessContent());
+        vo.setProcessorName(process.getProcessorName());
+        vo.setProcessorDept(process.getProcessorDept());
+        vo.setProcessTime(process.getProcessTime());
+        return vo;
+    }
+
+    private String getProcessTypeName(Integer type) {
+        if (type == null) return "";
+        switch (type) {
+            case 1: return "接收";
+            case 2: return "派单";
+            case 3: return "现场处理";
+            case 4: return "完成";
+            case 5: return "回访";
+            default: return "";
+        }
     }
 }

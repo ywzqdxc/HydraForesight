@@ -3,10 +3,12 @@ package com.hydravision.controller.report;
 import com.hydravision.common.result.PageResult;
 import com.hydravision.common.result.Result;
 import com.hydravision.dto.report.ReportCreateDTO;
+import com.hydravision.dto.report.ReportProcessDTO;
 import com.hydravision.dto.report.ReportQueryDTO;
 import com.hydravision.dto.report.ReportVerifyDTO;
 import com.hydravision.service.report.PublicReportService;
 import com.hydravision.vo.report.PublicReportVO;
+import com.hydravision.vo.report.ReportProcessVO;
 import com.hydravision.vo.report.ReportStatisticsVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,6 +52,13 @@ public class PublicReportController {
         return Result.success();
     }
 
+    @Operation(summary = "处理上报(含处理记录)")
+    @PostMapping("/process")
+    public Result<Void> processReportWithRecord(@Valid @RequestBody ReportProcessDTO dto) {
+        reportService.processReportWithRecord(dto);
+        return Result.success();
+    }
+
     @Operation(summary = "获取上报详情")
     @GetMapping("/{id}")
     public Result<PublicReportVO> getReportDetail(@Parameter(description = "上报ID") @PathVariable Long id) {
@@ -80,5 +89,11 @@ public class PublicReportController {
     public Result<Void> upvoteReport(@Parameter(description = "上报ID") @PathVariable Long id) {
         reportService.upvoteReport(id);
         return Result.success();
+    }
+
+    @Operation(summary = "获取上报处理记录")
+    @GetMapping("/{id}/process")
+    public Result<List<ReportProcessVO>> getProcessRecords(@Parameter(description = "上报ID") @PathVariable Long id) {
+        return Result.success(reportService.getProcessRecords(id));
     }
 }

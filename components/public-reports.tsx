@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -35,6 +35,15 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  pageReports,
+  createReport,
+  upvoteReport,
+  getProcessRecords,
+  type PublicReport as ApiReport,
+  type CreateReportRequest,
+} from "@/lib/api/report"
 
 // 上报类型
 type ReportType = "all" | "flooding" | "rainfall" | "traffic" | "disaster" | "other"
@@ -57,7 +66,7 @@ interface Report {
 }
 
 export default function PublicReports() {
-    // 状态管理
+  // 状态管理
   const [activeTab, setActiveTab] = useState<string>("all")
   const [selectedType, setSelectedType] = useState<ReportType>("all")
   const [searchQuery, setSearchQuery] = useState("")
@@ -73,196 +82,169 @@ export default function PublicReports() {
     severity: "medium" as "high" | "medium" | "low",
   })
   const [showSubmitSuccess, setShowSubmitSuccess] = useState(false)
+  const [allReports, setAllReports] = useState<Report[]>([])
+  const [loading, setLoading] = useState(false)
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null)
+  const [showDetailDialog, setShowDetailDialog] = useState(false)
+  const [processRecords, setProcessRecords] = useState<any[]>([])
 
-  // 模拟上报数据
-  // const allReports: Report[] = [
-  const [allReports, setAllReports] = useState<Report[]>([
-    {
-      id: "1",
-      type: "flooding",
-      title: "嘉州大道严重积水",
-      location: "市中区嘉州大道与天星路交叉口",
-      description: "道路积水严重，水深约30厘米，小型车辆难以通行，建议绕行。",
-      time: "2025-04-24 10:15",
-      status: "verified",
-      severity: "high",
-      upvotes: 15,
-    },
-    {
-      id: "2",
-      type: "rainfall",
-      title: "持续强降雨",
-      location: "市中区月弦坝附近",
-      description: "持续强降雨已超过2小时，雨势不减，周边低洼地带开始出现积水。",
-      time: "2025-04-16 09:30",
-      status: "verified",
-      severity: "medium",
-      upvotes: 8,
-    },
-    {
-      id: "3",
-      type: "traffic",
-      title: "道路交通拥堵",
-      location: "嘉定北路与柏杨东路交叉口",
-      description: "因积水导致交通拥堵，车辆行驶缓慢，预计需等待30分钟以上。",
-      time: "2025-04-20 09:45",
-      status: "verified",
-      severity: "medium",
-      upvotes: 12,
-    },
-    {
-      id: "4",
-      type: "disaster",
-      title: "小区地下车库进水",
-      location: "市中区徐家街徐家小区",
-      description: "小区地下车库进水严重，水位约20厘米，正在组织车辆撤离。",
-      time: "2025-04-24 10:05",
-      status: "verified",
-      severity: "high",
-      upvotes: 18,
-    },
-    {
-      id: "5",
-      type: "flooding",
-      title: "嘉定北路积水",
-      location: "市中区嘉定北路与百福路交叉口",
-      description: "道路出现积水，深度约15厘米，车辆可缓慢通行。",
-      time: "2025-04-02 09:20",
-      status: "verified",
-      severity: "low",
-      upvotes: 5,
-    },
-    {
-      id: "6",
-      type: "rainfall",
-      title: "雨势增强",
-      location: "沙湾区全域",
-      description: "降雨强度明显增加，预计未来1小时雨量将达到30mm以上。",
-      time: "2025-04-02 08:50",
-      status: "unverified",
-      upvotes: 3,
-    },
-    {
-      id: "7",
-      type: "traffic",
-      title: "信号灯故障",
-      location: "市中区龙游路与天星路交叉口",
-      description: "交通信号灯因雨水影响出现故障，交警正在现场指挥交通。",
-      time: "2025-04-18 09:10",
-      status: "unverified",
-      upvotes: 7,
-    },
-    {
-      id: "8",
-      type: "disaster",
-      title: "树木倒伏",
-      location: "市中区春华公园北门",
-      description: "一棵大树因强风暴雨倒伏，压坏两辆停放的车辆，无人员伤亡。",
-      time: "2025-04-21 10:20",
-      status: "unverified",
-      severity: "medium",
-      upvotes: 9,
-    },
-    {
-      id: "9",
-      type: "other",
-      title: "排水管道堵塞",
-      location: "市中区柏杨东路与天星路交叉口",
-      description: "排水管道疑似堵塞，路面积水无法及时排出，建议相关部门处理。",
-      time: "2025-04-09 09:35",
-      status: "unverified",
-      upvotes: 6,
-    },
-    {
-      id: "10",
-      type: "flooding",
-      title: "地下通道积水",
-      location: "市中区碧山路地下通道",
-      description: "地下通道积水严重，已无法通行，请绕行其他道路。",
-      time: "2025-04-02 10:30",
-      status: "verified",
-      severity: "high",
-      upvotes: 20,
-    },
-    {
-      id: "11",
-      type: "other",
-      title: "雨水口堵塞",
-      location: "市中区朝霞路新纪元小区",
-      description: "小区北门雨水口堵塞，路面大量积水，影响出行。",
-      time: "2025-04-02 10:40",
-      status: "unverified",
-      upvotes: 11,
-    },
-    {
-      id: "12",
-      type: "disaster",
-      title: "围墙倒塌",
-      location: "市中区竹公溪路建设工地",
-      description: "工地临时围墙因强风暴雨部分倒塌，无人员伤亡，已封锁现场。",
-      time: "2025-04-17 09:55",
-      status: "verified",
-      severity: "medium",
-      upvotes: 8,
-    },
-  ])
+  useEffect(() => {
+    loadReports()
+  }, [selectedType])
 
-  // 状态管理
-  // const [activeTab, setActiveTab] = useState<string>("all")
-  // const [selectedType, setSelectedType] = useState<ReportType>("all")
-  // const [searchQuery, setSearchQuery] = useState("")
-  // const [showVerified, setShowVerified] = useState(true)
-  // const [showUnverified, setShowUnverified] = useState(true)
-  // const [sortBy, setSortBy] = useState<"time" | "upvotes">("time")
+  const loadReports = async () => {
+    setLoading(true)
+    try {
+      const response = await pageReports({
+        reportType: selectedType === "all" ? undefined : getReportTypeValue(selectedType),
+        current: 1,
+        size: 100,
+      })
+      if (response.code === 200 && response.data) {
+        const reports: Report[] = response.data.records.map(convertApiReportToLocal)
+        setAllReports(reports)
+      }
+    } catch (error) {
+      console.error("加载上报数据失败", error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  // 处理提交上报
-  const handleSubmitReport = () => {
+  const convertApiReportToLocal = (apiReport: ApiReport): Report => {
+    return {
+      id: String(apiReport.id),
+      type: getReportTypeKey(apiReport.reportType),
+      title: apiReport.title,
+      location: apiReport.locationName,
+      description: apiReport.content,
+      time: apiReport.reportTime,
+      status: apiReport.verifyStatus === 1 ? "verified" : "unverified",
+      severity: getSeverityKey(apiReport.severity),
+      upvotes: apiReport.upvoteCount,
+    }
+  }
+
+  const getReportTypeKey = (type: number): Exclude<ReportType, "all"> => {
+    switch (type) {
+      case 1:
+        return "flooding"
+      case 2:
+        return "rainfall"
+      case 3:
+        return "traffic"
+      case 4:
+        return "disaster"
+      default:
+        return "other"
+    }
+  }
+
+  const getReportTypeValue = (type: ReportType): number | undefined => {
+    switch (type) {
+      case "flooding":
+        return 1
+      case "rainfall":
+        return 2
+      case "traffic":
+        return 3
+      case "disaster":
+        return 4
+      case "other":
+        return 5
+      default:
+        return undefined
+    }
+  }
+
+  const getSeverityKey = (severity: number): "high" | "medium" | "low" => {
+    switch (severity) {
+      case 3:
+        return "high"
+      case 2:
+        return "medium"
+      default:
+        return "low"
+    }
+  }
+
+  const getSeverityValue = (severity: "high" | "medium" | "low"): number => {
+    switch (severity) {
+      case "high":
+        return 3
+      case "medium":
+        return 2
+      default:
+        return 1
+    }
+  }
+
+  const handleSubmitReport = async () => {
     if (!newReport.title || !newReport.location || !newReport.description) {
-      return // 简单验证
+      return
     }
 
-    // 生成新上报ID
-    const newId = String(allReports.length + 1)
+    setLoading(true)
+    try {
+      const request: CreateReportRequest = {
+        reportType: getReportTypeValue(newReport.type)!,
+        title: newReport.title,
+        content: newReport.description,
+        locationName: newReport.location,
+        severity: getSeverityValue(newReport.severity),
+      }
 
-    // 创建新上报对象
-    const reportToAdd: Report = {
-      id: newId,
-      type: newReport.type,
-      title: newReport.title,
-      location: newReport.location,
-      description: newReport.description,
-      time: new Date().toLocaleString("zh-CN", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      status: "unverified", // 新提交的默认未核实
-      severity: newReport.severity,
-      upvotes: 1, // 默认1个上报（提交者自己）
+      const response = await createReport(request)
+      if (response.code === 200) {
+        setIsSubmitReportOpen(false)
+        setShowSubmitSuccess(true)
+
+        setTimeout(() => {
+          setShowSubmitSuccess(false)
+        }, 3000)
+
+        // 重新加载数据
+        await loadReports()
+
+        // 重置表单
+        setNewReport({
+          type: "flooding",
+          title: "",
+          location: "",
+          description: "",
+          severity: "medium",
+        })
+      }
+    } catch (error) {
+      console.error("提交上报失败", error)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    // 添加到上报列表（添加到开头，最新的在前面）
-    setAllReports((prev) => [reportToAdd, ...prev])
+  const handleViewDetail = async (report: Report) => {
+    setSelectedReport(report)
+    setShowDetailDialog(true)
 
-    // 关闭对话框并显示成功提示
-    setIsSubmitReportOpen(false)
-    setShowSubmitSuccess(true)
+    // 加载处理记录
+    try {
+      const response = await getProcessRecords(Number(report.id))
+      if (response.code === 200 && response.data) {
+        setProcessRecords(response.data)
+      }
+    } catch (error) {
+      console.error("加载处理记录失败", error)
+    }
+  }
 
-    // 3秒后隐藏成功提示
-    setTimeout(() => {
-      setShowSubmitSuccess(false)
-    }, 3000)
-
-    // 重置表单
-    setNewReport({
-      type: "flooding",
-      title: "",
-      location: "",
-      description: "",
-      severity: "medium",
-    })
+  const handleUpvote = async (reportId: string) => {
+    try {
+      await upvoteReport(Number(reportId))
+      // 重新加载数据
+      await loadReports()
+    } catch (error) {
+      console.error("点赞失败", error)
+    }
   }
 
   // 筛选和排序上报
@@ -425,7 +407,7 @@ export default function PublicReports() {
                   <Label htmlFor="report-description" className="text-right mt-2">
                     详细描述
                   </Label>
-                  <textarea
+                  <Textarea
                     id="report-description"
                     value={newReport.description}
                     onChange={(e) => setNewReport({ ...newReport, description: e.target.value })}
@@ -446,11 +428,12 @@ export default function PublicReports() {
       </CardHeader>
       <CardContent>
         {showSubmitSuccess && (
-          <div className="bg-green-50 border border-green-200 text-green-800 rounded-md p-4 flex items-center">
+          <div className="mb-4 bg-green-50 border border-green-200 text-green-800 rounded-md p-4 flex items-center">
             <CheckCircle2 className="h-5 w-5 mr-2 text-green-500" />
             <span>上报提交成功！感谢您的参与，我们会尽快核实处理。</span>
           </div>
         )}
+
         <div className="space-y-4">
           {/* 搜索和筛选 */}
           <div className="flex flex-col sm:flex-row gap-3">
@@ -554,7 +537,9 @@ export default function PublicReports() {
             </TabsList>
 
             <TabsContent value="all" className="mt-4 space-y-4">
-              {filteredReports.length > 0 ? (
+              {loading ? (
+                <div className="text-center py-8">加载中...</div>
+              ) : filteredReports.length > 0 ? (
                 filteredReports.map((report) => (
                   <div key={report.id} className="border rounded-lg p-4 hover:bg-accent/50 transition-colors">
                     <div className="flex justify-between items-start">
@@ -584,11 +569,21 @@ export default function PublicReports() {
                           <div className="flex items-center justify-between mt-2">
                             <span className="text-xs text-muted-foreground">{report.time}</span>
                             <div className="flex items-center gap-2">
-                              <Button variant="ghost" size="sm" className="h-7 text-xs">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 text-xs"
+                                onClick={() => handleUpvote(report.id)}
+                              >
                                 <AlertTriangle className="mr-1 h-3 w-3" />
                                 {report.upvotes} 人已上报
                               </Button>
-                              <Button variant="outline" size="sm" className="h-7 text-xs bg-transparent">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-7 text-xs bg-transparent"
+                                onClick={() => handleViewDetail(report)}
+                              >
                                 查看详情
                               </Button>
                             </div>
@@ -607,7 +602,9 @@ export default function PublicReports() {
             </TabsContent>
 
             <TabsContent value="verified" className="mt-4 space-y-4">
-              {filteredReports.filter((r) => r.status === "verified").length > 0 ? (
+              {loading ? (
+                <div className="text-center py-8">加载中...</div>
+              ) : filteredReports.filter((r) => r.status === "verified").length > 0 ? (
                 filteredReports
                   .filter((r) => r.status === "verified")
                   .map((report) => (
@@ -632,11 +629,21 @@ export default function PublicReports() {
                             <div className="flex items-center justify-between mt-2">
                               <span className="text-xs text-muted-foreground">{report.time}</span>
                               <div className="flex items-center gap-2">
-                                <Button variant="ghost" size="sm" className="h-7 text-xs">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-7 text-xs"
+                                  onClick={() => handleUpvote(report.id)}
+                                >
                                   <AlertTriangle className="mr-1 h-3 w-3" />
                                   {report.upvotes} 人已上报
                                 </Button>
-                                <Button variant="outline" size="sm" className="h-7 text-xs bg-transparent">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-7 text-xs bg-transparent"
+                                  onClick={() => handleViewDetail(report)}
+                                >
                                   查看详情
                                 </Button>
                               </div>
@@ -655,7 +662,9 @@ export default function PublicReports() {
             </TabsContent>
 
             <TabsContent value="unverified" className="mt-4 space-y-4">
-              {filteredReports.filter((r) => r.status === "unverified").length > 0 ? (
+              {loading ? (
+                <div className="text-center py-8">加载中...</div>
+              ) : filteredReports.filter((r) => r.status === "unverified").length > 0 ? (
                 filteredReports
                   .filter((r) => r.status === "unverified")
                   .map((report) => (
@@ -680,11 +689,21 @@ export default function PublicReports() {
                             <div className="flex items-center justify-between mt-2">
                               <span className="text-xs text-muted-foreground">{report.time}</span>
                               <div className="flex items-center gap-2">
-                                <Button variant="ghost" size="sm" className="h-7 text-xs">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-7 text-xs"
+                                  onClick={() => handleUpvote(report.id)}
+                                >
                                   <AlertTriangle className="mr-1 h-3 w-3" />
                                   {report.upvotes} 人已上报
                                 </Button>
-                                <Button variant="outline" size="sm" className="h-7 text-xs bg-transparent">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-7 text-xs bg-transparent"
+                                  onClick={() => handleViewDetail(report)}
+                                >
                                   查看详情
                                 </Button>
                               </div>
@@ -703,6 +722,60 @@ export default function PublicReports() {
             </TabsContent>
           </Tabs>
         </div>
+
+        <Dialog open={showDetailDialog} onOpenChange={setShowDetailDialog}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>上报详情</DialogTitle>
+            </DialogHeader>
+            {selectedReport && (
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    {getTypeIcon(selectedReport.type)}
+                    <h3 className="font-semibold text-lg">{selectedReport.title}</h3>
+                    {getSeverityBadge(selectedReport.severity)}
+                  </div>
+                  <div className="text-sm text-muted-foreground flex items-center gap-4">
+                    <span className="flex items-center">
+                      <MapPin className="h-3 w-3 mr-1" />
+                      {selectedReport.location}
+                    </span>
+                    <span className="flex items-center">
+                      <Clock className="h-3 w-3 mr-1" />
+                      {selectedReport.time}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-2">详细描述</h4>
+                  <p className="text-sm text-muted-foreground">{selectedReport.description}</p>
+                </div>
+
+                {processRecords.length > 0 && (
+                  <div>
+                    <h4 className="font-medium mb-2">处理记录</h4>
+                    <div className="space-y-3">
+                      {processRecords.map((record) => (
+                        <div key={record.id} className="border rounded-lg p-3 bg-muted/30">
+                          <div className="flex items-start justify-between mb-1">
+                            <Badge variant="outline">{record.processTypeName}</Badge>
+                            <span className="text-xs text-muted-foreground">{record.processTime}</span>
+                          </div>
+                          <p className="text-sm mb-1">{record.processContent}</p>
+                          <div className="text-xs text-muted-foreground">
+                            处理人：{record.processorName} {record.processorDept && `(${record.processorDept})`}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant="outline">刷新数据</Button>

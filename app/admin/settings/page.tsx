@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Textarea } from "@/components/ui/textarea"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
@@ -32,7 +33,14 @@ import {
   deleteUser,
 } from "@/lib/api/user"
 import { pageDepartments } from "@/lib/api/department"
-import { Loader2, Pencil, Trash2, UserPlus, Settings } from "lucide-react"
+import {
+  pageReports,
+  processReportWithRecord,
+  getProcessRecords,
+  type PublicReport,
+  type ReportProcess,
+} from "@/lib/api/report"
+import { Loader2, Pencil, Trash2, UserPlus, Settings, CheckCircle2, Clock, AlertCircle, FileText } from "lucide-react"
 import type { User, Role } from "@/lib/api/user"
 import type { Department } from "@/lib/api/department"
 
@@ -45,6 +53,16 @@ export default function SettingsPage() {
   const [users, setUsers] = useState<User[]>([])
   const [roles, setRoles] = useState<Role[]>([])
   const [departments, setDepartments] = useState<Department[]>([])
+  const [reports, setReports] = useState<PublicReport[]>([])
+  const [selectedReport, setSelectedReport] = useState<PublicReport | null>(null)
+  const [showProcessDialog, setShowProcessDialog] = useState(false)
+  const [showRecordsDialog, setShowRecordsDialog] = useState(false)
+  const [processRecords, setProcessRecords] = useState<ReportProcess[]>([])
+  const [processForm, setProcessForm] = useState({
+    processType: 1,
+    processContent: "",
+    processStatus: 1,
+  })
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [showUserDialog, setShowUserDialog] = useState(false)
@@ -91,15 +109,17 @@ export default function SettingsPage() {
 
   const loadData = async () => {
     try {
-      const [usersResult, rolesResult, deptResult] = await Promise.all([
+      const [usersResult, rolesResult, deptResult, reportsResult] = await Promise.all([
         pageUsers({ current: 1, size: 100 }),
         pageRoles({ current: 1, size: 100 }),
         pageDepartments({ current: 1, size: 100 }),
+        pageReports({ current: 1, size: 100 }),
       ])
 
       setUsers(usersResult.records)
       setRoles(rolesResult.records)
       setDepartments(deptResult.records)
+      setReports(reportsResult.records)
     } catch (error) {
       toast({
         title: "加载数据失败",
@@ -107,6 +127,121 @@ export default function SettingsPage() {
         variant: "destructive",
       })
     }
+  }
+
+  const handleProcessReport = (report: PublicReport) => {
+    setSelectedReport(report)
+    setProcessForm({
+      processType: 1,
+      processContent: "",
+      processStatus: report.processStatus === 0 ? 1 : report.processStatus,
+    })
+    setShowProcessDialog(true)
+  }
+
+  const handleViewRecords = async (report: PublicReport) => {
+    setSelectedReport(report)
+    try {
+      const response = await getProcessRecords(report.id)
+      if (response.code === 200 && response.data) {
+        setProcessRecords(response.data)
+        setShowRecordsDialog(true)
+      }
+    } catch (error) {
+      toast({
+        title: "加载失败",
+        description: "无法加载处理记录",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleSubmitProcess = async () => {
+    if (!selectedReport || !processForm.processContent) {
+      toast({
+        title: "提示",
+        description: "请填写处理内容",
+        variant: "destructive",
+      })
+      return
+    }
+
+    try {
+      await processReportWithRecord({
+        reportId: selectedReport.id,
+        processType: processForm.processType,
+        processContent: processForm.processContent,
+        processStatus: processForm.processStatus,
+      })
+
+      toast({
+        title: "成功",
+        description: "上报处理成功",
+      })
+
+      setShowProcessDialog(false)
+      await loadData()
+    } catch (error) {
+      toast({
+        title: "处理失败",
+        description: error instanceof Error ? error.message : "请重试",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const getReportTypeName = (type: number) => {
+    const types: Record<number, string> = {
+      1: "积水",
+      2: "降雨",
+      3: "交通",
+      4: "灾害",
+      5: "其他",
+    }
+    return types[type] || "未知"
+  }
+
+  const getSeverityName = (severity: number) => {
+    const severities: Record<number, string> = {
+      1: "轻微",
+      2: "中等",
+      3: "严重",
+    }
+    return severities[severity] || "未知"
+  }
+
+  const getVerifyStatusBadge = (status: number) => {
+    if (status === 1) {
+      return (
+        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+          <CheckCircle2 className="mr-1 h-3 w-3" />
+          已核实
+        </Badge>
+      )
+    } else if (status === 2) {
+      return (
+        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+          不属实
+        </Badge>
+      )
+    }
+    return (
+      <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
+        <Clock className="mr-1 h-3 w-3" />
+        未核实
+      </Badge>
+    )
+  }
+
+  const getProcessStatusBadge = (status: number) => {
+    if (status === 2) {
+      return <Badge variant="default">已处理</Badge>
+    } else if (status === 1) {
+      return <Badge variant="secondary">处理中</Badge>
+    } else if (status === 3) {
+      return <Badge variant="outline">已关闭</Badge>
+    }
+    return <Badge variant="destructive">待处理</Badge>
   }
 
   const handleCreateUser = () => {
@@ -225,7 +360,6 @@ export default function SettingsPage() {
       }
 
       await loadData()
-      // 更新 selectedUser 以保持对话框内的数据同步
       const updatedUsers = await pageUsers({ current: 1, size: 100 })
       const updatedUser = updatedUsers.records.find((u) => u.id === selectedUser.id)
       if (updatedUser) setSelectedUser(updatedUser)
@@ -259,6 +393,7 @@ export default function SettingsPage() {
             <TabsTrigger value="users">用户管理</TabsTrigger>
             <TabsTrigger value="roles">角色管理</TabsTrigger>
             <TabsTrigger value="departments">部门管理</TabsTrigger>
+            <TabsTrigger value="reports">公众上报处理</TabsTrigger>
           </TabsList>
 
           <TabsContent value="users" className="space-y-4">
@@ -378,6 +513,78 @@ export default function SettingsPage() {
                 </Card>
               ))}
             </div>
+          </TabsContent>
+
+          <TabsContent value="reports" className="space-y-4">
+            <Card>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>上报ID</TableHead>
+                    <TableHead>类型</TableHead>
+                    <TableHead>标题</TableHead>
+                    <TableHead>位置</TableHead>
+                    <TableHead>严重程度</TableHead>
+                    <TableHead>核实状态</TableHead>
+                    <TableHead>处理状态</TableHead>
+                    <TableHead>上报时间</TableHead>
+                    <TableHead className="text-right">操作</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {reports.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={9} className="text-center text-muted-foreground py-8">
+                        暂无上报数据
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    reports.map((report) => (
+                      <TableRow key={report.id}>
+                        <TableCell className="font-mono text-xs">{report.reportId}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline">{getReportTypeName(report.reportType)}</Badge>
+                        </TableCell>
+                        <TableCell className="max-w-[200px] truncate">{report.title}</TableCell>
+                        <TableCell className="max-w-[150px] truncate">{report.locationName}</TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              report.severity === 3 ? "destructive" : report.severity === 2 ? "secondary" : "outline"
+                            }
+                          >
+                            {getSeverityName(report.severity)}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{getVerifyStatusBadge(report.verifyStatus)}</TableCell>
+                        <TableCell>{getProcessStatusBadge(report.processStatus)}</TableCell>
+                        <TableCell className="text-sm">{report.reportTime}</TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleViewRecords(report)}
+                              title="查看记录"
+                            >
+                              <FileText className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="default"
+                              onClick={() => handleProcessReport(report)}
+                              title="处理上报"
+                            >
+                              <CheckCircle2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>
@@ -532,6 +739,119 @@ export default function SettingsPage() {
               )
             })}
           </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showProcessDialog} onOpenChange={setShowProcessDialog}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>处理上报</DialogTitle>
+            <DialogDescription>核实并处理公众上报信息</DialogDescription>
+          </DialogHeader>
+
+          {selectedReport && (
+            <div className="space-y-4">
+              <div className="bg-muted p-3 rounded-md">
+                <div className="text-sm font-medium mb-1">{selectedReport.title}</div>
+                <div className="text-xs text-muted-foreground">{selectedReport.locationName}</div>
+                <div className="text-xs text-muted-foreground mt-1">{selectedReport.content}</div>
+              </div>
+
+              <div>
+                <Label>处理类型</Label>
+                <Select
+                  value={String(processForm.processType)}
+                  onValueChange={(val) => setProcessForm({ ...processForm, processType: Number(val) })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">接收</SelectItem>
+                    <SelectItem value="2">派单</SelectItem>
+                    <SelectItem value="3">现场处理</SelectItem>
+                    <SelectItem value="4">完成</SelectItem>
+                    <SelectItem value="5">回访</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label>处理状态</Label>
+                <Select
+                  value={String(processForm.processStatus)}
+                  onValueChange={(val) => setProcessForm({ ...processForm, processStatus: Number(val) })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="0">待处理</SelectItem>
+                    <SelectItem value="1">处理中</SelectItem>
+                    <SelectItem value="2">已处理</SelectItem>
+                    <SelectItem value="3">已关闭</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label>处理描述 *</Label>
+                <Textarea
+                  value={processForm.processContent}
+                  onChange={(e) => setProcessForm({ ...processForm, processContent: e.target.value })}
+                  placeholder="请详细描述处理过程和结果"
+                  rows={4}
+                />
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowProcessDialog(false)}>
+              取消
+            </Button>
+            <Button onClick={handleSubmitProcess}>提交处理</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showRecordsDialog} onOpenChange={setShowRecordsDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>处理记录</DialogTitle>
+            <DialogDescription>查看上报的所有处理记录</DialogDescription>
+          </DialogHeader>
+
+          {selectedReport && (
+            <div className="space-y-4">
+              <div className="bg-muted p-3 rounded-md">
+                <div className="text-sm font-medium mb-1">{selectedReport.title}</div>
+                <div className="text-xs text-muted-foreground">{selectedReport.locationName}</div>
+              </div>
+
+              {processRecords.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <AlertCircle className="mx-auto h-8 w-8 mb-2 opacity-50" />
+                  <p>暂无处理记录</p>
+                </div>
+              ) : (
+                <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                  {processRecords.map((record) => (
+                    <div key={record.id} className="border rounded-lg p-3 bg-muted/30">
+                      <div className="flex items-start justify-between mb-2">
+                        <Badge variant="outline">{record.processTypeName}</Badge>
+                        <span className="text-xs text-muted-foreground">{record.processTime}</span>
+                      </div>
+                      <p className="text-sm mb-2">{record.processContent}</p>
+                      <div className="text-xs text-muted-foreground">
+                        处理人：{record.processorName} {record.processorDept && `(${record.processorDept})`}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>

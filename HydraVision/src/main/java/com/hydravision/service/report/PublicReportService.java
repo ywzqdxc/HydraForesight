@@ -3,10 +3,12 @@ package com.hydravision.service.report;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hydravision.common.result.PageResult;
 import com.hydravision.dto.report.ReportCreateDTO;
+import com.hydravision.dto.report.ReportProcessDTO;
 import com.hydravision.dto.report.ReportQueryDTO;
 import com.hydravision.dto.report.ReportVerifyDTO;
 import com.hydravision.entity.report.PublicReport;
 import com.hydravision.vo.report.PublicReportVO;
+import com.hydravision.vo.report.ReportProcessVO;
 import com.hydravision.vo.report.ReportStatisticsVO;
 
 import java.util.List;
@@ -32,6 +34,11 @@ public interface PublicReportService extends IService<PublicReport> {
     void processReport(Long id, String result);
 
     /**
+     * 处理上报并记录
+     */
+    void processReportWithRecord(ReportProcessDTO dto);
+
+    /**
      * 获取上报详情
      */
     PublicReportVO getReportDetail(Long id);
@@ -55,4 +62,9 @@ public interface PublicReportService extends IService<PublicReport> {
      * 点赞上报
      */
     void upvoteReport(Long id);
+
+    /**
+     * 获取处理记录
+     */
+    List<ReportProcessVO> getProcessRecords(Long reportId);
 }
