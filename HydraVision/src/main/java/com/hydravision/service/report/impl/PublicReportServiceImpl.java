@@ -16,9 +16,11 @@ import com.hydravision.dto.report.ReportQueryDTO;
 import com.hydravision.dto.report.ReportVerifyDTO;
 import com.hydravision.entity.report.PublicReport;
 import com.hydravision.entity.report.ReportProcess;
+import com.hydravision.entity.user.Department;
 import com.hydravision.entity.user.User;
 import com.hydravision.mapper.report.PublicReportMapper;
 import com.hydravision.mapper.report.ReportProcessMapper;
+import com.hydravision.mapper.user.DepartmentMapper;
 import com.hydravision.mapper.user.UserMapper;
 import com.hydravision.security.SecurityUtils;
 import com.hydravision.service.report.PublicReportService;
@@ -47,6 +49,9 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
     
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private DepartmentMapper departmentMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -107,6 +112,14 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
         Long userId = SecurityUtils.getCurrentUserId();
         User user = userMapper.selectById(userId);
         
+        String deptName = "";
+        if (user != null && user.getDeptId() != null) {
+            Department dept = departmentMapper.selectById(user.getDeptId());
+            if (dept != null) {
+                deptName = dept.getDeptName();
+            }
+        }
+        
         // 更新上报状态
         if (dto.getProcessStatus() != null) {
             report.setProcessStatus(dto.getProcessStatus());
@@ -127,7 +140,7 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
         process.setProcessContent(dto.getProcessContent());
         process.setProcessorId(userId);
         process.setProcessorName(user != null ? user.getRealName() : "");
-        process.setProcessorDept(user != null && user.getDepartmentName() != null ? user.getDepartmentName() : "");
+        process.setProcessorDept(deptName);
         process.setProcessTime(LocalDateTime.now());
         processMapper.insert(process);
     }
