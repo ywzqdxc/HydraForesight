@@ -65,22 +65,4 @@ public interface UserService extends IService<User> {
      * 修改用户密码
      */
     void updatePassword(String username, PasswordUpdateDTO dto); // Added method
-
-    /**
-     * 添加用户角色管理相关方法
-     */
-    /**
-     * 为用户设置角色
-     */
-    void setUserRole(Long userId, Long roleId);
-
-    /**
-     * 移除用户的角色
-     */
-    void removeUserRole(Long userId, Long roleId);
-
-    /**
-     * 获取用户的角色列表
-     */
-    List<String> getUserRoles(Long userId);
 }

@@ -153,29 +153,3 @@ export const getUserDetail = (id: number) => {
     method: "GET",
   })
 }
-
-export interface UserRole {
-  userId: number
-  roleId: number
-}
-
-// 为用户设置角色
-export const setUserRole = (userId: number, roleId: number) => {
-  return request(`/user/${userId}/role/${roleId}`, {
-    method: "POST",
-  })
-}
-
-// 移除用户的角色
-export const removeUserRole = (userId: number, roleId: number) => {
-  return request(`/user/${userId}/role/${roleId}`, {
-    method: "DELETE",
-  })
-}
-
-// 获取用户的角色列表
-export const getUserRoles = (userId: number) => {
-  return request<string[]>(`/user/${userId}/roles`, {
-    method: "GET",
-  })
-}

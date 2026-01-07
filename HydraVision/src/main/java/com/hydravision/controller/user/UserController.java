@@ -20,8 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * 用户管理控制器
  */
@@ -84,30 +82,5 @@ public class UserController {
         String username = authentication.getName();
         userService.updatePassword(username, dto);
         return Result.success();
-    }
-
-    @Operation(summary = "为用户设置角色")
-    @PostMapping("/{userId}/role/{roleId}")
-    public Result<Void> setUserRole(
-            @Parameter(description = "用户ID") @PathVariable Long userId,
-            @Parameter(description = "角色ID") @PathVariable Long roleId) {
-        userService.setUserRole(userId, roleId);
-        return Result.success();
-    }
-
-    @Operation(summary = "移除用户的角色")
-    @DeleteMapping("/{userId}/role/{roleId}")
-    public Result<Void> removeUserRole(
-            @Parameter(description = "用户ID") @PathVariable Long userId,
-            @Parameter(description = "角色ID") @PathVariable Long roleId) {
-        userService.removeUserRole(userId, roleId);
-        return Result.success();
-    }
-
-    @Operation(summary = "获取用户的角色列表")
-    @GetMapping("/{userId}/roles")
-    public Result<List<String>> getUserRoles(
-            @Parameter(description = "用户ID") @PathVariable Long userId) {
-        return Result.success(userService.getUserRoles(userId));
     }
 }
