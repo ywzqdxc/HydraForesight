@@ -12,12 +12,14 @@ export interface User {
   gender?: number
   birthday?: string
   deptId: number
+  deptName?: string
   status: number
   lastLoginTime?: string
   lastLoginIp?: string
   loginCount: number
   createTime: string
   remark?: string
+  roles?: Role[]
 }
 
 export interface UserProfile {
@@ -32,12 +34,14 @@ export interface UserProfile {
   gender?: number
   birthday?: string
   deptId?: number
+  deptName?: string
   status: number
   lastLoginTime?: string
   lastLoginIp?: string
   loginCount: number
   createTime: string
   remark?: string
+  roles?: Role[]
 }
 
 export interface UpdateProfileRequest {
@@ -64,6 +68,7 @@ export interface CreateUserRequest {
   email?: string
   phone?: string
   deptId?: number
+  roleIds?: number[]
 }
 
 export interface UpdateUserRequest {
@@ -91,6 +96,14 @@ export interface PageResult<T> {
   size: number
   total: number
   records: T[]
+}
+
+export interface Role {
+  id: number
+  roleCode: string
+  roleName: string
+  roleDesc?: string
+  isSystem: boolean
 }
 
 // 获取当前用户信息
@@ -177,5 +190,21 @@ export const removeUserRole = (userId: number, roleId: number) => {
 export const getUserRoles = (userId: number) => {
   return request<string[]>(`/user/${userId}/roles`, {
     method: "GET",
+  })
+}
+
+export interface PageRolesRequest {
+  current: number
+  size: number
+  roleName?: string
+  roleCode?: string
+  status?: number
+}
+
+// 分页查询角色接口
+export const pageRoles = (params: PageRolesRequest) => {
+  return request<PageResult<Role>>("/role/page", {
+    method: "GET",
+    params,
   })
 }

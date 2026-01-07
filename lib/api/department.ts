@@ -34,6 +34,20 @@ export interface UpdateDepartmentRequest {
   status?: number
 }
 
+export interface PageDepartmentsRequest {
+  current: number
+  size: number
+  deptName?: string
+  status?: number
+}
+
+export interface PageResult<T> {
+  current: number
+  size: number
+  total: number
+  records: T[]
+}
+
 export async function listDepartments(): Promise<Department[]> {
   const response = await apiClient.get("/department/list")
   return response.data
@@ -55,4 +69,9 @@ export async function updateDepartment(data: UpdateDepartmentRequest): Promise<v
 
 export async function deleteDepartment(id: number): Promise<void> {
   await apiClient.delete(`/department/${id}`)
+}
+
+export async function pageDepartments(params: PageDepartmentsRequest): Promise<PageResult<Department>> {
+  const response = await apiClient.get("/department/page", { params })
+  return response.data
 }

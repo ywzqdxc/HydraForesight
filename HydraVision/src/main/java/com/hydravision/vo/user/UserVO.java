@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 用户VO
@@ -67,4 +68,10 @@ public class UserVO implements Serializable {
 
     @Schema(description = "备注")
     private String remark;
+
+    @Schema(description = "角色列表")
+    private List<RoleVO> roles;
+
+    @Schema(description = "部门名称")
+    private String deptName;
 }

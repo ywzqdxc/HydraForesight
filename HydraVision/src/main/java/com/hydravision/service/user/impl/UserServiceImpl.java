@@ -22,6 +22,7 @@ import com.hydravision.mapper.user.UserMapper;
 import com.hydravision.mapper.user.UserRoleMapper;
 import com.hydravision.service.user.UserService;
 import com.hydravision.vo.user.UserVO;
+import com.hydravision.vo.user.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -216,6 +217,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserVO convertToVO(User user) {
         UserVO vo = new UserVO();
         BeanUtil.copyProperties(user, vo);
+        
+        List<Role> roles = roleMapper.selectByUserId(user.getId());
+        if (roles != null && !roles.isEmpty()) {
+            List<RoleVO> roleVOList = roles.stream()
+                    .map(role -> {
+                        RoleVO roleVO = new RoleVO();
+                        BeanUtil.copyProperties(role, roleVO);
+                        return roleVO;
+                    })
+                    .collect(Collectors.toList());
+            vo.setRoles(roleVOList);
+        }
+        
         return vo;
     }
 }
