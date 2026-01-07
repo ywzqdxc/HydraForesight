@@ -27,6 +27,8 @@ import com.hydravision.service.report.PublicReportService;
 import com.hydravision.vo.report.PublicReportVO;
 import com.hydravision.vo.report.ReportProcessVO;
 import com.hydravision.vo.report.ReportStatisticsVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, PublicReport> implements PublicReportService {
+
+    private static final Logger log = LoggerFactory.getLogger(PublicReportServiceImpl.class);
 
     @Autowired
     private ReportProcessMapper processMapper;
@@ -110,14 +114,28 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
 
         // 获取当前用户信息
         Long userId = SecurityUtils.getCurrentUserId();
-        User user = userMapper.selectById(userId);
+        log.info("[v0] Processing report with userId: {}", userId);
         
+        User user = null;
+        String userName = "";
         String deptName = "";
-        if (user != null && user.getDeptId() != null) {
-            Department dept = departmentMapper.selectById(user.getDeptId());
-            if (dept != null) {
-                deptName = dept.getDeptName();
+        
+        if (userId != null && userId > 0) {
+            user = userMapper.selectById(userId);
+            log.info("[v0] User found: {}", user != null ? user.getRealName() : "null");
+            
+            if (user != null) {
+                userName = user.getRealName() != null ? user.getRealName() : "";
+                if (user.getDeptId() != null && user.getDeptId() > 0) {
+                    Department dept = departmentMapper.selectById(user.getDeptId());
+                    log.info("[v0] Department found: {}", dept != null ? dept.getDeptName() : "null");
+                    if (dept != null) {
+                        deptName = dept.getDeptName();
+                    }
+                }
             }
+        } else {
+            log.warn("[v0] Current user ID is null or invalid");
         }
         
         // 更新上报状态
@@ -127,8 +145,10 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
             if (dto.getProcessStatus() == 2) {
                 report.setVerifyStatus(1);
                 report.setVerifyTime(LocalDateTime.now());
-                report.setVerifierId(userId);
-                report.setVerifierName(user != null ? user.getRealName() : "");
+                if (userId != null) {
+                    report.setVerifierId(userId);
+                }
+                report.setVerifierName(userName);
             }
         }
         baseMapper.updateById(report);
@@ -138,10 +158,15 @@ public class PublicReportServiceImpl extends ServiceImpl<PublicReportMapper, Pub
         process.setReportId(dto.getReportId());
         process.setProcessType(dto.getProcessType());
         process.setProcessContent(dto.getProcessContent());
-        process.setProcessorId(userId);
-        process.setProcessorName(user != null ? user.getRealName() : "");
+        process.setProcessorId(userId != null ? userId : 0L);
+        process.setProcessorName(userName);
         process.setProcessorDept(deptName);
         process.setProcessTime(LocalDateTime.now());
+        process.setCreateTime(LocalDateTime.now());
+        
+        log.info("[v0] Inserting process record - userId: {}, userName: {}, deptName: {}", 
+                userId, userName, deptName);
+        
         processMapper.insert(process);
     }
 

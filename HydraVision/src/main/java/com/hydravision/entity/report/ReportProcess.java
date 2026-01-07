@@ -1,9 +1,10 @@
 package com.hydravision.entity.report;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hydravision.common.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,11 @@ import java.time.LocalDateTime;
  */
 @TableName("hf_report_process")
 @Schema(description = "上报处理记录")
-public class ReportProcess extends BaseEntity {
+public class ReportProcess {
+
+    @Schema(description = "主键ID")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     @Schema(description = "上报记录ID")
     @TableField("report_id")
@@ -47,6 +52,19 @@ public class ReportProcess extends BaseEntity {
     @Schema(description = "附件URL")
     @TableField("attachment_urls")
     private String attachmentUrls;
+
+    @Schema(description = "创建时间")
+    @TableField("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getReportId() {
         return reportId;
@@ -110,5 +128,13 @@ public class ReportProcess extends BaseEntity {
 
     public void setAttachmentUrls(String attachmentUrls) {
         this.attachmentUrls = attachmentUrls;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 }

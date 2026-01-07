@@ -102,6 +102,9 @@ export default function ReportManagement() {
       return
     }
 
+    console.log("[v0] Submitting process for report:", selectedReport.id)
+    console.log("[v0] Process form data:", processForm)
+
     try {
       await processReportWithRecord({
         reportId: selectedReport.id,
@@ -118,6 +121,7 @@ export default function ReportManagement() {
       setShowProcessDialog(false)
       await loadReports()
     } catch (error) {
+      console.error("[v0] Process report error:", error)
       toast({
         title: "处理失败",
         description: error instanceof Error ? error.message : "请重试",
