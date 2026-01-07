@@ -2,13 +2,13 @@ package com.hydravision.controller.user;
 
 import com.hydravision.common.result.PageResult;
 import com.hydravision.common.result.Result;
+import com.hydravision.common.result.ResultCode;
+import com.hydravision.common.exception.BusinessException;
 import com.hydravision.dto.user.PasswordUpdateDTO;
 import com.hydravision.dto.user.UserCreateDTO;
 import com.hydravision.dto.user.UserQueryDTO;
 import com.hydravision.dto.user.UserUpdateDTO;
 import com.hydravision.entity.user.User;
-import com.hydravision.exception.BusinessException;
-import com.hydravision.exception.ResultCode;
 import com.hydravision.service.user.UserService;
 import com.hydravision.vo.user.UserVO;
 import io.swagger.v3.oas.annotations.Operation;
