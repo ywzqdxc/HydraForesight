@@ -21,17 +21,29 @@ INSERT INTO hf_alert_rule (rule_code, rule_name, rule_type, area_id, alert_level
 -- -----------------------------------------------------
 -- 初始化预警记录数据（包含首页显示的预警）
 -- -----------------------------------------------------
+-- 删除现有数据，确保脚本可以重复执行
+DELETE FROM hf_alert_response;
+DELETE FROM hf_alert_notification;
+DELETE FROM hf_alert_record;
+DELETE FROM hf_alert_rule;
+
+-- 重置自增ID
+ALTER TABLE hf_alert_rule AUTO_INCREMENT = 1;
+ALTER TABLE hf_alert_record AUTO_INCREMENT = 1;
+ALTER TABLE hf_alert_notification AUTO_INCREMENT = 1;
+ALTER TABLE hf_alert_response AUTO_INCREMENT = 1;
+
 INSERT INTO hf_alert_record (alert_id, rule_id, alert_type, alert_level, area_id, area_name, title, content, trigger_value, trigger_time, publish_time, expected_end_time, status, publisher_id, publisher_name, is_public, view_count) VALUES
 -- 暴雨红色预警（首页横幅显示）
 ('ALT20250108001', 4, 1, 4, 1, '乐山市区', '暴雨红色预警', '乐山市区域发布暴雨红色预警，预计未来3小时降水量将达80-100毫米，请注意防范。', 85.000, NOW(), NOW(), DATE_ADD(NOW(), INTERVAL 6 HOUR), 1, 1, '系统管理员', 1, 156),
 -- 内涝橙色预警
 ('ALT20250108002', 6, 3, 3, 1, '柏杨中路', '内涝橙色预警', '柏杨中路多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。', 32.000, DATE_SUB(NOW(), INTERVAL 30 MINUTE), DATE_SUB(NOW(), INTERVAL 25 MINUTE), DATE_ADD(NOW(), INTERVAL 4 HOUR), 1, 1, '系统管理员', 1, 89),
 -- 雷电黄色预警
-('ALT20250108003', 8, 4, 2, 1, '市中区', '雷电黄色预警', '预计未来6小时乐山市将出现强雷电活动，局部地区可能伴有短时强降水和大风。', 1.500, DATE_SUB(NOW(), INTERVAL 2 HOUR), DATE_SUB(NOW(), INTERVAL 1 HOUR 50 MINUTE), DATE_ADD(NOW(), INTERVAL 5 HOUR), 1, 1, '系统管理员', 1, 67),
+('ALT20250108003', 8, 4, 2, 1, '市中区', '雷电黄色预警', '预计未来6小时乐山市将出现强雷电活动，局部地区可能伴有短时强降水和大风。', 1.500, DATE_SUB(NOW(), INTERVAL 120 MINUTE), DATE_SUB(NOW(), INTERVAL 110 MINUTE), DATE_ADD(NOW(), INTERVAL 5 HOUR), 1, 1, '系统管理员', 1, 67),
 -- 内涝黄色预警（已解除）
-('ALT20250107001', 5, 3, 2, 2, '黄石坡', '内涝黄色预警', '黄石坡多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。', 22.000, DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_SUB(NOW(), INTERVAL 23 HOUR), DATE_SUB(NOW(), INTERVAL 12 HOUR), 2, 1, '系统管理员', 1, 245),
+('ALT20250107001', 5, 3, 2, 2, '黄石坡', '内涝黄色预警', '黄石坡多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。', 22.000, DATE_SUB(NOW(), INTERVAL 1440 MINUTE), DATE_SUB(NOW(), INTERVAL 1380 MINUTE), DATE_SUB(NOW(), INTERVAL 720 MINUTE), 2, 1, '系统管理员', 1, 245),
 -- 暴雨黄色预警（已解除）
-('ALT20250106001', 2, 1, 2, 1, '乐山市区', '暴雨黄色预警', '预计未来24小时乐山市区降水量将达100-150毫米，请注意防范。', 120.000, DATE_SUB(NOW(), INTERVAL 2 DAY), DATE_SUB(NOW(), INTERVAL 47 HOUR), DATE_SUB(NOW(), INTERVAL 24 HOUR), 2, 1, '系统管理员', 1, 312);
+('ALT20250106001', 2, 1, 2, 1, '乐山市区', '暴雨黄色预警', '预计未来24小时乐山市区降水量将达100-150毫米，请注意防范。', 120.000, DATE_SUB(NOW(), INTERVAL 2880 MINUTE), DATE_SUB(NOW(), INTERVAL 2820 MINUTE), DATE_SUB(NOW(), INTERVAL 1440 MINUTE), 2, 1, '系统管理员', 1, 312);
 
 -- -----------------------------------------------------
 -- 初始化预警通知记录（首页横幅通知）
@@ -42,7 +54,7 @@ INSERT INTO hf_alert_notification (alert_record_id, user_id, notify_channel, not
 -- 内涝橙色预警通知
 (2, 0, 5, '首页横幅', '内涝橙色预警：柏杨中路多处低洼地带已出现积水，部分道路交通受阻，请注意绕行。', DATE_SUB(NOW(), INTERVAL 25 MINUTE), 1, 0, 0, DATE_SUB(NOW(), INTERVAL 25 MINUTE)),
 -- 雷电黄色预警通知
-(3, 0, 5, '首页横幅', '雷电黄色预警：预计未来6小时乐山市将出现强雷电活动，局部地区可能伴有短时强降水和大风。', DATE_SUB(NOW(), INTERVAL 1 HOUR 50 MINUTE), 1, 0, 0, DATE_SUB(NOW(), INTERVAL 1 HOUR 50 MINUTE));
+(3, 0, 5, '首页横幅', '雷电黄色预警：预计未来6小时乐山市将出现强雷电活动，局部地区可能伴有短时强降水和大风。', DATE_SUB(NOW(), INTERVAL 110 MINUTE), 1, 0, 0, DATE_SUB(NOW(), INTERVAL 110 MINUTE));
 
 -- -----------------------------------------------------
 -- 初始化预警响应记录示例
