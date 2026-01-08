@@ -139,33 +139,44 @@ export default function AlertBanner() {
     const files = e.target.files
     if (!files || files.length === 0) return
 
+    console.log("[v0] 选择的文件数量:", files.length)
     setUploading(true)
 
     for (const file of Array.from(files)) {
       try {
-        console.log("[v0] 开始上传文件:", file.name)
+        console.log("[v0] 开始上传文件:", {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        })
+
         const res = await uploadAlertResponseFile(file)
         console.log("[v0] 文件上传响应:", res)
 
         if (res.code === 200 && res.data) {
           const fileInfo: FileInfo = {
-            id: res.data.id || `${Date.now()}_${Math.random()}`,
+            id: res.data.id || `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             name: res.data.fileName || res.data.name || file.name,
             url: res.data.url || "",
             size: res.data.fileSize || res.data.size || file.size,
             type: res.data.fileType || res.data.type || file.type,
-            path: res.data.path || res.data.filePath || "",
+            path: res.data.filePath || res.data.path || "",
           }
           console.log("[v0] 构建的文件信息:", fileInfo)
 
-          setUploadedFiles((prev) => [...prev, fileInfo])
+          setUploadedFiles((prev) => {
+            const newFiles = [...prev, fileInfo]
+            console.log("[v0] 更新后的文件列表:", newFiles)
+            return newFiles
+          })
           toast.success(`文件 ${file.name} 上传成功`)
         } else {
+          console.error("[v0] 上传失败:", res)
           toast.error(`文件 ${file.name} 上传失败: ${res.message || "未知错误"}`)
         }
       } catch (error) {
         console.error("[v0] 文件上传错误:", error)
-        toast.error(`文件 ${file.name} 上传失败`)
+        toast.error(`文件 ${file.name} 上传失败: ${error instanceof Error ? error.message : "网络错误"}`)
       }
     }
 
@@ -186,18 +197,22 @@ export default function AlertBanner() {
       return
     }
 
+    console.log("[v0] 准备提交响应，当前上传的文件:", uploadedFiles)
     setSubmitting(true)
     try {
       // 将文件信息序列化为JSON字符串
       const attachmentUrlsJson = JSON.stringify(uploadedFiles)
       console.log("[v0] 提交的附件JSON:", attachmentUrlsJson)
 
-      await createAlertResponse({
+      const submitData = {
         alertRecordId: notification.alertRecordId,
         responseType: responseForm.responseType,
         responseContent: responseForm.responseContent,
         attachmentUrls: attachmentUrlsJson,
-      })
+      }
+      console.log("[v0] 提交的完整数据:", submitData)
+
+      await createAlertResponse(submitData)
 
       toast.success("响应提交成功")
       setShowResponseDialog(false)
@@ -213,6 +228,7 @@ export default function AlertBanner() {
               try {
                 response.attachments = JSON.parse(response.attachmentUrls)
               } catch (e) {
+                console.error("[v0] 解析附件JSON失败:", e)
                 response.attachments = []
               }
             }

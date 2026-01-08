@@ -372,11 +372,17 @@ export async function createAlertResponse(data: {
  */
 export async function uploadAlertResponseFile(file: File): Promise<
   ApiResponse<{
-    fileName: string
-    filePath: string
-    fileSize: number
-    fileType: string
-    uploadTime: string
+    id?: string
+    fileName?: string
+    name?: string
+    filePath?: string
+    path?: string
+    url?: string
+    fileSize?: number
+    size?: number
+    fileType?: string
+    type?: string
+    uploadTime?: string
   }>
 > {
   const formData = new FormData()

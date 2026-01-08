@@ -106,6 +106,22 @@ class RequestClient {
     })
     return this.handleResponse<T>(response)
   }
+
+  async upload<T>(url: string, formData: FormData): Promise<ApiResponse<T>> {
+    const headers: HeadersInit = {}
+    const token = this.getToken()
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`
+    }
+    // 不设置Content-Type，让浏览器自动设置包含boundary的multipart/form-data
+
+    const response = await fetch(`${this.baseURL}${url}`, {
+      method: "POST",
+      headers: headers,
+      body: formData,
+    })
+    return this.handleResponse<T>(response)
+  }
 }
 
 export const apiClient = new RequestClient(API_BASE_URL)
