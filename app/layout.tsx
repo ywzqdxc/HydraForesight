@@ -8,7 +8,7 @@ import { DarkModeFixes } from "@/components/dark-mode-fixes"
 const inter = localFont({
   src: [
     {
-      path: "../public/fonts/inter-var.woff2",
+      path: "./fonts/inter-var.woff2",
       style: "normal",
     },
   ],
