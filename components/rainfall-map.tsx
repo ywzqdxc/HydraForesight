@@ -8,28 +8,26 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { MapPin, Droplets, Maximize2, Minimize2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import AMap from "AMap" // Import AMap
 
 interface AMapType {
   Map: new (container: string, options?: any) => any
-  // 添加其他需要的类和方法，例如 Marker、TileLayer 等
   Marker: any
   TileLayer: any
   ToolBar: any
+  Pixel: any
+  createDefaultLayer: () => any
 }
 
-// 扩展 Window 接口
 declare global {
   interface Window {
     AMap: AMapType
   }
 }
 
-// 定义标记点类型
 interface Marker {
   id: string
   type: "flooding" | "detection" | "public"
-  position: [number, number] // 经纬度
+  position: [number, number]
   title: string
   severity?: "severe" | "moderate" | "mild"
   details?: string
@@ -48,10 +46,8 @@ export default function RainfallMap() {
   const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null)
   const mapContainer = useRef<HTMLDivElement>(null)
 
-  // 修改坐标到四川乐山附近
   const centerPosition = [103.7361, 29.569559]
 
-  // 模拟标记点数据
   const markers: Marker[] = [
     // 积水点
     {
@@ -282,9 +278,7 @@ export default function RainfallMap() {
     },
   ]
 
-  // 初始化高德地图
   useEffect(() => {
-    // 检查是否已加载高德地图脚本
     if (!document.getElementById("amap-script") && !window.AMap) {
       const script = document.createElement("script")
       script.id = "amap-script"
@@ -303,24 +297,20 @@ export default function RainfallMap() {
     }
   }, [mapInstance])
 
-  // 监听标记点显示状态变化
   useEffect(() => {
     if (mapInstance && mapLoaded) {
       updateMarkers()
     }
   }, [showFloodingMarkers, showDetectionPoints, showPublicReports, mapLoaded, mapInstance])
 
-  // 监听标签页切换
   useEffect(() => {
     if (mapInstance && mapLoaded) {
-      // 延迟一下以确保DOM已更新
       setTimeout(() => {
         mapInstance.resize()
       }, 100)
     }
   }, [mapType, mapInstance, mapLoaded])
 
-  // 初始化地图
   const initMap = () => {
     if (!mapContainer.current || !window.AMap) return
 
@@ -331,7 +321,6 @@ export default function RainfallMap() {
       viewMode: "2D",
     })
 
-    // 添加控件
     map.addControl(new window.AMap.Scale())
     map.addControl(
       new window.AMap.ToolBar({
@@ -339,60 +328,42 @@ export default function RainfallMap() {
       }),
     )
 
-    // 添加图层切换控件
     const layers = {
       base: new window.AMap.TileLayer(),
       satellite: new window.AMap.TileLayer.Satellite(),
       roadNet: new window.AMap.TileLayer.RoadNet(),
     }
 
-    // 默认显示基础图层
-    map.add(AMap.createDefaultLayer())
+    map.add(window.AMap.createDefaultLayer())
     // map.add([layers.satellite])
 
-    // 监听地图加载完成事件
     map.on("complete", () => {
       setMapLoaded(true)
       setMapInstance(map)
-
-      // 默认切换到卫星视图
-      // 获取所有图层并移除
-      // const layers = map.getLayers()
-      // map.remove(layers)
-      // map.add([new window.AMap.TileLayer.Satellite()])
-
-      // 添加降水热力图层
-      // addRainfallHeatmap(map)
     })
   }
 
-  // 添加降水热力图
   const addRainfallHeatmap = (map: any) => {
-    // 模拟降水数据点
     const heatmapData = []
 
-    // 生成随机降水点
     for (let i = 0; i < 200; i++) {
-      // 在中心点周围随机生成点
       const lng = centerPosition[0] + (Math.random() - 0.5) * 0.05
       const lat = centerPosition[1] + (Math.random() - 0.5) * 0.05
 
-      // 越靠近中心点，降水量越大
       const distance = Math.sqrt(Math.pow(lng - centerPosition[0], 2) + Math.pow(lat - centerPosition[1], 2))
 
-      // 计算权重（降水量）
       const weight = Math.max(0, 1 - distance * 50)
 
       heatmapData.push({
         lng,
         lat,
-        count: weight * 100, // 将权重转换为降水量
+        count: weight * 100,
       })
     }
-    // 创建热力图实例
+
     const heatmap = new window.AMap.HeatMap(map, {
-      radius: 25, // 热力图半径
-      opacity: [0.1, 0.8], // 热力图透明度
+      radius: 25,
+      opacity: [0.1, 0.8],
       gradient: {
         0.1: "rgba(0, 0, 255, 0.5)",
         0.3: "rgba(0, 255, 255, 0.5)",
@@ -402,23 +373,18 @@ export default function RainfallMap() {
       },
     })
 
-    // 设置数据
     heatmap.setDataSet({
       data: heatmapData,
       max: 100,
     })
   }
 
-  // 更新标记点
   const updateMarkers = () => {
     if (!mapInstance) return
 
-    // 清除所有标记
     mapInstance.clearMap()
 
-    // 添加标记点
     markers.forEach((marker) => {
-      // 根据类型和显示设置过滤标记点
       if (
         (marker.type === "flooding" && !showFloodingMarkers) ||
         (marker.type === "detection" && !showDetectionPoints) ||
@@ -427,7 +393,6 @@ export default function RainfallMap() {
         return
       }
 
-      // 根据类型设置图标样式
       let content = ""
       if (marker.type === "flooding") {
         const color = marker.severity === "severe" ? "#ef4444" : marker.severity === "moderate" ? "#f97316" : "#eab308"
@@ -457,7 +422,7 @@ export default function RainfallMap() {
           <div class="flex items-center justify-center w-8 h-8">
             <div class="absolute p-1 rounded-full" style="background-color: #a855f7">
               <svg t="1746197573907" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="33838" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
-              <path d="M703.74312 37.376593A506.303367 506.303367 0 0 0 511.99936 0.00064C229.631713 0.00064 0 229.632353 0 512c0 218.623727 137.599828 405.631493 330.879586 478.847401l0.384 0.256c1.535998 0.639999 3.199996 1.151999 4.863994 1.791998l1.151998 0.383999c55.99993 20.351975 115.135856 30.719962 174.719782 30.719962a508.415364 508.415364 0 0 0 197.887753-39.80795C894.206882 906.751507 1023.99872 724.223735 1023.99872 512A512.447359 512.447359 0 0 0 703.74312 37.376593zM329.599588 907.007506A435.519456 435.519456 0 0 1 76.799904 512c0-229.887713 179.071776-418.559477 404.991494-434.175457L260.735674 480.768039A38.399952 38.399952 0 0 0 294.399632 537.599968h215.551731L329.599588 907.007506z m325.759593 15.87198a436.671454 436.671454 0 0 1-253.055684 10.367987l203.647746-417.151478a38.591952 38.591952 0 0 0-34.559957-55.295931H359.295551l82.559896-160.2558A435.647455 435.647455 0 0 1 947.198816 512a435.391456 435.391456 0 0 1-212.607734 373.887533z" 
+              <path d="M703.74312 37.376593A506.303367 506.303367 0 0 0 511.99936 0.00064C229.631713 0.00064 0 229.632353 0 512c0 218.623727 137.599828 405.631493 404.991494 478.847401l0.384 0.256c1.535998 0.639999 3.199996 1.151999 4.863994 1.791998l1.151998 0.383999c55.99993 20.351975 115.135856 30.719962 174.719782 30.719962a508.415364 508.415364 0 0 0 197.887753-39.80795C894.206882 906.751507 1023.99872 724.223735 1023.99872 512A512.447359 512.447359 0 0 0 703.74312 37.376593zM329.599588 907.007506A435.519456 435.519456 0 0 1 76.799904 512c0-229.887713 179.071776-418.559477 404.991494-434.175457L260.735674 480.768039A38.399952 38.399952 0 0 0 294.399632 537.599968h215.551731L329.599588 907.007506z m325.759593 15.87198a436.671454 436.671454 0 0 1-253.055684 10.367987l203.647746-417.151478a38.591952 38.591952 0 0 0-34.559957-55.295931H359.295551l82.559896-160.2558A435.647455 435.647455 0 0 1 947.198816 512a435.391456 435.391456 0 0 1-212.607734 373.887533z" 
               fill="#FFFFFF" p-id="33839"></path>
               </svg>
             </div>
@@ -465,65 +430,49 @@ export default function RainfallMap() {
         `
       }
 
-      // 创建标记
       const mapMarker = new window.AMap.Marker({
         position: marker.position,
         title: marker.title,
         content: content,
-        offset: new AMap.Pixel(-15, -15),
+        offset: new window.AMap.Pixel(-15, -15),
         extData: marker,
       })
 
-      // 添加点击事件
       mapMarker.on("click", () => {
         setSelectedMarker(marker)
       })
 
-      // 添加到地图
       mapInstance.add(mapMarker)
     })
   }
 
-  // 切换地图类型
   const handleMapTypeChange = (type: string) => {
     setMapType(type)
 
     if (!mapInstance) return
 
-    // 获取所有图层并移除
     const layers = mapInstance.getLayers()
     mapInstance.remove(layers)
 
-    // 根据类型添加图层
     if (type === "satellite") {
       mapInstance.add([new window.AMap.TileLayer.Satellite()])
-      // 重新添加标记点
       updateMarkers()
-      //重新添加热力图
       // addRainfallHeatmap(mapInstance)
     } else if (type === "hybrid") {
       mapInstance.add([new window.AMap.TileLayer.Satellite(), new window.AMap.TileLayer.RoadNet()])
-      // 重新添加标记点
       updateMarkers()
-      //重新添加热力图
       // addRainfallHeatmap(mapInstance)
     } else {
-      // 默认基础图层
-      // mapInstance.add([new window.AMap.TileLayer()])
-      mapInstance.add(AMap.createDefaultLayer())
-      // 重新添加标记点和热力图
+      mapInstance.add(window.AMap.createDefaultLayer())
       updateMarkers()
-      //重新添加热力图
       // addRainfallHeatmap(mapInstance)
     }
   }
 
-  // 切换全屏显示
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
   }
 
-  // 关闭标记详情
   const closeMarkerDetails = () => {
     setSelectedMarker(null)
   }
@@ -556,7 +505,6 @@ export default function RainfallMap() {
           >
             <div ref={mapContainer} className="h-[400px] absolute inset-0"></div>
 
-            {/* 标记详情弹窗 */}
             {selectedMarker && (
               <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-72 bg-white dark:bg-gray-800 p-3 rounded-md shadow-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-start mb-2">
@@ -620,9 +568,7 @@ export default function RainfallMap() {
         </TabsContent>
       </Tabs>
 
-      {/* 底部：图例和开关控制 */}
       <div className="flex flex-wrap justify-between items-center">
-        {/* 图例区域 - 使用grid布局 */}
         <div className="grid grid-cols-3 gap-1 ml-3 w-[400px]">
           <div className="ml-2">图例：</div>
           <div></div>
@@ -649,7 +595,6 @@ export default function RainfallMap() {
           </div>
         </div>
 
-        {/* 开关控制区域 - 垂直排列 */}
         <div className="flex flex-col gap-1 ml-3 mt-2 min-w-[200px]">
           <div className="flex items-center space-x-2">
             <Switch id="flooding" checked={showFloodingMarkers} onCheckedChange={setShowFloodingMarkers} />
