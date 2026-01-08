@@ -21,6 +21,9 @@ public class AlertNotificationDTO {
     @NotNull(message = "预警级别不能为空")
     private Integer alertLevel;
 
+    @Schema(description = "预警区域ID(0表示全局)")
+    private Long areaId;
+
     @Schema(description = "预警区域名称")
     @NotBlank(message = "预警区域不能为空")
     private String areaName;
@@ -59,6 +62,14 @@ public class AlertNotificationDTO {
 
     public void setAlertLevel(Integer alertLevel) {
         this.alertLevel = alertLevel;
+    }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
     }
 
     public String getAreaName() {

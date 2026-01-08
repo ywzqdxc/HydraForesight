@@ -48,6 +48,7 @@ public class AlertNotificationServiceImpl extends ServiceImpl<AlertNotificationM
             alertRecord.setAlertId("ALT" + IdUtil.getSnowflakeNextIdStr());
             alertRecord.setAlertType(dto.getAlertType());
             alertRecord.setAlertLevel(dto.getAlertLevel());
+            alertRecord.setAreaId(dto.getAreaId() != null ? dto.getAreaId() : 0L);
             alertRecord.setAreaName(dto.getAreaName());
             alertRecord.setTitle(dto.getTitle());
             alertRecord.setContent(dto.getContent());
