@@ -82,11 +82,12 @@ spring:
 file:
   upload:
     # 文件上传路径，可以是相对路径或绝对路径
-    path: ./uploads
+    path: D:/HydraForesight/uploads
     # 最大文件大小（字节）10MB
     max-size: 10485760
     # 允许的文件类型
     allowed-types: jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,mp4,mp3
+    url-prefix: http://127.0.0.1:8080/api
 
 # MyBatis Plus配置
 mybatis-plus:

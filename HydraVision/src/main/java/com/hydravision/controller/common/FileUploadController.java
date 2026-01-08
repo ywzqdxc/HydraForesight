@@ -51,7 +51,7 @@ public class FileUploadController {
     }
 
     @Operation(summary = "下载文件")
-    @GetMapping("/download/**")
+    @GetMapping("/download")
     public ResponseEntity<Resource> downloadFile(@Parameter(description = "文件路径") @RequestParam String filePath) {
         try {
             Path path = Paths.get(uploadPath).resolve(filePath).normalize();
@@ -59,14 +59,23 @@ public class FileUploadController {
 
             if (resource.exists() && resource.isReadable()) {
                 String contentType = "application/octet-stream";
+                // 尝试根据文件扩展名确定Content-Type
+                String filename = resource.getFilename();
+                if (filename != null) {
+                    if (filename.endsWith(".pdf")) contentType = "application/pdf";
+                    else if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) contentType = "image/jpeg";
+                    else if (filename.endsWith(".png")) contentType = "image/png";
+                }
+                
                 return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .header(HttpHeaders.CONTENT_DISPOSITION, 
+                                "attachment; filename=\"" + new String(resource.getFilename().getBytes("UTF-8"), "ISO-8859-1") + "\"")
                         .body(resource);
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }

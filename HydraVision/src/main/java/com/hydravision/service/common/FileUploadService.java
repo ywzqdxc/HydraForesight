@@ -30,11 +30,14 @@ public class FileUploadService {
     @Value("${file.upload.allowed-types:jpg,jpeg,png,gif,pdf,doc,docx}")
     private String allowedTypes;
 
+    @Value("${file.upload.url-prefix:http://127.0.0.1:8080/api}")
+    private String urlPrefix;
+
     /**
      * 上传文件
      * @param file 文件
      * @param subDir 子目录（如：alert-response）
-     * @return 文件信息Map
+     * @return 文件信息Map（包含id, name, url, size, type, path）
      */
     public Map<String, Object> uploadFile(MultipartFile file, String subDir) {
         if (file == null || file.isEmpty()) {
@@ -57,9 +60,16 @@ public class FileUploadService {
             throw new BusinessException("不支持的文件类型: " + extension);
         }
 
-        // 生成存储路径
-        String dateDir = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String fileName = UUID.randomUUID().toString().replace("-", "") + "." + extension;
+        LocalDateTime now = LocalDateTime.now();
+        String dateDir = now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String timeStamp = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        
+        // 生成唯一文件名：原文件名_时间戳_随机码.扩展名
+        String randomCode = UUID.randomUUID().toString().substring(0, 4).toUpperCase();
+        String baseFileName = originalFilename != null ? 
+            originalFilename.substring(0, originalFilename.lastIndexOf(".")) : "file";
+        String fileName = baseFileName + "_" + timeStamp + randomCode + "." + extension;
+        
         String relativePath = subDir + "/" + dateDir + "/" + fileName;
 
         try {
@@ -67,13 +77,13 @@ public class FileUploadService {
             Files.createDirectories(targetPath.getParent());
             Files.copy(file.getInputStream(), targetPath);
 
-            // 返回文件信息
             Map<String, Object> result = new HashMap<>();
-            result.put("fileName", originalFilename);
-            result.put("filePath", relativePath);
-            result.put("fileSize", file.getSize());
-            result.put("fileType", extension);
-            result.put("uploadTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            result.put("id", System.currentTimeMillis() + "_" + randomCode.hashCode());
+            result.put("name", originalFilename);
+            result.put("url", urlPrefix + "/file/download?filePath=" + relativePath);
+            result.put("size", file.getSize());
+            result.put("type", file.getContentType() != null ? file.getContentType() : "application/octet-stream");
+            result.put("path", targetPath.toString());
 
             return result;
         } catch (IOException e) {
