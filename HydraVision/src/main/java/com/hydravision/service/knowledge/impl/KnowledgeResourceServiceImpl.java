@@ -98,6 +98,10 @@ public class KnowledgeResourceServiceImpl implements KnowledgeResourceService {
         resource.setViewCount(0);
         resource.setIsDeleted(0);
         
+        if (resource.getCategoryId() == null) {
+            resource.setCategoryId(0L);
+        }
+        
         if (resource.getPublishStatus() == null) {
             resource.setPublishStatus(0);
         }
@@ -114,6 +118,7 @@ public class KnowledgeResourceServiceImpl implements KnowledgeResourceService {
         System.out.println("[v0 Debug] fileSize=" + resource.getFileSize());
         System.out.println("[v0 Debug] uploaderId=" + resource.getUploaderId());
         System.out.println("[v0 Debug] uploaderName=" + resource.getUploaderName());
+        System.out.println("[v0 Debug] categoryId=" + resource.getCategoryId());
         System.out.println("[v0 Debug] publishStatus=" + resource.getPublishStatus());
         
         int result = resourceMapper.insert(resource);
