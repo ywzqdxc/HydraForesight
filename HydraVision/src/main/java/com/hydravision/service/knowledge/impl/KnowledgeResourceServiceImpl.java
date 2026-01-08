@@ -58,12 +58,22 @@ public class KnowledgeResourceServiceImpl implements KnowledgeResourceService {
 
     @Override
     public List<KnowledgeResourceVO> getPublishedResources() {
+        System.out.println("[v0 Debug] KnowledgeResourceService - 开始查询已发布的知识资源");
         LambdaQueryWrapper<KnowledgeResource> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(KnowledgeResource::getPublishStatus, 1)
                    .orderByDesc(KnowledgeResource::getPublishTime);
         
+        System.out.println("[v0 Debug] KnowledgeResourceService - 执行数据库查询");
         List<KnowledgeResource> resources = resourceMapper.selectList(queryWrapper);
-        return resources.stream().map(this::convertToVO).collect(Collectors.toList());
+        System.out.println("[v0 Debug] KnowledgeResourceService - 数据库返回记录数: " + resources.size());
+        
+        if (!resources.isEmpty()) {
+            System.out.println("[v0 Debug] KnowledgeResourceService - 第一条记录: ID=" + resources.get(0).getId() + ", 标题=" + resources.get(0).getTitle() + ", 状态=" + resources.get(0).getPublishStatus());
+        }
+        
+        List<KnowledgeResourceVO> result = resources.stream().map(this::convertToVO).collect(Collectors.toList());
+        System.out.println("[v0 Debug] KnowledgeResourceService - 转换完成，返回VO数量: " + result.size());
+        return result;
     }
 
     @Override

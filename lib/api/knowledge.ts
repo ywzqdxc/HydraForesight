@@ -1,4 +1,4 @@
-import { request } from "./request"
+import { apiClient } from "./request"
 
 export interface FloodGuide {
   id: number
@@ -56,71 +56,126 @@ export interface PageResult<T> {
 // 防汛指南API
 export const floodGuideApi = {
   // 分页查询
-  getPage: (params: {
+  getPage: async (params: {
     pageNum?: number
     pageSize?: number
     keyword?: string
     guideLevel?: number
     publishStatus?: number
-  }) => request.get<PageResult<FloodGuide>>("/api/knowledge/flood-guide/page", { params }),
+  }): Promise<PageResult<FloodGuide>> => {
+    console.log("[v0] floodGuideApi.getPage - 开始请求", params)
+    const response = await apiClient.get<PageResult<FloodGuide>>("/api/knowledge/flood-guide/page", params)
+    console.log("[v0] floodGuideApi.getPage - 响应:", response)
+    return response.data
+  },
 
   // 获取已发布列表
-  getPublished: () => request.get<FloodGuide[]>("/api/knowledge/flood-guide/published"),
+  getPublished: async (): Promise<FloodGuide[]> => {
+    console.log("[v0] floodGuideApi.getPublished - 开始请求")
+    const response = await apiClient.get<FloodGuide[]>("/api/knowledge/flood-guide/published")
+    console.log("[v0] floodGuideApi.getPublished - 响应码:", response.code)
+    console.log("[v0] floodGuideApi.getPublished - 数据:", response.data)
+    console.log("[v0] floodGuideApi.getPublished - 数据数量:", response.data?.length || 0)
+    return response.data
+  },
 
   // 获取详情
-  getById: (id: number) => request.get<FloodGuide>(`/api/knowledge/flood-guide/${id}`),
+  getById: async (id: number): Promise<FloodGuide> => {
+    const response = await apiClient.get<FloodGuide>(`/api/knowledge/flood-guide/${id}`)
+    return response.data
+  },
 
   // 创建
-  create: (data: Partial<FloodGuide>) => request.post<FloodGuide>("/api/knowledge/flood-guide", data),
+  create: async (data: Partial<FloodGuide>): Promise<FloodGuide> => {
+    const response = await apiClient.post<FloodGuide>("/api/knowledge/flood-guide", data)
+    return response.data
+  },
 
   // 更新
-  update: (id: number, data: Partial<FloodGuide>) => request.put<FloodGuide>(`/api/knowledge/flood-guide/${id}`, data),
+  update: async (id: number, data: Partial<FloodGuide>): Promise<FloodGuide> => {
+    const response = await apiClient.put<FloodGuide>(`/api/knowledge/flood-guide/${id}`, data)
+    return response.data
+  },
 
   // 删除
-  delete: (id: number) => request.delete(`/api/knowledge/flood-guide/${id}`),
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/knowledge/flood-guide/${id}`)
+  },
 
   // 发布
-  publish: (id: number) => request.post(`/api/knowledge/flood-guide/${id}/publish`),
+  publish: async (id: number): Promise<void> => {
+    await apiClient.post(`/api/knowledge/flood-guide/${id}/publish`)
+  },
 
   // 增加浏览次数
-  incrementView: (id: number) => request.post(`/api/knowledge/flood-guide/${id}/view`),
+  incrementView: async (id: number): Promise<void> => {
+    await apiClient.post(`/api/knowledge/flood-guide/${id}/view`)
+  },
 }
 
 // 知识资源API
 export const knowledgeResourceApi = {
   // 分页查询
-  getPage: (params: {
+  getPage: async (params: {
     pageNum?: number
     pageSize?: number
     keyword?: string
     fileType?: string
     publishStatus?: number
-  }) => request.get<PageResult<KnowledgeResource>>("/api/knowledge/resource/page", { params }),
+  }): Promise<PageResult<KnowledgeResource>> => {
+    console.log("[v0] knowledgeResourceApi.getPage - 开始请求", params)
+    const response = await apiClient.get<PageResult<KnowledgeResource>>("/api/knowledge/resource/page", params)
+    console.log("[v0] knowledgeResourceApi.getPage - 响应:", response)
+    return response.data
+  },
 
   // 获取已发布列表
-  getPublished: () => request.get<KnowledgeResource[]>("/api/knowledge/resource/published"),
+  getPublished: async (): Promise<KnowledgeResource[]> => {
+    console.log("[v0] knowledgeResourceApi.getPublished - 开始请求")
+    const response = await apiClient.get<KnowledgeResource[]>("/api/knowledge/resource/published")
+    console.log("[v0] knowledgeResourceApi.getPublished - 响应码:", response.code)
+    console.log("[v0] knowledgeResourceApi.getPublished - 数据:", response.data)
+    console.log("[v0] knowledgeResourceApi.getPublished - 数据数量:", response.data?.length || 0)
+    return response.data
+  },
 
   // 获取详情
-  getById: (id: number) => request.get<KnowledgeResource>(`/api/knowledge/resource/${id}`),
+  getById: async (id: number): Promise<KnowledgeResource> => {
+    const response = await apiClient.get<KnowledgeResource>(`/api/knowledge/resource/${id}`)
+    return response.data
+  },
 
   // 创建
-  create: (data: Partial<KnowledgeResource>) => request.post<KnowledgeResource>("/api/knowledge/resource", data),
+  create: async (data: Partial<KnowledgeResource>): Promise<KnowledgeResource> => {
+    const response = await apiClient.post<KnowledgeResource>("/api/knowledge/resource", data)
+    return response.data
+  },
 
   // 更新
-  update: (id: number, data: Partial<KnowledgeResource>) =>
-    request.put<KnowledgeResource>(`/api/knowledge/resource/${id}`, data),
+  update: async (id: number, data: Partial<KnowledgeResource>): Promise<KnowledgeResource> => {
+    const response = await apiClient.put<KnowledgeResource>(`/api/knowledge/resource/${id}`, data)
+    return response.data
+  },
 
   // 删除
-  delete: (id: number) => request.delete(`/api/knowledge/resource/${id}`),
+  delete: async (id: number): Promise<void> => {
+    await apiClient.delete(`/api/knowledge/resource/${id}`)
+  },
 
   // 发布
-  publish: (id: number) => request.post(`/api/knowledge/resource/${id}/publish`),
+  publish: async (id: number): Promise<void> => {
+    await apiClient.post(`/api/knowledge/resource/${id}/publish`)
+  },
 
   // 增加下载次数
-  incrementDownload: (id: number) => request.post(`/api/knowledge/resource/${id}/download`),
+  incrementDownload: async (id: number): Promise<void> => {
+    await apiClient.post(`/api/knowledge/resource/${id}/download`)
+  },
 
   // 增加浏览次数
-  incrementView: (id: number) => request.post(`/api/knowledge/resource/${id}/view`),
+  incrementView: async (id: number): Promise<void> => {
+    await apiClient.post(`/api/knowledge/resource/${id}/view`)
+  },
 }
 
 // 文件上传API（复用已有的）
@@ -128,6 +183,6 @@ export const uploadFile = async (file: File): Promise<any> => {
   const formData = new FormData()
   formData.append("file", file)
 
-  const response = await request.upload("/api/common/upload", formData)
-  return response
+  const response = await apiClient.upload("/api/common/upload", formData)
+  return response.data
 }

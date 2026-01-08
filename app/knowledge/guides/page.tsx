@@ -28,20 +28,29 @@ export default function KnowledgePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    console.log("[v0] KnowledgePage - 组件加载，准备获取防汛指南")
     loadGuides()
   }, [])
 
   const loadGuides = async () => {
     try {
-      console.log("[v0] 开始加载已发布的防汛指南")
+      console.log("[v0] KnowledgePage - 开始加载已发布的防汛指南")
       const response = await floodGuideApi.getPublished()
-      console.log("[v0] 加载到的防汛指南数量:", response.length)
-      setGuides(response)
-      if (response.length === 0) {
+      console.log("[v0] KnowledgePage - 接收到的数据:", response)
+      console.log("[v0] KnowledgePage - 数据类型:", typeof response)
+      console.log("[v0] KnowledgePage - 是否为数组:", Array.isArray(response))
+      console.log("[v0] KnowledgePage - 数据数量:", response?.length || 0)
+
+      setGuides(response || [])
+
+      if (!response || response.length === 0) {
+        console.log("[v0] KnowledgePage - 没有数据，显示提示")
         toast.info("暂无已发布的防汛指南")
+      } else {
+        console.log("[v0] KnowledgePage - 成功加载", response.length, "条防汛指南")
       }
     } catch (error) {
-      console.error("[v0] 加载防汛指南失败:", error)
+      console.error("[v0] KnowledgePage - 加载防汛指南失败:", error)
       toast.error("加载失败，请稍后重试")
     } finally {
       setLoading(false)
@@ -411,23 +420,9 @@ function GuideCard({ guide }: GuideCardProps) {
   const handleView = async () => {
     try {
       await floodGuideApi.incrementView(guide.id)
-      // You can add a modal or navigate to a detail page here
       toast.success("已打开防汛指南")
     } catch (error) {
       toast.error("打开失败")
-    }
-  }
-
-  const getLevelName = (level: number) => {
-    switch (level) {
-      case 1:
-        return "基础"
-      case 2:
-        return "中级"
-      case 3:
-        return "高级"
-      default:
-        return "未知"
     }
   }
 
@@ -459,7 +454,7 @@ function GuideCard({ guide }: GuideCardProps) {
                   : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
             }
           >
-            {getLevelName(guide.guideLevel)}
+            {guide.guideLevelName}
           </Badge>
         </div>
         <CardTitle className="text-lg mt-2">{guide.title}</CardTitle>

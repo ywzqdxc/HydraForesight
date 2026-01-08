@@ -28,20 +28,29 @@ export default function KnowledgePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    console.log("[v0] ResourcesPage - 组件加载，准备获取知识资源")
     loadResources()
   }, [])
 
   const loadResources = async () => {
     try {
-      console.log("[v0] 开始加载已发布的知识资源")
+      console.log("[v0] ResourcesPage - 开始加载已发布的知识资源")
       const response = await knowledgeResourceApi.getPublished()
-      console.log("[v0] 加载到的知识资源数量:", response.length)
-      setResources(response)
-      if (response.length === 0) {
+      console.log("[v0] ResourcesPage - 接收到的数据:", response)
+      console.log("[v0] ResourcesPage - 数据类型:", typeof response)
+      console.log("[v0] ResourcesPage - 是否为数组:", Array.isArray(response))
+      console.log("[v0] ResourcesPage - 数据数量:", response?.length || 0)
+
+      setResources(response || [])
+
+      if (!response || response.length === 0) {
+        console.log("[v0] ResourcesPage - 没有数据，显示提示")
         toast.info("暂无已发布的知识资源")
+      } else {
+        console.log("[v0] ResourcesPage - 成功加载", response.length, "条知识资源")
       }
     } catch (error) {
-      console.error("[v0] 加载知识资源失败:", error)
+      console.error("[v0] ResourcesPage - 加载知识资源失败:", error)
       toast.error("加载失败，请稍后重试")
     } finally {
       setLoading(false)
@@ -441,7 +450,6 @@ function ResourceCard({ resource }: ResourceCardProps) {
   const handleDownload = async () => {
     try {
       await knowledgeResourceApi.incrementDownload(resource.id)
-      // Open the file URL for download
       window.open(resource.fileUrl, "_blank")
       toast.success("开始下载")
     } catch (error) {
@@ -452,7 +460,6 @@ function ResourceCard({ resource }: ResourceCardProps) {
   const handlePreview = async () => {
     try {
       await knowledgeResourceApi.incrementView(resource.id)
-      // Open the file URL for preview
       window.open(resource.fileUrl, "_blank")
     } catch (error) {
       toast.error("预览失败")
@@ -480,7 +487,7 @@ function ResourceCard({ resource }: ResourceCardProps) {
         )}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <div>文件大小: {resource.fileSizeText}</div>
-          <div>下载次数: {resource.downloadCount}</div>
+          <div>下载: {resource.downloadCount}</div>
           <div>浏览: {resource.viewCount}</div>
         </div>
         {resource.uploaderName && (

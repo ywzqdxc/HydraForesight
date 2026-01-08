@@ -59,13 +59,23 @@ public class FloodGuideServiceImpl implements FloodGuideService {
 
     @Override
     public List<FloodGuideVO> getPublishedGuides() {
+        System.out.println("[v0 Debug] FloodGuideService - 开始查询已发布的防汛指南");
         LambdaQueryWrapper<FloodGuide> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(FloodGuide::getPublishStatus, 1)
                    .orderByDesc(FloodGuide::getSortOrder)
                    .orderByDesc(FloodGuide::getPublishTime);
         
+        System.out.println("[v0 Debug] FloodGuideService - 执行数据库查询");
         List<FloodGuide> guides = floodGuideMapper.selectList(queryWrapper);
-        return guides.stream().map(this::convertToVO).collect(Collectors.toList());
+        System.out.println("[v0 Debug] FloodGuideService - 数据库返回记录数: " + guides.size());
+        
+        if (!guides.isEmpty()) {
+            System.out.println("[v0 Debug] FloodGuideService - 第一条记录: ID=" + guides.get(0).getId() + ", 标题=" + guides.get(0).getTitle() + ", 状态=" + guides.get(0).getPublishStatus());
+        }
+        
+        List<FloodGuideVO> result = guides.stream().map(this::convertToVO).collect(Collectors.toList());
+        System.out.println("[v0 Debug] FloodGuideService - 转换完成，返回VO数量: " + result.size());
+        return result;
     }
 
     @Override

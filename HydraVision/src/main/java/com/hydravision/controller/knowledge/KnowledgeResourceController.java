@@ -41,7 +41,13 @@ public class KnowledgeResourceController {
      */
     @GetMapping("/published")
     public Result<List<KnowledgeResourceVO>> getPublished() {
+        System.out.println("[v0 Debug] ========== 开始处理知识资源published请求 ==========");
         List<KnowledgeResourceVO> resources = resourceService.getPublishedResources();
+        System.out.println("[v0 Debug] 查询到的知识资源数量: " + resources.size());
+        if (!resources.isEmpty()) {
+            System.out.println("[v0 Debug] 第一条记录: " + resources.get(0).getTitle());
+        }
+        System.out.println("[v0 Debug] ========== 知识资源published请求处理完成 ==========");
         return Result.success(resources);
     }
 

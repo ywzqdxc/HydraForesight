@@ -39,7 +39,13 @@ public class FloodGuideController {
      */
     @GetMapping("/published")
     public Result<List<FloodGuideVO>> getPublished() {
+        System.out.println("[v0 Debug] ========== 开始处理防汛指南published请求 ==========");
         List<FloodGuideVO> guides = floodGuideService.getPublishedGuides();
+        System.out.println("[v0 Debug] 查询到的防汛指南数量: " + guides.size());
+        if (!guides.isEmpty()) {
+            System.out.println("[v0 Debug] 第一条记录: " + guides.get(0).getTitle());
+        }
+        System.out.println("[v0 Debug] ========== 防汛指南published请求处理完成 ==========");
         return Result.success(guides);
     }
 
