@@ -625,44 +625,33 @@ export default function RainfallMap() {
           </div>
           <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span className="text-xs">监测点</span>
+            <span className="text-xs">监测站</span>
           </div>
-          <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
+          <div className="flex items-center gap-1 px-2 py-1 bg-purple-100 rounded-md">
             <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-            <span className="text-xs">河道水库监测点</span>
+            <span className="text-xs">公众上报</span>
           </div>
         </div>
 
-        {/* 切换地图类型 */}
-        <div className="flex items-center gap-1">
-          <Select value={mapType} onValueChange={handleMapTypeChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="地图类型" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="rainfall">普通地图</SelectItem>
-              <SelectItem value="satellite">卫星图</SelectItem>
-              <SelectItem value="hybrid">混合视图</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline" size="icon" onClick={toggleFullscreen}>
-            {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-          </Button>
-          <div></div>
-        </div>
-
-        <div className="flex flex-col gap-1 ml-3 mt-2 min-w-[200px]">
+        {/* 控制开关 */}
+        <div className="flex flex-wrap gap-4 mr-2">
           <div className="flex items-center space-x-2">
             <Switch id="flooding" checked={showFloodingMarkers} onCheckedChange={setShowFloodingMarkers} />
-            <Label htmlFor="flooding">显示道路积水点</Label>
+            <Label htmlFor="flooding" className="text-sm">
+              显示积水点
+            </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Switch id="detection" checked={showDetectionPoints} onCheckedChange={setShowDetectionPoints} />
-            <Label htmlFor="detection">显示监测点</Label>
+            <Label htmlFor="detection" className="text-sm">
+              显示监测站
+            </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Switch id="public" checked={showPublicReports} onCheckedChange={setShowPublicReports} />
-            <Label htmlFor="public">显示河道水库监测</Label>
+            <Label htmlFor="public" className="text-sm">
+              显示公众上报
+            </Label>
           </div>
         </div>
       </div>
