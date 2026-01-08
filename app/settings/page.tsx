@@ -1,16 +1,76 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Header } from "@/components/header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Users, Shield, Building2, FileText } from "lucide-react"
+import { Users, Shield, Building2, FileText, Loader2 } from "lucide-react"
 import DepartmentManagement from "@/components/settings/department-management"
 import UserManagement from "@/components/settings/user-management"
 import RoleManagement from "@/components/settings/role-management"
 import ReportManagement from "@/components/settings/report-management"
+import { getCurrentUser } from "@/lib/api/user"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function SettingsPage() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState("users")
+  const [loading, setLoading] = useState(true)
+  const [hasAccess, setHasAccess] = useState(false)
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false)
+
+  useEffect(() => {
+    checkAccess()
+  }, [])
+
+  const checkAccess = async () => {
+    try {
+      const user = await getCurrentUser()
+
+      // 检查用户是否有角色
+      if (!user.roles || user.roles.length === 0) {
+        setHasAccess(false)
+        return
+      }
+
+      // 检查是否是超级管理员或系统管理员
+      const isSuperAdmin = user.roles.some((role) => role.roleCode === "ROLE_SUPER_ADMIN")
+      const isAdmin = user.roles.some((role) => role.roleCode === "ROLE_ADMIN")
+
+      setIsSuperAdmin(isSuperAdmin)
+      setHasAccess(isSuperAdmin || isAdmin)
+    } catch (error) {
+      console.error("检查访问权限失败:", error)
+      setHasAccess(false)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1 container py-6 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </main>
+      </div>
+    )
+  }
+
+  if (!hasAccess) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1 container py-6">
+          <Alert variant="destructive">
+            <Shield className="h-4 w-4" />
+            <AlertDescription>您没有权限访问系统设置。只有超级管理员和系统管理员才能访问此页面。</AlertDescription>
+          </Alert>
+        </main>
+      </div>
+    )
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -19,7 +79,10 @@ export default function SettingsPage() {
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">系统设置</h1>
-            <p className="text-muted-foreground">管理系统的用户、角色、部门和公众上报</p>
+            <p className="text-muted-foreground">
+              管理系统的用户、角色、部门和公众上报
+              {isSuperAdmin && <span className="ml-2 text-destructive font-medium">（超级管理员权限）</span>}
+            </p>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
