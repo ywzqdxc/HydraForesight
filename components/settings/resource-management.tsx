@@ -94,48 +94,96 @@ export default function ResourceManagement() {
     const file = e.target.files?.[0]
     if (!file) return
 
+    console.log("[v0] 开始上传文件:", file.name, "大小:", file.size)
+
     setUploading(true)
     try {
       const formData = new FormData()
       formData.append("file", file)
+      formData.append("subDir", "knowledge-resources")
 
-      const response = await request.upload("/api/common/upload", formData)
+      console.log("[v0] 调用上传API: /file/upload")
+      const response = await request.upload<{ url: string; fileName: string; fileSize: number }>(
+        "/file/upload",
+        formData,
+      )
 
-      if (response && response.url) {
-        setFormData((prev) => ({
-          ...prev,
-          fileUrl: response.url,
-          fileType: response.type || file.name.split(".").pop()?.toUpperCase() || "FILE",
-          fileSize: response.size || file.size,
-        }))
-        toast.success("文件上传成功")
+      console.log("[v0] 上传成功，响应:", response)
+
+      // 自动识别文件类型
+      const fileName = file.name.toLowerCase()
+      let fileType = "FILE"
+
+      if (fileName.endsWith(".pdf")) {
+        fileType = "PDF"
+      } else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
+        fileType = "DOCX"
+      } else if (fileName.endsWith(".xls") || fileName.endsWith(".xlsx")) {
+        fileType = "XLSX"
+      } else if (fileName.endsWith(".ppt") || fileName.endsWith(".pptx")) {
+        fileType = "PPTX"
+      } else if (fileName.endsWith(".zip") || fileName.endsWith(".rar") || fileName.endsWith(".7z")) {
+        fileType = "ZIP"
+      } else if (fileName.endsWith(".mp4") || fileName.endsWith(".avi") || fileName.endsWith(".mov")) {
+        fileType = "MP4"
+      } else if (fileName.endsWith(".mp3") || fileName.endsWith(".wav")) {
+        fileType = "MP3"
+      } else if (fileName.endsWith(".exe") || fileName.endsWith(".msi")) {
+        fileType = "EXE"
+      } else if (fileName.endsWith(".apk")) {
+        fileType = "APK"
+      } else if (fileName.endsWith(".txt")) {
+        fileType = "TXT"
       }
+
+      console.log("[v0] 识别的文件类型:", fileType)
+
+      setFormData((prev) => ({
+        ...prev,
+        fileUrl: response.url,
+        fileType: fileType,
+        fileSize: response.fileSize || file.size,
+      }))
+      toast.success(`文件上传成功 (${fileType})`)
     } catch (error) {
-      console.error("文件上传失败:", error)
-      toast.error("文件上传失败")
+      console.error("[v0] 文件上传失败:", error)
+      toast.error("文件上传失败: " + (error instanceof Error ? error.message : "未知错误"))
     } finally {
       setUploading(false)
     }
   }
 
   const handleSave = async () => {
-    if (!formData.title || !formData.fileUrl) {
-      toast.error("请填写标题并上传文件")
+    console.log("[v0] 准备保存资源，表单数据:", formData)
+
+    if (!formData.title?.trim()) {
+      toast.error("请填写标题")
       return
     }
 
+    if (!formData.fileUrl) {
+      toast.error("请上传文件")
+      return
+    }
+
+    setLoading(true)
     try {
-      if (editingResource) {
-        await knowledgeResourceApi.update(editingResource.id!, formData)
+      if (editingResource?.id) {
+        console.log("[v0] 更新资源 ID:", editingResource.id)
+        await knowledgeResourceApi.update(editingResource.id, formData)
         toast.success("更新成功")
       } else {
+        console.log("[v0] 创建新资源")
         await knowledgeResourceApi.create(formData)
         toast.success("创建成功")
       }
       setDialogOpen(false)
       loadResources()
     } catch (error) {
-      toast.error("保存失败")
+      console.error("[v0] 保存失败:", error)
+      toast.error("保存失败: " + (error instanceof Error ? error.message : "未知错误"))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -292,13 +340,22 @@ export default function ResourceManagement() {
             <div className="grid gap-2">
               <Label htmlFor="file">上传文件 *</Label>
               <div className="flex items-center gap-2">
-                <Input id="file" type="file" onChange={handleFileUpload} disabled={uploading} />
+                <Input
+                  id="file"
+                  type="file"
+                  onChange={handleFileUpload}
+                  disabled={uploading}
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar,.7z,.mp4,.avi,.mov,.mp3,.wav,.exe,.msi,.apk,.txt"
+                />
                 {uploading && <Loader2 className="h-4 w-4 animate-spin" />}
               </div>
               {formData.fileUrl && (
-                <p className="text-sm text-muted-foreground">
-                  当前文件: {formData.fileType} ({formData.fileSize ? Math.round(formData.fileSize / 1024) : 0} KB)
-                </p>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>
+                    文件类型: <Badge variant="outline">{formData.fileType}</Badge>
+                  </p>
+                  <p>文件大小: {formData.fileSize ? Math.round(formData.fileSize / 1024) : 0} KB</p>
+                </div>
               )}
             </div>
             <div className="grid gap-2">
@@ -347,11 +404,18 @@ export default function ResourceManagement() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setDialogOpen(false)} disabled={uploading || loading}>
               取消
             </Button>
-            <Button onClick={handleSave} disabled={uploading}>
-              保存
+            <Button onClick={handleSave} disabled={uploading || loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  保存中...
+                </>
+              ) : (
+                "保存"
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>

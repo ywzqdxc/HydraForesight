@@ -161,3 +161,11 @@ export async function request<T = any>(
 
   return response.data
 }
+
+request.upload = async <T = any>(url: string, formData: FormData): Promise<T> => {
+  const response = await apiClient.upload<T>(url, formData)
+  if (response.code !== 200) {
+    throw new Error(response.message || "上传失败")
+  }
+  return response.data
+}
