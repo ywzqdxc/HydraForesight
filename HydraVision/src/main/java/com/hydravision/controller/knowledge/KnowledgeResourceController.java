@@ -52,7 +52,7 @@ public class KnowledgeResourceController {
     public Result<KnowledgeResourceVO> getById(@PathVariable Long id) {
         KnowledgeResourceVO resource = resourceService.getResourceById(id);
         if (resource == null) {
-            return Result.error("资源不存在");
+            return Result.fail("资源不存在");
         }
         return Result.success(resource);
     }
@@ -68,7 +68,7 @@ public class KnowledgeResourceController {
             KnowledgeResourceVO resource = resourceService.createResource(dto, userId, username);
             return Result.success(resource);
         } catch (Exception e) {
-            return Result.error("创建失败: " + e.getMessage());
+            return Result.fail("创建失败: " + e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class KnowledgeResourceController {
             KnowledgeResourceVO resource = resourceService.updateResource(id, dto);
             return Result.success(resource);
         } catch (Exception e) {
-            return Result.error("更新失败: " + e.getMessage());
+            return Result.fail("更新失败: " + e.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ public class KnowledgeResourceController {
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
         boolean success = resourceService.deleteResource(id);
-        return success ? Result.success() : Result.error("删除失败");
+        return success ? Result.success() : Result.fail("删除失败");
     }
 
     /**
@@ -100,7 +100,7 @@ public class KnowledgeResourceController {
     @PostMapping("/{id}/publish")
     public Result<Void> publish(@PathVariable Long id) {
         boolean success = resourceService.publishResource(id);
-        return success ? Result.success() : Result.error("发布失败");
+        return success ? Result.success() : Result.fail("发布失败");
     }
 
     /**

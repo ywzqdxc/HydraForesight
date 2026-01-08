@@ -50,7 +50,7 @@ public class FloodGuideController {
     public Result<FloodGuideVO> getById(@PathVariable Long id) {
         FloodGuideVO guide = floodGuideService.getFloodGuideById(id);
         if (guide == null) {
-            return Result.error("防汛指南不存在");
+            return Result.fail("防汛指南不存在");
         }
         return Result.success(guide);
     }
@@ -64,7 +64,7 @@ public class FloodGuideController {
             FloodGuideVO guide = floodGuideService.createFloodGuide(dto);
             return Result.success(guide);
         } catch (Exception e) {
-            return Result.error("创建失败: " + e.getMessage());
+            return Result.fail("创建失败: " + e.getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ public class FloodGuideController {
             FloodGuideVO guide = floodGuideService.updateFloodGuide(id, dto);
             return Result.success(guide);
         } catch (Exception e) {
-            return Result.error("更新失败: " + e.getMessage());
+            return Result.fail("更新失败: " + e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class FloodGuideController {
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
         boolean success = floodGuideService.deleteFloodGuide(id);
-        return success ? Result.success() : Result.error("删除失败");
+        return success ? Result.success() : Result.fail("删除失败");
     }
 
     /**
@@ -96,7 +96,7 @@ public class FloodGuideController {
     @PostMapping("/{id}/publish")
     public Result<Void> publish(@PathVariable Long id) {
         boolean success = floodGuideService.publishGuide(id);
-        return success ? Result.success() : Result.error("发布失败");
+        return success ? Result.success() : Result.fail("发布失败");
     }
 
     /**
