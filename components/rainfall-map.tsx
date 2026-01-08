@@ -1,27 +1,27 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Slider } from "@/components/ui/slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { MapPin, Droplets, AlertTriangle, Maximize2, Minimize2 } from "lucide-react"
+import { MapPin, Droplets, Maximize2, Minimize2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import AMap from "AMap" // Import AMap
 
 interface AMapType {
-  Map: new (container: string, options?: any) => any;
+  Map: new (container: string, options?: any) => any
   // 添加其他需要的类和方法，例如 Marker、TileLayer 等
-  Marker: any;
-  TileLayer: any;
-  ToolBar: any;
+  Marker: any
+  TileLayer: any
+  ToolBar: any
 }
 
 // 扩展 Window 接口
 declare global {
   interface Window {
-    AMap: AMapType;
+    AMap: AMapType
   }
 }
 
@@ -41,7 +41,7 @@ export default function RainfallMap() {
   const [showFloodingMarkers, setShowFloodingMarkers] = useState(true)
   const [showDetectionPoints, setShowDetectionPoints] = useState(true)
   const [showPublicReports, setShowPublicReports] = useState(true)
-  
+
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [mapInstance, setMapInstance] = useState<any>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
@@ -303,7 +303,6 @@ export default function RainfallMap() {
     }
   }, [mapInstance])
 
-
   // 监听标记点显示状态变化
   useEffect(() => {
     if (mapInstance && mapLoaded) {
@@ -364,8 +363,6 @@ export default function RainfallMap() {
 
       // 添加降水热力图层
       // addRainfallHeatmap(map)
-
-
     })
   }
 
@@ -426,7 +423,6 @@ export default function RainfallMap() {
         (marker.type === "flooding" && !showFloodingMarkers) ||
         (marker.type === "detection" && !showDetectionPoints) ||
         (marker.type === "public" && !showPublicReports)
-        
       ) {
         return
       }
@@ -474,7 +470,7 @@ export default function RainfallMap() {
         position: marker.position,
         title: marker.title,
         content: content,
-        offset: new AMap.Pixel(-15, -15),
+        offset: new window.AMap.Pixel(-15, -15),
         extData: marker,
       })
 
@@ -533,8 +529,8 @@ export default function RainfallMap() {
   }
 
   return (
-    <div className={`space-y-4 ${isFullscreen ? "fixed inset-0 z-50 bg-background p-4" : "h-[600px]"}`}>
-      {/* <div className="flex items-center justify-between">
+    <div className={`space-y-4 ${isFullscreen ? "fixed inset-0 z-50 bg-background p-4" : "h-auto"}`}>
+      <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium">&nbsp;&nbsp;&nbsp;&nbsp;乐山市实时监测地图</h3>
         <div className="flex items-center gap-4">
           <Select value={mapType} onValueChange={handleMapTypeChange}>
@@ -542,10 +538,9 @@ export default function RainfallMap() {
               <SelectValue placeholder="地图类型" />
             </SelectTrigger>
             <SelectContent>
-            <SelectItem value="rainfall">普通地图</SelectItem>
+              <SelectItem value="rainfall">普通地图</SelectItem>
               <SelectItem value="satellite">卫星图</SelectItem>
               <SelectItem value="hybrid">混合视图</SelectItem>
-              
             </SelectContent>
           </Select>
           <Button variant="outline" size="icon" onClick={toggleFullscreen}>
@@ -553,14 +548,14 @@ export default function RainfallMap() {
           </Button>
           <div></div>
         </div>
-      </div> */}
+      </div>
 
-      <Tabs defaultValue="map" className="w-full" >
+      <Tabs defaultValue="map" className="w-full">
         <TabsContent value="map" className="mt-2">
           <div
-            className={`relative w-full ${isFullscreen ? "h-[calc(100vh-200px)]" : "h-[470px]"} bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden`}
+            className={`relative w-full ${isFullscreen ? "h-[calc(100vh-200px)]" : "h-[400px]"} bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden`}
           >
-            <div ref={mapContainer} className="h-full absolute inset-0"></div>
+            <div ref={mapContainer} className="h-[400px] absolute inset-0"></div>
 
             {/* 标记详情弹窗 */}
             {selectedMarker && (
@@ -614,7 +609,7 @@ export default function RainfallMap() {
                 <p className="text-xs text-muted-foreground mb-2">{selectedMarker.details}</p>
 
                 <div className="flex gap-2 mt-2">
-                  <Button variant="outline" size="sm" className="h-7 text-xs">
+                  <Button variant="outline" size="sm" className="h-7 text-xs bg-transparent">
                     查看详情
                   </Button>
                   <Button size="sm" className="h-7 text-xs">
@@ -623,18 +618,17 @@ export default function RainfallMap() {
                 </div>
               </div>
             )}
-          </div> 
-          
+          </div>
         </TabsContent>
       </Tabs>
-      
-      {/* 最后一行的图例和开关 */}
-      <div className="flex flex-wrap justify-between items-center" >
 
-        {/* <div className="flex flex-wrap gap-1 ml-3 w-[400px]"> */}
+      {/* 最后一行的图例和开关 */}
+      <div className="flex flex-wrap justify-between items-center">
+        {/* 修改图例布局 */}
         <div className="grid grid-cols-3 gap-1 ml-3 w-[400px]">
-        
-          <div className="ml-2">图例：</div><div></div><div></div>
+          <div className="ml-2">图例：</div>
+          <div></div>
+          <div></div>
           <div className="flex items-center gap-1 px-2 py-1 bg-red-100 rounded-md">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
             <span className="text-xs">严重积水</span>
@@ -651,7 +645,7 @@ export default function RainfallMap() {
             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
             <span className="text-xs">监测点</span>
           </div>
-            <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
+          <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
             <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
             <span className="text-xs">河道水库监测点</span>
           </div>
@@ -664,10 +658,9 @@ export default function RainfallMap() {
               <SelectValue placeholder="地图类型" />
             </SelectTrigger>
             <SelectContent>
-            <SelectItem value="rainfall">普通地图</SelectItem>
+              <SelectItem value="rainfall">普通地图</SelectItem>
               <SelectItem value="satellite">卫星图</SelectItem>
               <SelectItem value="hybrid">混合视图</SelectItem>
-              
             </SelectContent>
           </Select>
           <Button variant="outline" size="icon" onClick={toggleFullscreen}>
@@ -690,9 +683,8 @@ export default function RainfallMap() {
             <Label htmlFor="public">显示河道水库监测</Label>
           </div>
         </div>
-
       </div>
-      <div className="mb-10" ></div>
+      <div className="mb-10"></div>
     </div>
   )
 }
