@@ -5,32 +5,39 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Suspense, useEffect, useState } from "react"
 import {
   BookOpen,
   Video,
   FileText,
   Download,
-  ExternalLink,
   ThumbsUp,
   MessageSquare,
   Droplets,
   CloudRain,
   AlertTriangle,
+  Eye,
 } from "lucide-react"
+import { floodGuideApi, knowledgeResourceApi, type FloodGuide, type KnowledgeResource } from "@/lib/api/knowledge"
+import { toast } from "sonner"
 
 // 自定义 Hook：useQueryString
 function useQueryString(name: string) {
   const [value, setValue] = useState<string | null>(null)
   useEffect(() => {
-    // 确保在浏览器环境中执行
     if (typeof window !== "undefined") {
       const searchParams = new URLSearchParams(window.location.search)
       setValue(searchParams.get(name))
     }
   }, [name])
-  // console.log(value);
-  // console.log(processStringOrNull(value));
   if (value === null) {
     return "videos"
   } else {
@@ -48,9 +55,71 @@ function processStringOrNull(value: string | null): string | undefined {
 }
 
 export default function KnowledgePage() {
-  // const searchParams = new URLSearchParams(window.location.search);
-  // const tabDefaultValue = processStringOrNull(searchParams.get('tab'));
   const tabDefaultValue = processStringOrNull(useQueryString("tab"))
+  const [floodGuides, setFloodGuides] = useState<FloodGuide[]>([])
+  const [resources, setResources] = useState<KnowledgeResource[]>([])
+  const [selectedGuide, setSelectedGuide] = useState<FloodGuide | null>(null)
+  const [guideDialogOpen, setGuideDialogOpen] = useState(false)
+
+  useEffect(() => {
+    loadFloodGuides()
+    loadResources()
+  }, [])
+
+  const loadFloodGuides = async () => {
+    try {
+      const guides = await floodGuideApi.getPublished()
+      setFloodGuides(guides)
+    } catch (error) {
+      console.error("加载防汛指南失败:", error)
+    }
+  }
+
+  const loadResources = async () => {
+    try {
+      const resources = await knowledgeResourceApi.getPublished()
+      setResources(resources)
+    } catch (error) {
+      console.error("加载资源失败:", error)
+    }
+  }
+
+  const handleViewGuide = async (guide: FloodGuide) => {
+    try {
+      await floodGuideApi.incrementView(guide.id)
+      const detail = await floodGuideApi.getById(guide.id)
+      setSelectedGuide(detail)
+      setGuideDialogOpen(true)
+    } catch (error) {
+      toast.error("加载指南详情失败")
+    }
+  }
+
+  const handleDownloadResource = async (resource: KnowledgeResource) => {
+    try {
+      await knowledgeResourceApi.incrementDownload(resource.id)
+      window.open(resource.fileUrl, "_blank")
+      toast.success("开始下载")
+    } catch (error) {
+      toast.error("下载失败")
+    }
+  }
+
+  const handlePreviewResource = async (resource: KnowledgeResource) => {
+    try {
+      await knowledgeResourceApi.incrementView(resource.id)
+      // PDF和图片可以预览，其他类型直接下载
+      const previewableTypes = ["PDF", "JPG", "JPEG", "PNG", "GIF"]
+      if (previewableTypes.includes(resource.fileType.toUpperCase())) {
+        window.open(resource.fileUrl, "_blank")
+      } else {
+        toast.info("该文件类型不支持预览，将直接下载")
+        handleDownloadResource(resource)
+      }
+    } catch (error) {
+      toast.error("预览失败")
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -66,10 +135,7 @@ export default function KnowledgePage() {
             <div id="tabtab-container"></div>
           </div>
           <Suspense fallback={<div>Loading</div>}>
-            {/* <Tabs defaultValue="articles" className="w-full"> */}
             <Tabs defaultValue={tabDefaultValue} className="w-full">
-              {/* <Tabs defaultValue={useQueryString("tab") || "videos"} className="w-full"> */}
-              {/* <Tabs defaultValue={useQueryString("tab")?useQueryString("tab"):"videos"} className="w-full"> */}
               <TabsList>
                 <TabsTrigger value="videos">视频教程</TabsTrigger>
                 <TabsTrigger value="articles">科普文章</TabsTrigger>
@@ -220,111 +286,72 @@ export default function KnowledgePage() {
 
               <TabsContent value="guides" className="mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <GuideCard
-                    title="家庭防汛应急准备指南"
-                    description="详细介绍家庭防汛的物资准备、安全措施和应急预案，帮助家庭提前做好防汛准备。"
-                    level="基础"
-                    icon={<Droplets className="h-6 w-6 text-blue-500" />}
-                  />
-
-                  <GuideCard
-                    title="暴雨天气出行安全指南"
-                    description="提供暴雨天气出行的安全建议，包括交通工具选择、路线规划和紧急情况处理。"
-                    level="基础"
-                    icon={<AlertTriangle className="h-6 w-6 text-yellow-500" />}
-                  />
-
-                  <GuideCard
-                    title="城市内涝自救互救技巧"
-                    description="介绍在城市内涝情况下的自救互救方法，包括安全避险、求救信号和基本救援技能。"
-                    level="中级"
-                    icon={<AlertTriangle className="h-6 w-6 text-red-500" />}
-                  />
-
-                  <GuideCard
-                    title="防汛物资储备清单"
-                    description="提供全面的防汛物资清单，包括必备物品、数量建议和储存方法，适合家庭和社区参考。"
-                    level="基础"
-                    icon={<FileText className="h-6 w-6 text-green-500" />}
-                  />
-
-                  <GuideCard
-                    title="洪水预警信号解读"
-                    description="详细解读各级洪水预警信号的含义、发布条件和相应的防范措施，帮助公众正确理解预警信息。"
-                    level="中级"
-                    icon={<AlertTriangle className="h-6 w-6 text-orange-500" />}
-                  />
-
-                  <GuideCard
-                    title="防汛减灾知识问答"
-                    description="以问答形式整理常见的防汛减灾知识，涵盖预防、应对和恢复等各个阶段的关键问题。"
-                    level="基础"
-                    icon={<FileText className="h-6 w-6 text-purple-500" />}
-                  />
+                  {floodGuides.map((guide) => (
+                    <GuideCard
+                      key={guide.id}
+                      guide={guide}
+                      onView={() => handleViewGuide(guide)}
+                      icon={getGuideIcon(guide.guideLevel)}
+                    />
+                  ))}
                 </div>
               </TabsContent>
 
               <TabsContent value="resources" className="mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <ResourceCard
-                    title="防汛应急手册"
-                    description="全面的防汛应急指南，包含预警信息解读、安全避险、自救互救等内容，适合家庭和社区使用。"
-                    type="PDF"
-                    size="2.5MB"
-                    downloads="3,245"
-                    date="2023-05-15"
-                  />
-
-                  <ResourceCard
-                    title="暴雨灾害防范宣传海报"
-                    description="一套高清暴雨灾害防范宣传海报，适合学校、社区和公共场所张贴，提高公众防灾意识。"
-                    type="ZIP"
-                    size="15MB"
-                    downloads="1,876"
-                    date="2023-06-20"
-                  />
-
-                  <ResourceCard
-                    title="水情监测数据分析工具"
-                    description="用于分析和可视化水情监测数据的工具软件，支持多种数据格式和分析方法，适合专业人员使用。"
-                    type="EXE"
-                    size="45MB"
-                    downloads="985"
-                    date="2023-08-10"
-                  />
-
-                  <ResourceCard
-                    title="防汛知识PPT模板"
-                    description="一套精美的防汛知识PPT模板，包含多种主题和版式，适合教育培训和宣传活动使用。"
-                    type="PPTX"
-                    size="8MB"
-                    downloads="2,134"
-                    date="2023-07-05"
-                  />
-
-                  <ResourceCard
-                    title="城市内涝风险评估手册"
-                    description="详细介绍城市内涝风险评估的方法、指标和流程，适合城市规划和防灾减灾工作参考。"
-                    type="PDF"
-                    size="4.2MB"
-                    downloads="1,245"
-                    date="2023-09-18"
-                  />
-
-                  <ResourceCard
-                    title="水资源保护教育视频集"
-                    description="一套水资源保护主题的教育视频，适合学校环保教育和公众宣传活动使用。"
-                    type="MP4"
-                    size="650MB"
-                    downloads="756"
-                    date="2023-10-25"
-                  />
+                  {resources.map((resource) => (
+                    <ResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      onPreview={() => handlePreviewResource(resource)}
+                      onDownload={() => handleDownloadResource(resource)}
+                    />
+                  ))}
                 </div>
               </TabsContent>
             </Tabs>
           </Suspense>
         </div>
       </main>
+
+      <Dialog open={guideDialogOpen} onOpenChange={setGuideDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{selectedGuide?.title}</DialogTitle>
+            <DialogDescription>
+              <div className="flex items-center gap-2 mt-2">
+                <Badge className={getLevelColor(selectedGuide?.guideLevel || 1)}>{selectedGuide?.guideLevelName}</Badge>
+                <span className="text-sm">浏览: {selectedGuide?.viewCount}</span>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">描述</h4>
+              <p className="text-sm text-muted-foreground">{selectedGuide?.description}</p>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">内容</h4>
+              <div className="text-sm whitespace-pre-wrap bg-muted p-4 rounded-lg">{selectedGuide?.content}</div>
+            </div>
+            {selectedGuide?.tags && (
+              <div>
+                <h4 className="font-medium mb-2">标签</h4>
+                <div className="flex flex-wrap gap-2">
+                  {selectedGuide.tags.split(",").map((tag, index) => (
+                    <Badge key={index} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setGuideDialogOpen(false)}>关闭</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
@@ -344,8 +371,6 @@ function VideoCard({ title, description, thumbnail, duration, views, date, tags,
   return (
     <Card className="overflow-hidden">
       <div className="relative">
-        {/* <img src={thumbnail || "/placeholder.svg"} alt={title} className="w-full h-[200px] object-cover" /> */}
-        {/* <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=925955023&bvid=BV1DT4y1E7sY&cid=200176360&p=1&autoplay=false" */}
         <iframe
           src={thumbnail || "/placeholder.svg"}
           className="mx-auto max-w-[410px] w-full h-[200px] object-cover"
@@ -370,10 +395,6 @@ function VideoCard({ title, description, thumbnail, duration, views, date, tags,
             <Video className="h-3 w-3" />
             <span>{views}次观看</span>
           </div>
-          {/* <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
-            <span>{date}</span>
-          </div> */}
         </div>
       </CardContent>
       <CardFooter className="pt-0">
@@ -447,79 +468,99 @@ function ArticleCard({ title, description, author, date, readTime, tags, icon, u
 }
 
 interface GuideCardProps {
-  title: string
-  description: string
-  level: "基础" | "中级" | "高级"
+  guide: FloodGuide
+  onView: () => void
   icon: React.ReactNode
 }
 
-function GuideCard({ title, description, level, icon }: GuideCardProps) {
+function GuideCard({ guide, onView, icon }: GuideCardProps) {
   return (
     <Card>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           {icon}
-          <Badge
-            variant="outline"
-            className={
-              level === "基础"
-                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
-                : level === "中级"
-                  ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
-                  : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
-            }
-          >
-            {level}
-          </Badge>
+          <Badge className={getLevelColor(guide.guideLevel)}>{guide.guideLevelName}</Badge>
         </div>
-        <CardTitle className="text-lg mt-2">{title}</CardTitle>
+        <CardTitle className="text-lg mt-2">{guide.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-sm text-muted-foreground">{guide.description}</p>
       </CardContent>
       <CardFooter className="pt-0">
-        <Button className="w-full">查看指南</Button>
+        <Button className="w-full" onClick={onView}>
+          查看指南
+        </Button>
       </CardFooter>
     </Card>
   )
 }
 
 interface ResourceCardProps {
-  title: string
-  description: string
-  type: string
-  size: string
-  downloads: string
-  date: string
+  resource: KnowledgeResource
+  onPreview: () => void
+  onDownload: () => void
 }
 
-function ResourceCard({ title, description, type, size, downloads, date }: ResourceCardProps) {
+function ResourceCard({ resource, onPreview, onDownload }: ResourceCardProps) {
+  const previewableTypes = ["PDF", "JPG", "JPEG", "PNG", "GIF"]
+  const canPreview = previewableTypes.includes(resource.fileType.toUpperCase())
+
   return (
     <Card>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
-          <CardTitle className="text-lg">{title}</CardTitle>
-          <Badge variant="outline">{type}</Badge>
+          <CardTitle className="text-lg">{resource.title}</CardTitle>
+          <Badge variant="outline">{resource.fileType}</Badge>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground mb-4">{description}</p>
+        <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <div>文件大小: {size}</div>
-          <div>下载次数: {downloads}</div>
-          <div>更新日期: {date}</div>
+          <div>文件大小: {resource.fileSizeText}</div>
+          <div>下载: {resource.downloadCount}次</div>
+          <div>{new Date(resource.publishTime).toLocaleDateString()}</div>
         </div>
       </CardContent>
       <CardFooter className="pt-0 flex justify-between">
-        <Button variant="outline" size="sm" className="flex items-center gap-1 bg-transparent">
-          <ExternalLink className="h-4 w-4" />
-          <span>预览</span>
-        </Button>
-        <Button className="flex items-center gap-1">
+        {canPreview ? (
+          <Button variant="outline" size="sm" className="flex items-center gap-1 bg-transparent" onClick={onPreview}>
+            <Eye className="h-4 w-4" />
+            <span>预览</span>
+          </Button>
+        ) : (
+          <div className="text-xs text-muted-foreground">不支持预览</div>
+        )}
+        <Button className="flex items-center gap-1" onClick={onDownload}>
           <Download className="h-4 w-4" />
           <span>下载</span>
         </Button>
       </CardFooter>
     </Card>
   )
+}
+
+function getGuideIcon(level: number) {
+  switch (level) {
+    case 1:
+      return <Droplets className="h-6 w-6 text-blue-500" />
+    case 2:
+      return <AlertTriangle className="h-6 w-6 text-yellow-500" />
+    case 3:
+      return <AlertTriangle className="h-6 w-6 text-red-500" />
+    default:
+      return <FileText className="h-6 w-6 text-gray-500" />
+  }
+}
+
+function getLevelColor(level: number) {
+  switch (level) {
+    case 1:
+      return "bg-green-100 text-green-800"
+    case 2:
+      return "bg-yellow-100 text-yellow-800"
+    case 3:
+      return "bg-red-100 text-red-800"
+    default:
+      return "bg-gray-100 text-gray-800"
+  }
 }
