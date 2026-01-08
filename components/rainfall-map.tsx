@@ -8,7 +8,24 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { MapPin, Droplets, Maximize2, Minimize2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import AMap from "AMap" // Import AMap
 
+interface AMapType {
+  Map: new (container: string, options?: any) => any
+  // 添加其他需要的类和方法，例如 Marker、TileLayer 等
+  Marker: any
+  TileLayer: any
+  ToolBar: any
+}
+
+// 扩展 Window 接口
+declare global {
+  interface Window {
+    AMap: AMapType
+  }
+}
+
+// 定义标记点类型
 interface Marker {
   id: string
   type: "flooding" | "detection" | "public"
@@ -330,7 +347,7 @@ export default function RainfallMap() {
     }
 
     // 默认显示基础图层
-    map.add([new window.AMap.TileLayer()])
+    map.add(AMap.createDefaultLayer())
     // map.add([layers.satellite])
 
     // 监听地图加载完成事件
@@ -440,7 +457,7 @@ export default function RainfallMap() {
           <div class="flex items-center justify-center w-8 h-8">
             <div class="absolute p-1 rounded-full" style="background-color: #a855f7">
               <svg t="1746197573907" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="33838" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
-              <path d="M703.74312 37.376593A506.303367 506.303367 0 0 0 511.99936 0.00064C229.631713 0.00064 0 229.632353 0 512c0 218.623727 137.599828 405.631493 404.991494 478.847401l0.384 0.256c1.535998 0.639999 3.199996 1.151999 4.863994 1.791998l1.151998 0.383999c55.99993 20.351975 115.135856 30.719962 174.719782 30.719962a508.415364 508.415364 0 0 0 197.887753-39.80795C894.206882 906.751507 1023.99872 724.223735 1023.99872 512A512.447359 512.447359 0 0 0 703.74312 37.376593zM329.599588 907.007506A435.519456 435.519456 0 0 1 76.799904 512c0-229.887713 179.071776-418.559477 404.991494-434.175457L260.735674 480.768039A38.399952 38.399952 0 0 0 294.399632 537.599968h215.551731L329.599588 907.007506z m325.759593 15.87198a436.671454 436.671454 0 0 1-253.055684 10.367987l203.647746-417.151478a38.783952 38.783952 0 0 0-10.495987-28.671964 38.143952 38.143952 0 0 0-27.903965-12.031985H621.183224l82.559896-160.2558A435.647455 435.647455 0 0 1 947.198816 512a435.391456 435.391456 0 0 1-212.607734 373.887533z m79.231901-36.991953L767.99904 322.304237a38.783952 38.783952 0 0 0-10.495987-28.671964 38.143952 38.143952 0 0 0-27.903965-12.031985H621.183224l82.559896-160.2558A435.647455 435.647455 0 0 1 947.198816 512a435.391456 435.391456 0 0 1-212.607734 373.887533z" 
+              <path d="M703.74312 37.376593A506.303367 506.303367 0 0 0 511.99936 0.00064C229.631713 0.00064 0 229.632353 0 512c0 218.623727 137.599828 405.631493 330.879586 478.847401l0.384 0.256c1.535998 0.639999 3.199996 1.151999 4.863994 1.791998l1.151998 0.383999c55.99993 20.351975 115.135856 30.719962 174.719782 30.719962a508.415364 508.415364 0 0 0 197.887753-39.80795C894.206882 906.751507 1023.99872 724.223735 1023.99872 512A512.447359 512.447359 0 0 0 703.74312 37.376593zM329.599588 907.007506A435.519456 435.519456 0 0 1 76.799904 512c0-229.887713 179.071776-418.559477 404.991494-434.175457L260.735674 480.768039A38.399952 38.399952 0 0 0 294.399632 537.599968h215.551731L329.599588 907.007506z m325.759593 15.87198a436.671454 436.671454 0 0 1-253.055684 10.367987l203.647746-417.151478a38.591952 38.591952 0 0 0-34.559957-55.295931H359.295551l82.559896-160.2558A435.647455 435.647455 0 0 1 947.198816 512a435.391456 435.391456 0 0 1-212.607734 373.887533z" 
               fill="#FFFFFF" p-id="33839"></path>
               </svg>
             </div>
@@ -453,7 +470,7 @@ export default function RainfallMap() {
         position: marker.position,
         title: marker.title,
         content: content,
-        offset: new window.AMap.Pixel(-15, -15),
+        offset: new AMap.Pixel(-15, -15),
         extData: marker,
       })
 
@@ -492,7 +509,8 @@ export default function RainfallMap() {
       // addRainfallHeatmap(mapInstance)
     } else {
       // 默认基础图层
-      mapInstance.add([new window.AMap.TileLayer()])
+      // mapInstance.add([new window.AMap.TileLayer()])
+      mapInstance.add(AMap.createDefaultLayer())
       // 重新添加标记点和热力图
       updateMarkers()
       //重新添加热力图
@@ -528,7 +546,6 @@ export default function RainfallMap() {
           <Button variant="outline" size="icon" onClick={toggleFullscreen}>
             {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
           </Button>
-          <div></div>
         </div>
       </div>
 
@@ -547,7 +564,6 @@ export default function RainfallMap() {
                     {selectedMarker.type === "flooding" && <Droplets className="h-4 w-4 text-blue-500" />}
                     {selectedMarker.type === "detection" && <MapPin className="h-4 w-4 text-blue-500" />}
                     {selectedMarker.type === "public" && <MapPin className="h-4 w-4 text-purple-500" />}
-                    {/* {selectedMarker.type === "public" && <AlertTriangle className="h-4 w-4 text-purple-500" />} */}
                     <h4 className="font-medium text-sm">{selectedMarker.title}</h4>
                   </div>
                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={closeMarkerDetails}>
@@ -604,9 +620,9 @@ export default function RainfallMap() {
         </TabsContent>
       </Tabs>
 
-      {/* 最后一行的图例和开关 */}
+      {/* 底部：图例和开关控制 */}
       <div className="flex flex-wrap justify-between items-center">
-        {/* 修改图例布局 */}
+        {/* 图例区域 - 使用grid布局 */}
         <div className="grid grid-cols-3 gap-1 ml-3 w-[400px]">
           <div className="ml-2">图例：</div>
           <div></div>
@@ -625,37 +641,30 @@ export default function RainfallMap() {
           </div>
           <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span className="text-xs">监测站</span>
+            <span className="text-xs">监测点</span>
           </div>
-          <div className="flex items-center gap-1 px-2 py-1 bg-purple-100 rounded-md">
+          <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 rounded-md">
             <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-            <span className="text-xs">公众上报</span>
+            <span className="text-xs">河道水库监测点</span>
           </div>
         </div>
 
-        {/* 控制开关 */}
-        <div className="flex flex-wrap gap-4 mr-2">
+        {/* 开关控制区域 - 垂直排列 */}
+        <div className="flex flex-col gap-1 ml-3 mt-2 min-w-[200px]">
           <div className="flex items-center space-x-2">
             <Switch id="flooding" checked={showFloodingMarkers} onCheckedChange={setShowFloodingMarkers} />
-            <Label htmlFor="flooding" className="text-sm">
-              显示积水点
-            </Label>
+            <Label htmlFor="flooding">显示道路积水点</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Switch id="detection" checked={showDetectionPoints} onCheckedChange={setShowDetectionPoints} />
-            <Label htmlFor="detection" className="text-sm">
-              显示监测站
-            </Label>
+            <Label htmlFor="detection">显示监测点</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Switch id="public" checked={showPublicReports} onCheckedChange={setShowPublicReports} />
-            <Label htmlFor="public" className="text-sm">
-              显示公众上报
-            </Label>
+            <Label htmlFor="public">显示河道水库监测</Label>
           </div>
         </div>
       </div>
-      <div className="mb-10"></div>
     </div>
   )
 }
