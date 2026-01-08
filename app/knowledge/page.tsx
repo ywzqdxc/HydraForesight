@@ -68,19 +68,23 @@ export default function KnowledgePage() {
 
   const loadFloodGuides = async () => {
     try {
+      console.log("[v0] 开始加载防汛指南...")
       const guides = await floodGuideApi.getPublished()
+      console.log("[v0] 防汛指南加载成功:", guides)
       setFloodGuides(guides)
     } catch (error) {
-      console.error("加载防汛指南失败:", error)
+      console.error("[v0] 加载防汛指南失败:", error)
     }
   }
 
   const loadResources = async () => {
     try {
+      console.log("[v0] 开始加载资源...")
       const resources = await knowledgeResourceApi.getPublished()
+      console.log("[v0] 资源加载成功:", resources)
       setResources(resources)
     } catch (error) {
-      console.error("加载资源失败:", error)
+      console.error("[v0] 加载资源失败:", error)
     }
   }
 
@@ -285,29 +289,43 @@ export default function KnowledgePage() {
               </TabsContent>
 
               <TabsContent value="guides" className="mt-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {floodGuides.map((guide) => (
-                    <GuideCard
-                      key={guide.id}
-                      guide={guide}
-                      onView={() => handleViewGuide(guide)}
-                      icon={getGuideIcon(guide.guideLevel)}
-                    />
-                  ))}
-                </div>
+                {floodGuides.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p>暂无防汛指南数据</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {floodGuides.map((guide) => (
+                      <GuideCard
+                        key={guide.id}
+                        guide={guide}
+                        onView={() => handleViewGuide(guide)}
+                        icon={getGuideIcon(guide.guideLevel)}
+                      />
+                    ))}
+                  </div>
+                )}
               </TabsContent>
 
               <TabsContent value="resources" className="mt-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {resources.map((resource) => (
-                    <ResourceCard
-                      key={resource.id}
-                      resource={resource}
-                      onPreview={() => handlePreviewResource(resource)}
-                      onDownload={() => handleDownloadResource(resource)}
-                    />
-                  ))}
-                </div>
+                {resources.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    <Download className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p>暂无资源下载数据</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {resources.map((resource) => (
+                      <ResourceCard
+                        key={resource.id}
+                        resource={resource}
+                        onPreview={() => handlePreviewResource(resource)}
+                        onDownload={() => handleDownloadResource(resource)}
+                      />
+                    ))}
+                  </div>
+                )}
               </TabsContent>
             </Tabs>
           </Suspense>

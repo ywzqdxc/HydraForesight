@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BookOpen, Download } from "lucide-react"
 import FloodGuideManagement from "./flood-guide-management"
@@ -8,6 +8,10 @@ import ResourceManagement from "./resource-management"
 
 export default function KnowledgeManagement() {
   const [activeTab, setActiveTab] = useState("guides")
+
+  useEffect(() => {
+    console.log("[v0] 知识科普管理组件已加载")
+  }, [])
 
   return (
     <div className="space-y-6">
