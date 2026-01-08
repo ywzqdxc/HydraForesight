@@ -147,13 +147,20 @@ export const knowledgeResourceApi = {
 
   // 创建
   create: async (data: Partial<KnowledgeResource>): Promise<KnowledgeResource> => {
+    console.log("[v0] knowledgeResourceApi.create - 开始请求")
+    console.log("[v0] knowledgeResourceApi.create - 请求数据:", data)
     const response = await apiClient.post<KnowledgeResource>("/api/knowledge/resource", data)
+    console.log("[v0] knowledgeResourceApi.create - 响应:", response)
     return response.data
   },
 
   // 更新
   update: async (id: number, data: Partial<KnowledgeResource>): Promise<KnowledgeResource> => {
+    console.log("[v0] knowledgeResourceApi.update - 开始请求")
+    console.log("[v0] knowledgeResourceApi.update - 资源ID:", id)
+    console.log("[v0] knowledgeResourceApi.update - 请求数据:", data)
     const response = await apiClient.put<KnowledgeResource>(`/api/knowledge/resource/${id}`, data)
+    console.log("[v0] knowledgeResourceApi.update - 响应:", response)
     return response.data
   },
 

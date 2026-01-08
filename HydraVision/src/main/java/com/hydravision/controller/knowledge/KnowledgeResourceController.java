@@ -69,11 +69,26 @@ public class KnowledgeResourceController {
     @PostMapping
     public Result<KnowledgeResourceVO> create(@RequestBody KnowledgeResourceDTO dto) {
         try {
+            System.out.println("[v0 Debug] ========== 开始创建知识资源 ==========");
+            System.out.println("[v0 Debug] 接收到的DTO: " + dto);
+            System.out.println("[v0 Debug] 标题: " + dto.getTitle());
+            System.out.println("[v0 Debug] 文件URL: " + dto.getFileUrl());
+            System.out.println("[v0 Debug] 文件类型: " + dto.getFileType());
+            System.out.println("[v0 Debug] 文件大小: " + dto.getFileSize());
+            System.out.println("[v0 Debug] 发布状态: " + dto.getPublishStatus());
+            
             Long userId = securityUtils.getCurrentUserId();
             String username = securityUtils.getCurrentUser().getUsername();
+            System.out.println("[v0 Debug] 当前用户ID: " + userId + ", 用户名: " + username);
+            
             KnowledgeResourceVO resource = resourceService.createResource(dto, userId, username);
+            System.out.println("[v0 Debug] 资源创建成功，ID: " + resource.getId());
+            System.out.println("[v0 Debug] ========== 知识资源创建完成 ==========");
+            
             return Result.success(resource);
         } catch (Exception e) {
+            System.err.println("[v0 Debug] 创建资源异常: " + e.getMessage());
+            e.printStackTrace();
             return Result.fail("创建失败: " + e.getMessage());
         }
     }
@@ -84,9 +99,18 @@ public class KnowledgeResourceController {
     @PutMapping("/{id}")
     public Result<KnowledgeResourceVO> update(@PathVariable Long id, @RequestBody KnowledgeResourceDTO dto) {
         try {
+            System.out.println("[v0 Debug] ========== 开始更新知识资源 ==========");
+            System.out.println("[v0 Debug] 资源ID: " + id);
+            System.out.println("[v0 Debug] 接收到的DTO: " + dto);
+            
             KnowledgeResourceVO resource = resourceService.updateResource(id, dto);
+            System.out.println("[v0 Debug] 资源更新成功");
+            System.out.println("[v0 Debug] ========== 知识资源更新完成 ==========");
+            
             return Result.success(resource);
         } catch (Exception e) {
+            System.err.println("[v0 Debug] 更新资源异常: " + e.getMessage());
+            e.printStackTrace();
             return Result.fail("更新失败: " + e.getMessage());
         }
     }

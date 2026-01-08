@@ -154,7 +154,13 @@ export default function ResourceManagement() {
   }
 
   const handleSave = async () => {
-    console.log("[v0] 准备保存资源，表单数据:", formData)
+    console.log("[v0] ========== 开始保存资源 ==========")
+    console.log("[v0] 表单数据:", formData)
+    console.log("[v0] 标题:", formData.title)
+    console.log("[v0] 文件URL:", formData.fileUrl)
+    console.log("[v0] 文件类型:", formData.fileType)
+    console.log("[v0] 文件大小:", formData.fileSize, "类型:", typeof formData.fileSize)
+    console.log("[v0] 发布状态:", formData.publishStatus)
 
     if (!formData.title?.trim()) {
       toast.error("请填写标题")
@@ -168,19 +174,36 @@ export default function ResourceManagement() {
 
     setLoading(true)
     try {
+      const dataToSave = {
+        ...formData,
+        fileSize: Number(formData.fileSize) || 0,
+      }
+
+      console.log("[v0] 准备发送的数据:", dataToSave)
+
       if (editingResource?.id) {
-        console.log("[v0] 更新资源 ID:", editingResource.id)
-        await knowledgeResourceApi.update(editingResource.id, formData)
+        console.log("[v0] 执行更新操作，资源ID:", editingResource.id)
+        const result = await knowledgeResourceApi.update(editingResource.id, dataToSave)
+        console.log("[v0] 更新成功，返回结果:", result)
         toast.success("更新成功")
       } else {
-        console.log("[v0] 创建新资源")
-        await knowledgeResourceApi.create(formData)
+        console.log("[v0] 执行创建操作")
+        const result = await knowledgeResourceApi.create(dataToSave)
+        console.log("[v0] 创建成功，返回结果:", result)
         toast.success("创建成功")
       }
+
+      console.log("[v0] 关闭对话框并刷新列表")
       setDialogOpen(false)
-      loadResources()
+      await loadResources()
+      console.log("[v0] ========== 保存资源完成 ==========")
     } catch (error) {
-      console.error("[v0] 保存失败:", error)
+      console.error("[v0] ========== 保存失败 ==========")
+      console.error("[v0] 错误对象:", error)
+      console.error("[v0] 错误消息:", error instanceof Error ? error.message : "未知错误")
+      if (error instanceof Error) {
+        console.error("[v0] 错误堆栈:", error.stack)
+      }
       toast.error("保存失败: " + (error instanceof Error ? error.message : "未知错误"))
     } finally {
       setLoading(false)

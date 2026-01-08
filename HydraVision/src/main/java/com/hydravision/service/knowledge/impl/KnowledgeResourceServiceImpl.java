@@ -85,13 +85,18 @@ public class KnowledgeResourceServiceImpl implements KnowledgeResourceService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public KnowledgeResourceVO createResource(KnowledgeResourceDTO dto, Long uploaderId, String uploaderName) {
+        System.out.println("[v0 Debug] KnowledgeResourceService - 开始创建资源");
+        System.out.println("[v0 Debug] DTO信息: 标题=" + dto.getTitle() + ", 文件URL=" + dto.getFileUrl());
+        
         KnowledgeResource resource = new KnowledgeResource();
         BeanUtils.copyProperties(dto, resource);
+        
         resource.setResourceId(UUID.randomUUID().toString().replace("-", ""));
         resource.setUploaderId(uploaderId);
         resource.setUploaderName(uploaderName);
         resource.setDownloadCount(0);
         resource.setViewCount(0);
+        resource.setIsDeleted(0);
         
         if (resource.getPublishStatus() == null) {
             resource.setPublishStatus(0);
@@ -101,7 +106,20 @@ public class KnowledgeResourceServiceImpl implements KnowledgeResourceService {
             resource.setPublishTime(LocalDateTime.now());
         }
         
-        resourceMapper.insert(resource);
+        System.out.println("[v0 Debug] 准备插入数据库的资源信息:");
+        System.out.println("[v0 Debug] resourceId=" + resource.getResourceId());
+        System.out.println("[v0 Debug] title=" + resource.getTitle());
+        System.out.println("[v0 Debug] fileUrl=" + resource.getFileUrl());
+        System.out.println("[v0 Debug] fileType=" + resource.getFileType());
+        System.out.println("[v0 Debug] fileSize=" + resource.getFileSize());
+        System.out.println("[v0 Debug] uploaderId=" + resource.getUploaderId());
+        System.out.println("[v0 Debug] uploaderName=" + resource.getUploaderName());
+        System.out.println("[v0 Debug] publishStatus=" + resource.getPublishStatus());
+        
+        int result = resourceMapper.insert(resource);
+        System.out.println("[v0 Debug] 数据库插入结果: " + result);
+        System.out.println("[v0 Debug] 插入后的资源ID: " + resource.getId());
+        
         return convertToVO(resource);
     }
 
