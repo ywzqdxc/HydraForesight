@@ -1,11 +1,21 @@
 import type React from "react"
 import "@/app/globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import { ThemeProvider } from "@/components/theme-provider"
 import { DarkModeFixes } from "@/components/dark-mode-fixes"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = localFont({
+  src: [
+    {
+      path: "../public/fonts/inter-var.woff2",
+      style: "normal",
+    },
+  ],
+  variable: "--font-inter",
+  display: "swap",
+  fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+})
 
 export const metadata: Metadata = {
   title: "智水先知 - 城市洪涝监测与预警系统",
