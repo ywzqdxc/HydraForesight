@@ -1,5 +1,7 @@
 package com.hydravision.security;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.hydravision.entity.user.User;
 import com.hydravision.mapper.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -49,8 +51,9 @@ public class SecurityUtils {
     public static Long getCurrentUserId() {
         String username = getCurrentUsername();
         if (username != null && userMapper != null) {
-            var user = userMapper.selectOne(new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<>()
-                    .eq(com.hydravision.entity.user.User::getUsername, username));
+            LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(User::getUsername, username);
+            User user = userMapper.selectOne(wrapper);
             return user != null ? user.getId() : null;
         }
         return null;
