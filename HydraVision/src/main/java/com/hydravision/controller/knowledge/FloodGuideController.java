@@ -1,13 +1,13 @@
 package com.hydravision.controller.knowledge;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hydravision.common.Result;
+import com.hydravision.common.result.Result;
 import com.hydravision.dto.knowledge.FloodGuideDTO;
 import com.hydravision.service.knowledge.FloodGuideService;
 import com.hydravision.vo.knowledge.FloodGuideVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,10 +15,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/knowledge/flood-guide")
+@RequiredArgsConstructor
 public class FloodGuideController {
 
-    @Resource
-    private FloodGuideService floodGuideService;
+    private final FloodGuideService floodGuideService;
 
     /**
      * 分页查询防汛指南

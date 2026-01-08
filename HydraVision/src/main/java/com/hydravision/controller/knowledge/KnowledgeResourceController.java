@@ -1,14 +1,14 @@
 package com.hydravision.controller.knowledge;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hydravision.common.Result;
+import com.hydravision.common.result.Result;
 import com.hydravision.dto.knowledge.KnowledgeResourceDTO;
 import com.hydravision.security.SecurityUtils;
 import com.hydravision.service.knowledge.KnowledgeResourceService;
 import com.hydravision.vo.knowledge.KnowledgeResourceVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,13 +16,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/knowledge/resource")
+@RequiredArgsConstructor
 public class KnowledgeResourceController {
 
-    @Resource
-    private KnowledgeResourceService resourceService;
-
-    @Resource
-    private SecurityUtils securityUtils;
+    private final KnowledgeResourceService resourceService;
+    private final SecurityUtils securityUtils;
 
     /**
      * 分页查询资源

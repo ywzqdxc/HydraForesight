@@ -7,11 +7,11 @@ import com.hydravision.entity.knowledge.KnowledgeResource;
 import com.hydravision.mapper.knowledge.KnowledgeResourceMapper;
 import com.hydravision.service.knowledge.KnowledgeResourceService;
 import com.hydravision.vo.knowledge.KnowledgeResourceVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
  * 知识资源服务实现类
  */
 @Service
+@RequiredArgsConstructor
 public class KnowledgeResourceServiceImpl implements KnowledgeResourceService {
 
-    @Resource
-    private KnowledgeResourceMapper resourceMapper;
+    private final KnowledgeResourceMapper resourceMapper;
 
     @Override
     public Page<KnowledgeResourceVO> getResourcePage(int pageNum, int pageSize, String keyword, String fileType, Integer publishStatus) {

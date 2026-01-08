@@ -7,11 +7,11 @@ import com.hydravision.entity.knowledge.FloodGuide;
 import com.hydravision.mapper.knowledge.FloodGuideMapper;
 import com.hydravision.service.knowledge.FloodGuideService;
 import com.hydravision.vo.knowledge.FloodGuideVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
  * 防汛指南服务实现类
  */
 @Service
+@RequiredArgsConstructor
 public class FloodGuideServiceImpl implements FloodGuideService {
 
-    @Resource
-    private FloodGuideMapper floodGuideMapper;
+    private final FloodGuideMapper floodGuideMapper;
 
     @Override
     public Page<FloodGuideVO> getFloodGuidePage(int pageNum, int pageSize, String keyword, Integer guideLevel, Integer publishStatus) {
