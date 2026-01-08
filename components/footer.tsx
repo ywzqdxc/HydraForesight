@@ -1,4 +1,4 @@
-import { CloudRain } from "path-to-cloud-rain-icon" // Assuming CloudRain is an icon component
+import { CloudRain } from "lucide-react" // Assuming CloudRain is an icon component
 ;<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
   <div className="flex items-center gap-2">
     <CloudRain className="h-5 w-5 text-blue-500" />
