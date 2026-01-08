@@ -3,7 +3,7 @@ package com.hydravision.controller.alert;
 import com.hydravision.common.result.PageResult;
 import com.hydravision.common.result.Result;
 import com.hydravision.dto.alert.AlertNotificationDTO;
-import com.hydravision.security.util.SecurityUtils;
+import com.hydravision.security.SecurityUtils;
 import com.hydravision.service.alert.AlertNotificationService;
 import com.hydravision.vo.alert.AlertNotificationVO;
 import io.swagger.v3.oas.annotations.Operation;

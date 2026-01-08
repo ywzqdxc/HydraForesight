@@ -5,7 +5,7 @@ import com.hydravision.common.result.Result;
 import com.hydravision.dto.alert.AlertResponseDTO;
 import com.hydravision.entity.user.User;
 import com.hydravision.mapper.user.DepartmentMapper;
-import com.hydravision.security.util.SecurityUtils;
+import com.hydravision.security.SecurityUtils;
 import com.hydravision.service.alert.AlertResponseService;
 import com.hydravision.service.user.UserService;
 import com.hydravision.vo.alert.AlertResponseVO;
