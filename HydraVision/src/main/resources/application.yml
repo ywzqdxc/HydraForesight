@@ -13,9 +13,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hydra_foresight?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/hydravision?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
-    password: root
+    password: Qwertyuiop@520
     druid:
       # 初始化大小
       initial-size: 5
@@ -76,13 +76,13 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 50MB
+      max-file-size: 100MB
       max-request-size: 100MB
 
 file:
   upload:
     # 文件上传路径，可以是相对路径或绝对路径
-    path: D:/HydraForesight/uploads
+    path: /opt/hydravision/uploads
     # 最大文件大小（字节）10MB
     max-size: 52428800
     # 允许的文件类型
