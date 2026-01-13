@@ -87,7 +87,7 @@ public class KnowledgeResourceController {
             
             return Result.success(resource);
         } catch (Exception e) {
-            System.err.println("[v0 Debug] 创建资源异常: " + e.getMessage());
+            System.err.println(" 创建资源异常: " + e.getMessage());
             e.printStackTrace();
             return Result.fail("创建失败: " + e.getMessage());
         }

@@ -4,7 +4,7 @@ import axios from "axios"
 // 创建一个API路由来保护API密钥
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const city = searchParams.get("city") || "郑州"
+  const city = searchParams.get("city") || "乐山"
 
   try {
     const apiUrl = "http://apis.juhe.cn/simpleWeather/query"

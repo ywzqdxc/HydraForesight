@@ -3,7 +3,7 @@ import OpenAI from "openai"
 
 // 创建OpenAI客户端实例
 const openai = new OpenAI({
-  apiKey: "sk-1d195b5799804dc799fc25ddd3069d7f ",
+  apiKey: "sk-1d195b5799804dc799fc25ddd3069d7f",
   baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
 })
 
