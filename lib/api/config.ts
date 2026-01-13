@@ -3,7 +3,7 @@
  */
 
 // 后端API基础URL
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api"
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api"
 
 // 请求超时时间
 export const REQUEST_TIMEOUT = 30000

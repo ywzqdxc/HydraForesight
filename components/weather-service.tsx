@@ -54,8 +54,15 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
     setError(null)
 
     try {
-      // 使用我们的API路由而不是直接调用第三方API
-      const response = await axios.get(`/api/weather?city=${encodeURIComponent(city)}`)
+      const apiUrl = "http://apis.juhe.cn/simpleWeather/query"
+      const apiKey = "26530c5a585788f5427fd368bd6466ea"
+
+      const response = await axios.get(apiUrl, {
+        params: {
+          key: apiKey,
+          city: city,
+        },
+      })
 
       if (response.status === 200) {
         const data = response.data as WeatherResponse

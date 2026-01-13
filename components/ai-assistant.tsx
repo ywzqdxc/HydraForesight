@@ -18,7 +18,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "您好! 我是雨安盾智能助手，可以回答您关于降雨、防洪、水资源等方面的问题。有什么可以帮助您的吗?",
+      content: "您好! 我是智水先知智能助手，可以回答您关于降雨、防洪、水资源等方面的问题。有什么可以帮助您的吗?",
     },
   ])
   const [input, setInput] = useState("")
@@ -26,7 +26,12 @@ export default function AIAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   // 预设问题
-  const suggestedQuestions = ["发生暴雨灾害时如何自救?", "城市洪涝问题的现状如何？", "如何提升水库的调蓄作用？", "人员调度如何进行？"]
+  const suggestedQuestions = [
+    "发生暴雨灾害时如何自救?",
+    "城市洪涝问题的现状如何？",
+    "如何提升水库的调蓄作用？",
+    "人员调度如何进行？",
+  ]
 
   // 自动滚动到最新消息
   useEffect(() => {
@@ -44,8 +49,7 @@ export default function AIAssistant() {
     setInput("")
     setIsLoading(true)
 
-    // 添加助手回复
-    const aiMessage: Message = { role: "assistant", content }
+    // 添加临时加载消息
     setMessages((prev) => [
       ...prev,
       {
@@ -53,43 +57,61 @@ export default function AIAssistant() {
         content: "正在思考中...",
       },
     ])
+
     try {
+      const apiKey = "sk-1d195b5799804dc799fc25ddd3069d7f"
+      const baseURL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 
-
-      // 调用API
-      const response = await fetch("/api/chat", {
+      const response = await fetch(`${baseURL}/chat/completions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
         },
-        body: JSON.stringify({ message: content }),
+        body: JSON.stringify({
+          model: "deepseek-v3",
+          messages: [
+            {
+              role: "system",
+              content:
+                "你是智水先知洪涝监测与预警平台的智能助手，专注于城市内涝防治领域。具备多源数据融合分析、实时预警推演、应急决策辅助等专业能力，能够基于气象数据、水文监测、设备状态等信息，为用户提供精准的内涝风险评估、区域积水分布查询、防灾减灾建议等服务。回答需结合平台技术优势（如AI大模型预测、WebGL可视化、公众协同机制等），确保信息准确、专业且具备实践指导价值。",
+            },
+            { role: "user", content: content },
+          ],
+        }),
       })
 
       if (!response.ok) {
-        throw new Error("网络请求失败")
+        throw new Error(`API请求失败: ${response.status}`)
       }
 
       const data = await response.json()
 
-      // 添加助手回复
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: data.content,
-          reasoning: data.reasoning,
-        },
-      ])
+      // 移除加载消息并添加真实回复
+      setMessages((prev) => {
+        const filtered = prev.filter((msg) => msg.content !== "正在思考中...")
+        return [
+          ...filtered,
+          {
+            role: "assistant",
+            content: data.choices[0]?.message?.content || "抱歉，我无法回答这个问题。",
+            reasoning: data.choices[0]?.message?.reasoning_content || "",
+          },
+        ]
+      })
     } catch (error) {
       console.error("聊天请求失败:", error)
-      // 添加错误消息
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: "抱歉，我遇到了一些问题。请稍后再试。",
-        },
-      ])
+      // 移除加载消息并添加错误消息
+      setMessages((prev) => {
+        const filtered = prev.filter((msg) => msg.content !== "正在思考中...")
+        return [
+          ...filtered,
+          {
+            role: "assistant",
+            content: "抱歉，我遇到了一些问题。请稍后再试。",
+          },
+        ]
+      })
     } finally {
       setIsLoading(false)
     }
@@ -150,7 +172,7 @@ export default function AIAssistant() {
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="text-xs h-7"
+                    className="text-xs h-7 bg-transparent"
                     onClick={() => handleSendMessage(question)}
                     disabled={isLoading}
                   >
