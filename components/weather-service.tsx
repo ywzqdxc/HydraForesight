@@ -1,7 +1,6 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import axios from "axios"
 
 // 天气数据接口
 interface WeatherData {
@@ -54,11 +53,12 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
     setError(null)
 
     try {
-      // 使用我们的API路由而不是直接调用第三方API
-      const response = await axios.get(`/api/weather?city=${encodeURIComponent(city)}`)
+      const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`, {
+        method: "GET",
+      })
 
-      if (response.status === 200) {
-        const data = response.data as WeatherResponse
+      if (response.ok) {
+        const data = (await response.json()) as WeatherResponse
         if (data.error_code === 0) {
           setWeatherData(data.result)
         } else {
@@ -68,8 +68,8 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
         setError("请求异常")
       }
     } catch (err) {
-      setError("网络请求失败，请稍后重试")
       console.error("获取天气数据失败:", err)
+      setError("网络请求失败，请稍后重试")
     } finally {
       setLoading(false)
     }
@@ -84,9 +84,9 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
   }, [currentCity])
 
   return (
-    <WeatherContext.Provider value={{ weatherData, loading, error, changeCity, currentCity }}>
-      {children}
-    </WeatherContext.Provider>
+      <WeatherContext.Provider value={{ weatherData, loading, error, changeCity, currentCity }}>
+        {children}
+      </WeatherContext.Provider>
   )
 }
 
