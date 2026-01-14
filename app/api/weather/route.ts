@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const city = searchParams.get("city") || "乐山"
+  const city = searchParams.get("city") || "郑州"
 
   try {
     // 硬编码API密钥在服务端
