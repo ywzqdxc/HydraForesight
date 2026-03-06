@@ -66,6 +66,13 @@ spring:
           max-idle: 8
           min-idle: 0
   
+  # MVC日期格式配置（统一在此处管理，取代application.properties中的spring.mvc.format.*）
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
+
   # Jackson配置
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
