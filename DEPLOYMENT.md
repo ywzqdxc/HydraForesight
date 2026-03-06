@@ -98,7 +98,7 @@ sudo mysql -u root -p
 CREATE DATABASE hydravision DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 创建应用用户
-CREATE USER 'hydravision'@'localhost' IDENTIFIED BY 'your_strong_password_here';
+CREATE USER 'hydravision'@'localhost' IDENTIFIED BY 'Qwertyuiop@520';
 
 -- 授予权限
 GRANT ALL PRIVILEGES ON hydravision.* TO 'hydravision'@'localhost';
@@ -110,14 +110,13 @@ FLUSH PRIVILEGES;
 EXIT;
 ```
 
-**注意**: 请将 `your_strong_password_here` 替换为强密码并记录下来。
 
 ### 2.2 导入数据库脚本
 
 ```bash
 # 上传SQL脚本到服务器（如果有初始化脚本）
 # 然后执行：
-mysql -u hydravision -p hydravision < /path/to/init.sql
+mysql -u root  < /home/init.sql
 ```
 
 ## 三、部署后端应用
@@ -127,7 +126,7 @@ mysql -u hydravision -p hydravision < /path/to/init.sql
 ```bash
 # 创建应用目录
 sudo mkdir -p /opt/hydravision
-sudo chown $USER:$USER /opt/hydravision
+sudo chown admin /opt/hydravision
 cd /opt/hydravision
 ```
 
@@ -187,7 +186,7 @@ chmod 755 /opt/hydravision/uploads
 ### 3.5 构建后端应用
 
 ```bash
-cd /opt/hydravision/HydraVision
+cd /opt/hydravision
 
 # 如果本地有Maven
 ./mvnw clean package -DskipTests
@@ -202,7 +201,7 @@ cd /opt/hydravision/HydraVision
 ### 3.6 创建后端系统服务
 
 ```bash
-sudo nano /etc/systemd/system/hydravision-backend.service
+sudo vi /etc/systemd/system/hydravision-backend.service
 ```
 
 添加以下内容：
@@ -214,9 +213,9 @@ After=mysql.service
 
 [Service]
 Type=simple
-User=ubuntu
-WorkingDirectory=/opt/hydravision/HydraVision
-ExecStart=/usr/bin/java -jar /opt/hydravision/HydraVision/target/HydraVision-0.0.1-SNAPSHOT.jar
+User=root
+WorkingDirectory=/opt/hydravision
+ExecStart=/usr/bin/java -jar /opt/hydravision/hydra-vision-1.0.0-SNAPSHOT.jar
 Restart=on-failure
 RestartSec=10
 StandardOutput=journal
@@ -254,23 +253,6 @@ cd /opt/hydravision
 npm install
 # 或使用pnpm: pnpm install
 ```
-
-### 4.2 配置环境变量
-
-```bash
-nano .env.production
-```
-
-添加以下内容：
-
-```env
-# API地址（指向后端）
-NEXT_PUBLIC_API_URL=http://localhost:8080
-
-# 通义千问API（如果使用AI功能）
-DASHSCOPE_API_KEY=your_dashscope_api_key_here
-```
-
 ### 4.3 构建前端应用
 
 ```bash
@@ -294,14 +276,13 @@ After=network.target
 
 [Service]
 Type=simple
-User=ubuntu
-WorkingDirectory=/opt/hydravision
+User=root
+WorkingDirectory=/opt/HydraForesight
 ExecStart=/usr/bin/npm start
 Restart=on-failure
 RestartSec=10
 StandardOutput=journal
 StandardError=journal
-Environment="NODE_ENV=production"
 
 [Install]
 WantedBy=multi-user.target
@@ -336,13 +317,13 @@ sudo nano /etc/nginx/sites-available/hydravision
 ```nginx
 server {
     listen 80;
-    server_name your_domain.com;  # 改为你的域名或服务器IP
+    server_name 47.93.253.19;  # 改为你的域名或服务器IP
 
     client_max_body_size 100M;
 
     # 前端代理
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:9001;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -354,6 +335,78 @@ server {
     }
 
     # 后端API代理
+    location /api/ {
+        proxy_pass http://localhost:8080/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # 文件上传端点
+    location /file/ {
+        proxy_pass http://localhost:8080/file/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # 静态文件（上传的文件）
+    location /uploads/ {
+        alias /opt/hydravision/uploads/;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
+### 5.1 创建Nginx配置文件
+```nginx
+server {
+    listen 80;
+    server_name 47.93.253.19;
+
+    client_max_body_size 100M;
+
+    # 前端代理（包括Next.js API路由如 /api/chat, /api/weather）
+    location / {
+        proxy_pass http://localhost:9001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Next.js API路由 - 由前端处理（chat和weather）
+    location /api/chat {
+        proxy_pass http://localhost:9001/api/chat;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api/weather {
+        proxy_pass http://localhost:9001/api/weather;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Spring Boot后端API代理（其他/api/请求）
     location /api/ {
         proxy_pass http://localhost:8080/api/;
         proxy_set_header Host $host;
@@ -720,12 +773,3 @@ chmod +x deploy.sh
 
 ---
 
-## 联系支持
-
-如果遇到问题，请检查：
-1. 系统日志
-2. 应用日志
-3. 网络连接
-4. 防火墙配置
-
-祝部署顺利！🚀
